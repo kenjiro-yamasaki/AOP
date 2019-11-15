@@ -1,7 +1,6 @@
-﻿using SoftCube.Injector;
-using System;
+﻿using System;
 
-namespace SoftCube.Aspect.Sample
+namespace SoftCube.Injectors.Sample
 {
     /// <summary>
     /// プログラム。
@@ -16,16 +15,14 @@ namespace SoftCube.Aspect.Sample
         {
             Console.WriteLine("Hello World!");
 
-
             Test(null);
-
             Console.Read();
         }
 
 
-        static void Test(string name)
+        //static void Test(string name)
+        static void Test([NotNull]string name)
         {
-        
         }
 
     }

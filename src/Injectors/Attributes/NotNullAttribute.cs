@@ -2,7 +2,7 @@
 using Mono.Cecil.Cil;
 using System;
 
-namespace SoftCube.Injector
+namespace SoftCube.Injectors
 {
     /// <summary>
     /// 非nullパラメーター属性。

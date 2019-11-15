@@ -1,7 +1,8 @@
 ﻿using Mono.Cecil;
 using System;
+using System.Linq;
 
-namespace SoftCube.Injector.Runner
+namespace SoftCube.Injectors.Runner
 {
     /// <summary>
     /// CustomAttributeの拡張メッソド。
@@ -11,11 +12,11 @@ namespace SoftCube.Injector.Runner
         #region 静的メソッド
 
         /// <summary>
-        /// Mono.Cecil.CustomAttributeが表現する属性のインスタンスを生成する。
+        /// CustomAttributeが表現する属性のインスタンスを生成する。
         /// </summary>
-        /// <typeparam name="TAttribute">Mono.Cecil.CustomAttributeが表現する属性の型</typeparam>
-        /// <param name="this">Mono.Cecil.CustomAttribute</param>
-        /// <returns>Mono.Cecil.CustomAttributeが表現する属性のインスタンス</returns>
+        /// <typeparam name="TAttribute">CustomAttributeが表現する属性の型</typeparam>
+        /// <param name="this">CustomAttributeのインスタンス</param>
+        /// <returns>CustomAttributeが表現する属性のインスタンス</returns>
         internal static TAttribute Create<TAttribute>(this CustomAttribute @this)
             where TAttribute : class
         {
@@ -27,12 +28,7 @@ namespace SoftCube.Injector.Runner
             object[] arguments = null;
             if (@this.HasConstructorArguments)
             {
-                arguments = new object[@this.ConstructorArguments.Count];
-
-                for (var i = 0; i < @this.ConstructorArguments.Count; i++)
-                {
-                    arguments[i] = @this.ConstructorArguments[i].Value;
-                }
+                arguments = @this.ConstructorArguments.Select(a => a.Value).ToArray();
             }
 
             // 属性のインスタンスを生成する。

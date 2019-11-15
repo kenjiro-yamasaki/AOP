@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using System;
 
-namespace SoftCube.Injector
+namespace SoftCube.Injectors
 {
     /// <summary>
     /// 注入属性。
