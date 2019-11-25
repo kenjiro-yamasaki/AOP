@@ -1,6 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System;
+using System.Linq;
 
 namespace SoftCube.Injectors
 {
@@ -29,6 +30,7 @@ namespace SoftCube.Injectors
                 var argumentNullExceptionCtor = method.DeclaringType.Module.Assembly.MainModule.ImportReference(typeof(ArgumentNullException).GetConstructor(new Type[] { typeof(string) }));
                 var processor = method.Body.GetILProcessor();
                 var first = processor.Body.Instructions[0];
+
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldarg, target));
                 processor.InsertBefore(first, processor.Create(OpCodes.Brtrue_S, first));
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldstr, target.Name));

@@ -10,6 +10,7 @@
 
   <!-- Buildターゲットからビルド後に呼び出されるターゲット -->
   <ItemGroup>
+    <ProjectReference Include="..\Injectors.Runner\Injectors.Runner.csproj" />
     <ProjectReference Include="..\Injectors\Injectors.csproj" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

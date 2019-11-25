@@ -4,7 +4,7 @@ using System;
 namespace SoftCube.Injectors
 {
     /// <summary>
-    /// 注入属性。
+    /// パラメーター注入属性。
     /// </summary>
     public abstract class ParameterInjectorAttribute : Attribute
     {
