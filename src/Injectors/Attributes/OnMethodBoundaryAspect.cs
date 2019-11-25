@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace SoftCube.Injectors
 {
@@ -24,8 +25,6 @@ namespace SoftCube.Injectors
 
         #region メソッド
 
-
-
         /// <summary>
         /// 注入する。
         /// </summary>
@@ -43,27 +42,59 @@ namespace SoftCube.Injectors
 
             var module = method.DeclaringType.Module.Assembly.MainModule;
 
-            var type        = this.GetType();
-            var constructor = module.ImportReference(type.GetConstructor(new Type[] { }));
-            var onEntry     = module.ImportReference(type.GetMethod(nameof(OnEntry)));
-            var onExit      = module.ImportReference(type.GetMethod(nameof(OnExit)));
+            // ローカル変数を追加する。
+            var aspectIndex = processor.Body.Variables.Count();
+            processor.Body.Variables.Add(new VariableDefinition(module.ImportReference(GetType())));
 
-            // 属性のローカル変数を追加する。
-            var index = processor.Body.Variables.Count();
-            processor.Body.Variables.Add(new VariableDefinition(module.ImportReference(type)));
-            processor.Body.MaxStackSize += 1;
+            var methodExecutionArgsIndex = processor.Body.Variables.Count();
+            processor.Body.Variables.Add(new VariableDefinition(module.ImportReference(typeof(MethodExecutionArgs))));
 
-            var first = processor.Body.Instructions.First();
-            processor.InsertBefore(first, processor.Create(OpCodes.Newobj, constructor));
-            processor.InsertBefore(first, processor.Create(OpCodes.Stloc, index));
-            processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, index));
-            processor.InsertBefore(first, processor.Create(OpCodes.Callvirt, onEntry));
+            // 命令を書き換える。
+            {
+                var first = processor.Body.Instructions.First();
 
-            var last  = processor.Body.Instructions.Last();
-            //processor.InsertBefore(last, processor.Create(OpCodes.Leave_S, last));
-            processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, index));
-            processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, onExit));
-            //processor.InsertBefore(last, processor.Create(OpCodes.Endfinally));
+                // OnMethodBoundaryAspectの派生クラスを生成する。
+                processor.InsertBefore(first, processor.Create(OpCodes.Newobj, module.ImportReference(GetType().GetConstructor(new Type[] { }))));
+                processor.InsertBefore(first, processor.Create(OpCodes.Stloc, aspectIndex));
+
+                // MethodExecutionArgsを生成する。
+                processor.InsertBefore(first, processor.Create(OpCodes.Ldarg_0));
+                processor.InsertBefore(first, processor.Create(OpCodes.Ldc_I4, method.Parameters.Count));
+                processor.InsertBefore(first, processor.Create(OpCodes.Newarr, module.ImportReference(typeof(object))));
+                for (int parameterIndex = 0; parameterIndex < method.Parameters.Count; parameterIndex++)
+                {
+                    var parameter = method.Parameters[parameterIndex];
+                    processor.InsertBefore(first, processor.Create(OpCodes.Dup));
+                    processor.InsertBefore(first, processor.Create(OpCodes.Ldc_I4, parameterIndex));
+                    processor.InsertBefore(first, processor.Create(OpCodes.Ldarg, parameterIndex + 1));
+                    if (parameter.ParameterType.IsValueType)
+                    {
+                        processor.InsertBefore(first, processor.Create(OpCodes.Box, parameter.ParameterType));
+                    }
+                    processor.InsertBefore(first, processor.Create(OpCodes.Stelem_Ref));
+                }
+                processor.InsertBefore(first, processor.Create(OpCodes.Newobj, module.ImportReference(typeof(Arguments).GetConstructor(new Type[] { typeof(object[]) }))));
+                processor.InsertBefore(first, processor.Create(OpCodes.Newobj, module.ImportReference(typeof(MethodExecutionArgs).GetConstructor(new Type[] { typeof(object), typeof(Arguments) }))));
+                processor.InsertBefore(first, processor.Create(OpCodes.Stloc, methodExecutionArgsIndex));
+
+                processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
+                processor.InsertBefore(first, processor.Create(OpCodes.Call, module.ImportReference(typeof(MethodBase).GetMethod(nameof(MethodBase.GetCurrentMethod), new Type[]{ }))));
+                processor.InsertBefore(first, processor.Create(OpCodes.Callvirt, module.ImportReference(typeof(MethodExecutionArgs).GetProperty(nameof(MethodExecutionArgs.Method)).GetSetMethod())));
+
+                // OnEntryメソッドを呼び出す。
+                processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, aspectIndex));
+                processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
+                processor.InsertBefore(first, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnEntry)))));
+            }
+
+            {
+                var last = processor.Body.Instructions.Last();
+
+                // OnExitメソッドを呼び出す。
+                processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, aspectIndex));
+                processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
+                processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnExit)))));
+            }
         }
 
         #region イベントハンドラー
@@ -71,14 +102,14 @@ namespace SoftCube.Injectors
         /// <summary>
         /// メソッド開始イベントハンドラー。
         /// </summary>
-        public virtual void OnEntry()
+        public virtual void OnEntry(MethodExecutionArgs args)
         {
         }
 
         /// <summary>
         /// メソッド終了イベントハンドラー。
         /// </summary>
-        public virtual void OnExit()
+        public virtual void OnExit(MethodExecutionArgs args)
         {
         }
 

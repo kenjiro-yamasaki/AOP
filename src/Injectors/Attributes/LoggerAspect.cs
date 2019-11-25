@@ -23,7 +23,7 @@ namespace SoftCube.Injectors
         /// <summary>
         /// メソッド開始イベントハンドラー。
         /// </summary>
-        public override void OnEntry()
+        public override void OnEntry(MethodExecutionArgs args)
         {
             Console.WriteLine("OnEntry");
         }
@@ -31,7 +31,7 @@ namespace SoftCube.Injectors
         /// <summary>
         /// メソッド終了イベントハンドラー。
         /// </summary>
-        public override void OnExit()
+        public override void OnExit(MethodExecutionArgs args)
         {
             Console.WriteLine("OnExit");
         }
