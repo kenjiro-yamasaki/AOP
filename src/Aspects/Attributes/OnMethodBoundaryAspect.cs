@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace SoftCube.Aspect
+namespace SoftCube.Aspects
 {
     /// <summary>
-    /// メソッド境界アスペクト属性。
+    /// メソッド境界アスペクト。
     /// </summary>
     public abstract class OnMethodBoundaryAspect : MethodLevelAspect
     {

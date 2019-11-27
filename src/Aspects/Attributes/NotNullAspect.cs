@@ -3,7 +3,7 @@ using Mono.Cecil.Cil;
 using System;
 using System.Linq;
 
-namespace SoftCube.Aspect
+namespace SoftCube.Aspects
 {
     /// <summary>
     /// 非nullパラメーターアスペクト。

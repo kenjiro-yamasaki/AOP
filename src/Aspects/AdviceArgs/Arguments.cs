@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SoftCube.Aspect
+namespace SoftCube.Aspects
 {
     /// <summary>
     /// 引数コレクション。

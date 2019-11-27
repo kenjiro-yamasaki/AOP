@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>SoftCube.Aspect</AssemblyName>
-    <RootNamespace>SoftCube.Aspect</RootNamespace>
+    <AssemblyName>SoftCube.Aspects</AssemblyName>
+    <RootNamespace>SoftCube.Aspects</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon />
     <OutputType>Library</OutputType>

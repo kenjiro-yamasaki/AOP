@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using System;
 
-namespace SoftCube.Aspect
+namespace SoftCube.Aspects
 {
     /// <summary>
     /// パラメーター注入属性。

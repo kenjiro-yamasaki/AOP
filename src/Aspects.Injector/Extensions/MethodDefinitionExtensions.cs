@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftCube.Aspect.Injector
+namespace SoftCube.Aspects.Injector
 {
 
     internal static class MethodDefinitionExtensions
@@ -20,8 +20,8 @@ namespace SoftCube.Aspect.Injector
         internal static void Inject(this MethodDefinition method)
         {
             // メソッドの属性にカスタムコードを注入する。
-            var baseFullName  = $"{nameof(SoftCube)}.{nameof(Aspect)}.{nameof(MethodLevelAspect)}";
-            var baseScopeName = $"{nameof(SoftCube)}.{nameof(Aspect)}.dll";
+            var baseFullName  = $"{nameof(SoftCube)}.{nameof(Aspects)}.{nameof(MethodLevelAspect)}";
+            var baseScopeName = $"{nameof(SoftCube)}.{nameof(Aspects)}.dll";
 
             foreach (var attribute in method.CustomAttributes)
             {

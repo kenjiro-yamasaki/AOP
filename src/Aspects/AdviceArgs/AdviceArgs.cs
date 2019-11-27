@@ -1,4 +1,4 @@
-﻿namespace SoftCube.Aspect
+﻿namespace SoftCube.Aspects
 {
     /// <summary>
     /// アドバイス引数。

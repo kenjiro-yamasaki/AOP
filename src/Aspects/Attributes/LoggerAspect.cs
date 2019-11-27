@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoftCube.Aspect
+namespace SoftCube.Aspects
 {
     /// <summary>
     /// ロガーアスペクト。
