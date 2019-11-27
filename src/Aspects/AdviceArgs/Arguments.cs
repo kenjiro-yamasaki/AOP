@@ -14,7 +14,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// 引数リスト。
         /// </summary>
-        private List<object>arguments;
+        private List<object> arguments;
 
         #endregion
 

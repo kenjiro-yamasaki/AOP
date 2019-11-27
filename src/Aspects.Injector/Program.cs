@@ -24,7 +24,7 @@ namespace SoftCube.Aspects.Injector
                 // 対象アセンブリを含むディレクトリをカレントディレクトリに変更する。
                 Environment.CurrentDirectory = Path.GetDirectoryName(assemblyFilePath);
 
-                // 対象アセンブリにカスタムコードを注入する。
+                // 対象アセンブリにアスペクト（カスタムコード）を注入する。
                 Console.Out.WriteLine($" Injecting assembly {assemblyFilePath}...");
                 using (var assembly = AssemblyDefinition.ReadAssembly(assemblyFilePath, new ReaderParameters() { ReadSymbols = true, ReadWrite = true }))
                 {

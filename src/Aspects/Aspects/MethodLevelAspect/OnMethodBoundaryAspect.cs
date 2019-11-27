@@ -26,9 +26,9 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// 注入する。
+        /// アスペクト（カスタムコード）を注入する。
         /// </summary>
-        /// <param name="target">注入対象のメソッド定義</param>
+        /// <param name="method">注入対象のメソッド定義</param>
         protected override void OnInject(MethodDefinition method)
         {
             var processor = method.Body.GetILProcessor();
@@ -167,7 +167,7 @@ namespace SoftCube.Aspects
         #region イベントハンドラー
 
         /// <summary>
-        /// 開始イベントハンドラー。
+        /// メッソドの開始イベントハンドラー。
         /// </summary>
         /// <param name="args">メソッド実行引数</param>
         public virtual void OnEntry(MethodExecutionArgs args)
@@ -175,7 +175,7 @@ namespace SoftCube.Aspects
         }
 
         /// <summary>
-        /// 成功終了イベントハンドラー。
+        /// メッソドの正常終了イベントハンドラー。
         /// </summary>
         /// <param name="args">メソッド実行引数</param>
         public virtual void OnSuccess(MethodExecutionArgs args)
@@ -183,7 +183,7 @@ namespace SoftCube.Aspects
         }
 
         /// <summary>
-        /// 例外終了イベントハンドラー。
+        /// メッソドの例外終了イベントハンドラー。
         /// </summary>
         /// <param name="args">メソッド実行引数</param>
         public virtual void OnException(MethodExecutionArgs args)
@@ -191,7 +191,7 @@ namespace SoftCube.Aspects
         }
 
         /// <summary>
-        /// 終了イベントハンドラー。
+        /// メッソドの終了イベントハンドラー。
         /// </summary>
         /// <param name="args">メソッド実行引数</param>
         public virtual void OnExit(MethodExecutionArgs args)

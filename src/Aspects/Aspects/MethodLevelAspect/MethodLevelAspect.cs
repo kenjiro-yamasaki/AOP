@@ -4,14 +4,14 @@ using System;
 namespace SoftCube.Aspects
 {
     /// <summary>
-    /// メソッドレベルのアスペクト。
+    /// メソッドレベルアスペクト。
     /// </summary>
     public abstract class MethodLevelAspect : Attribute
     {
         #region コンストラクター
 
         /// <summary>
-        /// コンストラクター
+        /// コンストラクター。
         /// </summary>
         public MethodLevelAspect()
             : base()
@@ -23,7 +23,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// 注入する。
+        /// アスペクト（カスタムコード）を注入する。
         /// </summary>
         /// <param name="method">注入対象のメソッド定義</param>
         public void Inject(MethodDefinition method)
@@ -37,9 +37,9 @@ namespace SoftCube.Aspects
         }
 
         /// <summary>
-        /// 注入する。
+        /// アスペクト（カスタムコード）を注入する。
         /// </summary>
-        /// <param name="target">注入対象のメソッド定義</param>
+        /// <param name="method">注入対象のメソッド定義</param>
         protected abstract void OnInject(MethodDefinition method);
 
         #endregion

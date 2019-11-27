@@ -12,38 +12,38 @@ namespace SoftCube.Aspects.Injector
         #region 静的メソッド
 
         /// <summary>
-        /// CustomAttributeが表現する属性のインスタンスを生成する。
+        /// CustomAttributeが表現するアスペクトを生成する。
         /// </summary>
-        /// <typeparam name="TAttribute">CustomAttributeが表現する属性の型</typeparam>
-        /// <param name="this">CustomAttributeのインスタンス</param>
-        /// <returns>CustomAttributeが表現する属性のインスタンス</returns>
-        internal static TAttribute Create<TAttribute>(this CustomAttribute @this)
-            where TAttribute : class
+        /// <typeparam name="TAttribute">CustomAttributeが表現するアスペクトの型</typeparam>
+        /// <param name="customAttribute">CustomAttribute</param>
+        /// <returns>CustomAttributeが表現するアスペクト</returns>
+        internal static TAspect Create<TAspect>(this CustomAttribute customAttribute)
+            where TAspect : class
         {
-            var type = @this.AttributeType.Resolve();
-            var attributeTypeName = type.FullName + ", " + type.Module.Assembly.Name.Name;
-            var attributeType = Type.GetType(attributeTypeName);
+            var type           = customAttribute.AttributeType.Resolve();
+            var aspectTypeName = type.FullName + ", " + type.Module.Assembly.Name.Name;
+            var aspectType     = Type.GetType(aspectTypeName);
 
-            // 属性のコンストラクター引数を取得する。
+            // アスペクトのコンストラクター引数を取得する。
             object[] arguments = null;
-            if (@this.HasConstructorArguments)
+            if (customAttribute.HasConstructorArguments)
             {
-                arguments = @this.ConstructorArguments.Select(a => a.Value).ToArray();
+                arguments = customAttribute.ConstructorArguments.Select(a => a.Value).ToArray();
             }
 
-            // 属性のインスタンスを生成する。
-            var value = Activator.CreateInstance(attributeType, arguments) as TAttribute;
+            // アスペクトのインスタンスを生成する。
+            var aspect = Activator.CreateInstance(aspectType, arguments) as TAspect;
 
-            // 属性のプロパティを設定する。
-            if (@this.HasProperties)
+            // アスペクトのプロパティを設定する。
+            if (customAttribute.HasProperties)
             {
-                foreach (var attributeProperty in @this.Properties)
+                foreach (var attributeProperty in customAttribute.Properties)
                 {
-                    attributeType.GetProperty(attributeProperty.Name).SetValue(value, attributeProperty.Argument.Value, null);
+                    aspectType.GetProperty(attributeProperty.Name).SetValue(aspect, attributeProperty.Argument.Value, null);
                 }
             }
 
-            return value;
+            return aspect;
         }
 
         #endregion

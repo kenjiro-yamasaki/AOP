@@ -12,12 +12,12 @@ namespace SoftCube.Aspects.Injector
         #region 静的メソッド
 
         /// <summary>
-        /// アセンブリにカスタムコードを注入する。
+        /// アスペクト（カスタムコード）を注入する。
         /// </summary>
-        /// <param name="this">対象アセンブリ</param>
-        internal static void Inject(this AssemblyDefinition @this)
+        /// <param name="assembly">注入対象のアセンブリ</param>
+        internal static void Inject(this AssemblyDefinition assembly)
         {
-            foreach (var module in @this.Modules)
+            foreach (var module in assembly.Modules)
             {
                 module.Inject();
             }
