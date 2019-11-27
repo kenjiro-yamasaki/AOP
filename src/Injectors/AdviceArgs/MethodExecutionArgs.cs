@@ -20,6 +20,11 @@ namespace SoftCube.Injectors
         /// </summary>
         public Arguments Arguments { get; }
 
+        /// <summary>
+        /// 例外。
+        /// </summary>
+        public Exception Exception { get; set; }
+
         #endregion
 
         #region コンストラクター

@@ -15,7 +15,6 @@ namespace SoftCube.Injectors.Sample
         static void Main(string[] args)
         {
             new LoggerTest().Test("BBB", 101, DateTime.Now);
-            //Test(null);
 
             Console.Read();
         }
@@ -23,38 +22,86 @@ namespace SoftCube.Injectors.Sample
 
     class LoggerTest
     {
-        public LoggerTest()
-        {
-        }
+        //[LoggerAspect]
+        //public void Test(string arg0, int arg1, DateTime arg2)
+        //{
+        //    Console.WriteLine($"{arg0},{arg1},{arg2}");
+        //    throw new ArgumentNullException(nameof(arg1));
+        //}
 
         [LoggerAspect]
-        public void Test(string message, int number, DateTime now)
+        public string Test(string arg0, int arg1, DateTime arg2)
         {
-            Console.WriteLine(message);
-
-            //var aspect = new LoggerAspect();
-            //var args = new MethodExecutionArgs(this, new Arguments(message, number, now));
-            //args.Method = MethodBase.GetCurrentMethod();
-
-            //aspect.OnEntry(args);
-            //Console.WriteLine(message);
-            //aspect.OnExit(args);
-
-
-
-
-
-            //var aspect = new LoggerAspect();
-            //aspect.OnEntry();
-            //try
-            //{
-            //    Console.WriteLine(message);
-            //}
-            //finally
-            //{
-            //    aspect.OnExit();
-            //}
+            Console.WriteLine($"{arg0},{arg1},{arg2}");
+            return arg0;
+            throw new Exception();
+            //ThrowException();
         }
-    }
 
+        public void ThrowException()
+        {
+            throw new Exception();
+        }
+
+        //[LoggerAspect]
+        //public string Test(string arg0, int arg1, DateTime arg2)
+        //{
+        //    try
+        //    {
+        //        return arg0;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+        //    //Console.WriteLine($"{arg0},{arg1},{arg2}");
+        //    //throw new ArgumentNullException(nameof(arg1));
+        //}
+
+        //[LoggerAspect]
+        //public void Test(string arg0, int arg1, DateTime arg2)
+        //{
+        //    var aspect = new LoggerAspect();
+        //    var args = new MethodExecutionArgs(this, new Arguments(arg0, arg1, arg2));
+        //    args.Method = MethodBase.GetCurrentMethod();
+
+        //    aspect.OnEntry(args);
+        //    try
+        //    {
+        //        Console.WriteLine($"{arg0},{arg1},{arg2}");
+
+        //        aspect.OnSuccess(args);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        args.Exception = e;
+        //        aspect.OnException(args);
+        //    }
+        //    //finally
+        //    //{
+        //    //    aspect.OnExit(args);
+        //    //}
+        //}
+
+        //[LoggerAspect]
+        //public void Test(string arg0, int arg1, DateTime arg2)
+        //{
+        //    Console.WriteLine("OnEntry");
+        //    try
+        //    {
+        //        Console.WriteLine("OnSuccess");
+        //        ThrowException();
+        //        //throw new Exception();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine("OnException");
+        //        throw;
+        //    }
+        //    //finally
+        //    //{
+        //    //    Console.WriteLine("OnExit");
+        //    //}
+        //}
+    }
 }

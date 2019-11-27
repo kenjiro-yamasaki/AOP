@@ -28,6 +28,16 @@ namespace SoftCube.Injectors
             Console.WriteLine("OnEntry");
         }
 
+        public override void OnSuccess(MethodExecutionArgs args)
+        {
+            Console.WriteLine("OnSuccess");
+        }
+
+        public override void OnException(MethodExecutionArgs args)
+        {
+            Console.WriteLine("OnException");
+        }
+
         /// <summary>
         /// メソッド終了イベントハンドラー。
         /// </summary>
