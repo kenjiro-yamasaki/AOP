@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoftCube.Injectors
+namespace SoftCube.Aspect
 {
     /// <summary>
     /// ロガーアスペクト。

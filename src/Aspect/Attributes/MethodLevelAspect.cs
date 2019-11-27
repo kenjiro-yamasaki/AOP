@@ -1,19 +1,19 @@
 ﻿using Mono.Cecil;
 using System;
 
-namespace SoftCube.Injectors
+namespace SoftCube.Aspect
 {
     /// <summary>
-    /// メソッド注入属性。
+    /// メソッドレベルのアスペクト。
     /// </summary>
-    public abstract class MethodInjectorAttribute : Attribute
+    public abstract class MethodLevelAspect : Attribute
     {
         #region コンストラクター
 
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public MethodInjectorAttribute()
+        public MethodLevelAspect()
             : base()
         {
         }

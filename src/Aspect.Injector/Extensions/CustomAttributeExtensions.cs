@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace SoftCube.Injectors.Runner
+namespace SoftCube.Aspect.Injector
 {
     /// <summary>
     /// CustomAttributeの拡張メッソド。

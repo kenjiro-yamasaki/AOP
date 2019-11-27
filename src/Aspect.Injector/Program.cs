@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace SoftCube.Injectors.Runner
+namespace SoftCube.Aspect.Injector
 {
     /// <summary>
     /// プログラム。

@@ -2,7 +2,7 @@
 using Mono.Cecil.Pdb;
 using System.Linq;
 
-namespace SoftCube.Injectors.Runner
+namespace SoftCube.Aspect.Injector
 {
     /// <summary>
     /// AssemblyDefinitionの拡張メソッド。

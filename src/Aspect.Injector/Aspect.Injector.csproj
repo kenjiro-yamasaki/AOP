@@ -3,13 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>SoftCube.Injectors.Runner</AssemblyName>
-    <RootNamespace>SoftCube.Injectors.Runner</RootNamespace>
+    <AssemblyName>SoftCube.Aspect.Injector</AssemblyName>
+    <RootNamespace>SoftCube.Aspect.Injector</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Injectors\Injectors.csproj" />
+    <ProjectReference Include="..\Aspect\Aspect.csproj" />
   </ItemGroup>
 
 

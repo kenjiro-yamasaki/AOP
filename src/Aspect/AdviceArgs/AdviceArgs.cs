@@ -1,4 +1,4 @@
-﻿namespace SoftCube.Injectors
+﻿namespace SoftCube.Aspect
 {
     /// <summary>
     /// アドバイス引数。

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SoftCube.Injectors
+namespace SoftCube.Aspect
 {
     /// <summary>
     /// メソッド実行引数。

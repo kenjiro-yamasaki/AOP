@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SoftCube.Injectors.Sample
+namespace SoftCube.Aspect.Sample
 {
     /// <summary>
     /// プログラム。

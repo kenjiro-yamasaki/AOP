@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>SoftCube.Injectors</AssemblyName>
-    <RootNamespace>SoftCube.Injectors</RootNamespace>
+    <AssemblyName>SoftCube.Aspect</AssemblyName>
+    <RootNamespace>SoftCube.Aspect</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon />
     <OutputType>Library</OutputType>

@@ -3,10 +3,10 @@ using Mono.Cecil.Cil;
 using System;
 using System.Linq;
 
-namespace SoftCube.Injectors
+namespace SoftCube.Aspect
 {
     /// <summary>
-    /// 非nullパラメーター属性。
+    /// 非nullパラメーターアスペクト。
     /// </summary>
     /// <remarks>
     /// この属性を付けたパラメーターが、nullを許容しないことを明示する。
@@ -14,7 +14,7 @@ namespace SoftCube.Injectors
     /// </remarks>
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
     [Serializable]
-    public class NotNullAttribute : ParameterInjectorAttribute
+    public class NotNullAspect : ParameterLevelAspect
     {
         #region メソッド
 

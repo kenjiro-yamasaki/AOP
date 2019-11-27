@@ -5,12 +5,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace SoftCube.Injectors
+namespace SoftCube.Aspect
 {
     /// <summary>
     /// メソッド境界アスペクト属性。
     /// </summary>
-    public abstract class OnMethodBoundaryAspect : MethodInjectorAttribute
+    public abstract class OnMethodBoundaryAspect : MethodLevelAspect
     {
         #region コンストラクター
 

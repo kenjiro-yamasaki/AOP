@@ -1,19 +1,19 @@
 ﻿using Mono.Cecil;
 using System;
 
-namespace SoftCube.Injectors
+namespace SoftCube.Aspect
 {
     /// <summary>
     /// パラメーター注入属性。
     /// </summary>
-    public abstract class ParameterInjectorAttribute : Attribute
+    public abstract class ParameterLevelAspect : Attribute
     {
         #region コンストラクター
 
         /// <summary>
-        /// コンストラクター
+        /// コンストラクター。
         /// </summary>
-        public ParameterInjectorAttribute()
+        public ParameterLevelAspect()
             : base()
         {
         }
