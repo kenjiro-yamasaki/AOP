@@ -34,12 +34,6 @@ namespace SoftCube.Aspects.Sample
             Console.WriteLine($"{arg0},{arg1},{arg2}");
             return arg0;
             throw new Exception();
-            //ThrowException();
-        }
-
-        public void ThrowException()
-        {
-            throw new Exception();
         }
 
         //[LoggerAspect]
