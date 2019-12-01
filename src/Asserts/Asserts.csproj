@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2</TargetFramework>
+    <AssemblyName>SoftCube.Asserts</AssemblyName>
+    <RootNamespace>SoftCube.Asserts</RootNamespace>
+  </PropertyGroup>
+
+</Project>
