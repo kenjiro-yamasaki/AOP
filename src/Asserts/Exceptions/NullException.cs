@@ -1,21 +1,24 @@
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when an object reference is unexpectedly not null.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class NullException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="NullException"/> class.
-//        /// </summary>
-//        /// <param name="actual"></param>
-//        public NullException(object actual)
-//            : base(null, actual, "Assert.Null() Failure")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// nullアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.Null(...)の失敗時に投げられる。
+    /// </remarks>
+    public class NullException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="actual">実測値</param>
+        public NullException(object actual)
+            : base(null, actual, "Assert.Null() Failure")
+        {
+        }
+
+        #endregion
+    }
+}

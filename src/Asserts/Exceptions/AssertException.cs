@@ -7,6 +7,15 @@ namespace SoftCube.Asserts
     /// </summary>
     public class AssertException : Exception
     {
+        #region プロパティ
+
+        /// <summary>
+        /// ユーザーメッセージ。
+        /// </summary>
+        public string UserMessage { get; }
+
+        #endregion
+
         #region コンストラクター
 
         /// <summary>
@@ -19,20 +28,21 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="message">メッセージ</param>
-        public AssertException(string message)
-            : this(message, (Exception)null)
+        /// <param name="userMessage">ユーザーメッセージ</param>
+        public AssertException(string userMessage)
+            : this(userMessage, (Exception)null)
         {
         }
 
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="message">メッセージ</param>
+        /// <param name="userMessage">ユーザーメッセージ</param>
         /// <param name="innerException">内部例外</param>
-        protected AssertException(string message, Exception innerException)
-            : base(message, innerException)
+        protected AssertException(string userMessage, Exception innerException)
+            : base(userMessage, innerException)
         {
+            UserMessage = userMessage;
         }
 
         #endregion

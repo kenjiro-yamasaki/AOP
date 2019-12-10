@@ -57,11 +57,11 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="message">メッセージ</param>
+        /// <param name="userMessage">ユーザーメッセージ</param>
         /// <param name="expectedTitle">期待値のタイトル</param>
         /// <param name="actualTitle">実測値のタイトル</param>
-        public AssertExpectedActualException(object expected, object actual, string message, string expectedTitle = null, string actualTitle = null)
-            : this(expected, actual, message, expectedTitle, actualTitle, null)
+        public AssertExpectedActualException(object expected, object actual, string userMessage, string expectedTitle = null, string actualTitle = null)
+            : this(expected, actual, userMessage, expectedTitle, actualTitle, null)
         {
         }
 

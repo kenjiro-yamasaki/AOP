@@ -1,8 +1,11 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// Falseアサート例外。
+    /// falseアサート例外。
     /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.False(...)の失敗時に投げられる。
+    /// </remarks>
     public class FalseException : AssertExpectedActualException
     {
         #region コンストラクター
@@ -10,10 +13,10 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
+        /// <param name="acutual">実測値</param>
         /// <param name="message">メッセージ</param>
-        /// <param name="value">実測値</param>
-        public FalseException(string message, bool? value)
-            : base("False", value == null ? "(null)" : value.ToString(), message ?? "Assert.False() Failure")
+        public FalseException(bool? acutual, string message)
+            : base("False", acutual == null ? "(null)" : acutual.ToString(), message ?? "Assert.False() Failure")
         {
         }
 
