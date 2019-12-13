@@ -8,6 +8,8 @@
     <AssemblyName>SoftCube.Asserts.UnitTests</AssemblyName>
 
     <RootNamespace>SoftCube.Asserts.UnitTests</RootNamespace>
+
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

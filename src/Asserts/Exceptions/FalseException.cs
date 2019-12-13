@@ -1,7 +1,7 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// falseアサート例外。
+    /// Falseアサート例外。
     /// </summary>
     /// <remarks>
     /// 本例外は、Assert.False(...)の失敗時に投げられる。

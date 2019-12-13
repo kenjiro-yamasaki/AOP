@@ -1132,7 +1132,7 @@ namespace SoftCube.Asserts.UnitTests
             #endregion
         }
 
-        public class WithComparer
+        public class With_Comparer
         {
             #region int
 

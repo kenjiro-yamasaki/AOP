@@ -1,22 +1,25 @@
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a collection unexpectedly contains the expected value.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class DoesNotContainException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="DoesNotContainException"/> class.
-//        /// </summary>
-//        /// <param name="expected">The expected object value</param>
-//        /// <param name="actual">The actual value</param>
-//        public DoesNotContainException(object expected, object actual)
-//            : base(expected, actual, "Assert.DoesNotContain() Failure", "Found", "In value")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// DoesNotContainアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.DoesNotContain(...)の失敗時に投げられる。
+    /// </remarks>
+    public class DoesNotContainException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        public DoesNotContainException(object expected, object actual)
+            : base(expected, actual, "Assert.DoesNotContain() Failure", "Found", "In value")
+        {
+        }
+
+        #endregion
+    }
+}

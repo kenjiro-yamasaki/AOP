@@ -1,35 +1,48 @@
-//using System;
-//using System.Globalization;
+using System;
+using System.Globalization;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a string does not start with the expected value.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class StartsWithException : XunitException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="StartsWithException"/> class.
-//        /// </summary>
-//        /// <param name="expected">The expected string value</param>
-//        /// <param name="actual">The actual value</param>
-//        public StartsWithException(string expected, string actual)
-//            : base(string.Format(CultureInfo.CurrentCulture, "Assert.StartsWith() Failure:{2}Expected: {0}{2}Actual:   {1}", expected ?? "(null)", ShortenActual(expected, actual) ?? "(null)", Environment.NewLine))
-//        { }
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// StartsWithアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.StartsWith(...)の失敗時に投げられる。
+    /// </remarks>
+    public class StartsWithException : AssertException
+    {
+        #region コンストラクター
 
-//        static string ShortenActual(string expected, string actual)
-//        {
-//            if (expected == null || actual == null || actual.Length <= expected.Length)
-//            {
-//                return actual;
-//            }
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        public StartsWithException(string expected, string actual)
+            : base(string.Format(CultureInfo.CurrentCulture, "Assert.StartsWith() Failure:{2}Expected: {0}{2}Actual:   {1}", expected ?? "(null)", ShortenActual(expected, actual) ?? "(null)", Environment.NewLine))
+        {
+        }
 
-//            return actual.Substring(0, expected.Length) + "...";
-//        }
-//    }
-//}
+        #endregion
+
+        #region 静的メソッド
+
+        /// <summary>
+        /// 実測値を省略する。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <returns>省略された実測値</returns>
+        private static string ShortenActual(string expected, string actual)
+        {
+            if (expected == null || actual == null || actual.Length <= expected.Length)
+            {
+                return actual;
+            }
+
+            return actual.Substring(0, expected.Length) + "...";
+        }
+
+        #endregion
+    }
+}

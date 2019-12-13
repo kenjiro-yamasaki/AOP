@@ -1,291 +1,357 @@
-﻿//using System;
-//using System.Text.RegularExpressions;
-//using Xunit.Sdk;
+﻿using System;
+using System.Text.RegularExpressions;
 
-//namespace Xunit
-//{
-//#if XUNIT_VISIBILITY_INTERNAL 
-//    internal
-//#else
-//    public
-//#endif
-//    partial class Assert
-//    {
-//        /// <summary>
-//        /// Verifies that a string contains a given sub-string, using the current culture.
-//        /// </summary>
-//        /// <param name="expectedSubstring">The sub-string expected to be in the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="ContainsException">Thrown when the sub-string is not present inside the string</exception>
-//        public static void Contains(string expectedSubstring, string actualString)
-//        {
-//            Contains(expectedSubstring, actualString, StringComparison.CurrentCulture);
-//        }
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// アサート。
+    /// </summary>
+    public static partial class Assert
+    {
+        #region 静的メソッド
 
-//        /// <summary>
-//        /// Verifies that a string contains a given sub-string, using the given comparison type.
-//        /// </summary>
-//        /// <param name="expectedSubstring">The sub-string expected to be in the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <param name="comparisonType">The type of string comparison to perform</param>
-//        /// <exception cref="ContainsException">Thrown when the sub-string is not present inside the string</exception>
-//        public static void Contains(string expectedSubstring, string actualString, StringComparison comparisonType)
-//        {
-//            if (actualString == null || actualString.IndexOf(expectedSubstring, comparisonType) < 0)
-//                throw new ContainsException(expectedSubstring, actualString);
-//        }
+        #region Contains
 
-//        /// <summary>
-//        /// Verifies that a string does not contain a given sub-string, using the current culture.
-//        /// </summary>
-//        /// <param name="expectedSubstring">The sub-string which is expected not to be in the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the sub-string is present inside the string</exception>
-//        public static void DoesNotContain(string expectedSubstring, string actualString)
-//        {
-//            DoesNotContain(expectedSubstring, actualString, StringComparison.CurrentCulture);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列を含むことを検証する。
+        /// </summary>
+        /// <param name="expectedSubstring">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="ContainsException">文字列が部分文字列を含まない場合、投げられる</exception>
+        public static void Contains(string expectedSubstring, string actualString)
+        {
+            Contains(expectedSubstring, actualString, StringComparison.CurrentCulture);
+        }
 
-//        /// <summary>
-//        /// Verifies that a string does not contain a given sub-string, using the current culture.
-//        /// </summary>
-//        /// <param name="expectedSubstring">The sub-string which is expected not to be in the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <param name="comparisonType">The type of string comparison to perform</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the sub-string is present inside the given string</exception>
-//        public static void DoesNotContain(string expectedSubstring, string actualString, StringComparison comparisonType)
-//        {
-//            if (actualString != null && actualString.IndexOf(expectedSubstring, comparisonType) >= 0)
-//                throw new DoesNotContainException(expectedSubstring, actualString);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列を含むことを検証する。
+        /// </summary>
+        /// <param name="expectedSubstring">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <param name="stringComparison">文字列比較</param>
+        /// <exception cref="ContainsException">文字列が部分文字列を含まない場合、投げられる</exception>
+        public static void Contains(string expectedSubstring, string actualString, StringComparison stringComparison)
+        {
+            GuardArgumentNotNull(nameof(expectedSubstring), expectedSubstring);
 
-//        /// <summary>
-//        /// Verifies that a string starts with a given string, using the current culture.
-//        /// </summary>
-//        /// <param name="expectedStartString">The string expected to be at the start of the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="ContainsException">Thrown when the string does not start with the expected string</exception>
-//        public static void StartsWith(string expectedStartString, string actualString)
-//        {
-//            StartsWith(expectedStartString, actualString, StringComparison.CurrentCulture);
-//        }
+            if (actualString == null || actualString.IndexOf(expectedSubstring, stringComparison) < 0)
+            {
+                throw new ContainsException(expectedSubstring, actualString);
+            }
+        }
 
-//        /// <summary>
-//        /// Verifies that a string starts with a given string, using the given comparison type.
-//        /// </summary>
-//        /// <param name="expectedStartString">The string expected to be at the start of the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <param name="comparisonType">The type of string comparison to perform</param>
-//        /// <exception cref="ContainsException">Thrown when the string does not start with the expected string</exception>
-//        public static void StartsWith(string expectedStartString, string actualString, StringComparison comparisonType)
-//        {
-//            if (expectedStartString == null || actualString == null || !actualString.StartsWith(expectedStartString, comparisonType))
-//                throw new StartsWithException(expectedStartString, actualString);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列を含まないことを検証する。
+        /// </summary>
+        /// <param name="expectedSubstring">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="DoesNotContainException">文字列が部分文字列を含む場合、投げられる</exception>
+        public static void DoesNotContain(string expectedSubstring, string actualString)
+        {
+            DoesNotContain(expectedSubstring, actualString, StringComparison.CurrentCulture);
+        }
 
-//        /// <summary>
-//        /// Verifies that a string ends with a given string, using the current culture.
-//        /// </summary>
-//        /// <param name="expectedEndString">The string expected to be at the end of the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="ContainsException">Thrown when the string does not end with the expected string</exception>
-//        public static void EndsWith(string expectedEndString, string actualString)
-//        {
-//            EndsWith(expectedEndString, actualString, StringComparison.CurrentCulture);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列を含まないことを検証する。
+        /// </summary>
+        /// <param name="expectedSubstring">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <param name="stringComparison">文字列比較</param>
+        /// <exception cref="DoesNotContainException">文字列が部分文字列を含む場合、投げられる</exception>
+        public static void DoesNotContain(string expectedSubstring, string actualString, StringComparison stringComparison)
+        {
+            GuardArgumentNotNull(nameof(expectedSubstring), expectedSubstring);
 
-//        /// <summary>
-//        /// Verifies that a string ends with a given string, using the given comparison type.
-//        /// </summary>
-//        /// <param name="expectedEndString">The string expected to be at the end of the string</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <param name="comparisonType">The type of string comparison to perform</param>
-//        /// <exception cref="ContainsException">Thrown when the string does not end with the expected string</exception>
-//        public static void EndsWith(string expectedEndString, string actualString, StringComparison comparisonType)
-//        {
-//            if (expectedEndString == null || actualString == null || !actualString.EndsWith(expectedEndString, comparisonType))
-//                throw new EndsWithException(expectedEndString, actualString);
-//        }
+            if (actualString != null && actualString.IndexOf(expectedSubstring, stringComparison) >= 0)
+            {
+                throw new DoesNotContainException(expectedSubstring, actualString);
+            }
+        }
 
-//        /// <summary>
-//        /// Verifies that a string matches a regular expression.
-//        /// </summary>
-//        /// <param name="expectedRegexPattern">The regex pattern expected to match</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="MatchesException">Thrown when the string does not match the regex pattern</exception>
-//        public static void Matches(string expectedRegexPattern, string actualString)
-//        {
-//            Assert.GuardArgumentNotNull("expectedRegexPattern", expectedRegexPattern);
+        #endregion
 
-//            if (actualString == null || !Regex.IsMatch(actualString, expectedRegexPattern))
-//                throw new MatchesException(expectedRegexPattern, actualString);
-//        }
+        #region StartsWith
 
-//        /// <summary>
-//        /// Verifies that a string matches a regular expression.
-//        /// </summary>
-//        /// <param name="expectedRegex">The regex expected to match</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="MatchesException">Thrown when the string does not match the regex</exception>
-//        public static void Matches(Regex expectedRegex, string actualString)
-//        {
-//            Assert.GuardArgumentNotNull("expectedRegex", expectedRegex);
+        /// <summary>
+        /// 文字列が部分文字列から始まることを検証する。
+        /// </summary>
+        /// <param name="expectedStartString">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="StartsWithException">文字列が部分文字列から始まらない場合、投げられる</exception>
+        public static void StartsWith(string expectedStartString, string actualString)
+        {
+            StartsWith(expectedStartString, actualString, StringComparison.CurrentCulture);
+        }
 
-//            if (actualString == null || !expectedRegex.IsMatch(actualString))
-//                throw new MatchesException(expectedRegex.ToString(), actualString);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列から始まることを検証する。
+        /// </summary>
+        /// <param name="expectedStartString">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <param name="stringComparison">文字列比較</param>
+        /// <exception cref="StartsWithException">文字列が部分文字列から始まらない場合、投げられる</exception>
+        public static void StartsWith(string expectedStartString, string actualString, StringComparison stringComparison)
+        {
+            GuardArgumentNotNull(nameof(expectedStartString), expectedStartString);
 
-//        /// <summary>
-//        /// Verifies that a string does not match a regular expression.
-//        /// </summary>
-//        /// <param name="expectedRegexPattern">The regex pattern expected not to match</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="DoesNotMatchException">Thrown when the string matches the regex pattern</exception>
-//        public static void DoesNotMatch(string expectedRegexPattern, string actualString)
-//        {
-//            Assert.GuardArgumentNotNull("expectedRegexPattern", expectedRegexPattern);
+            if (actualString == null || !actualString.StartsWith(expectedStartString, stringComparison))
+            {
+                throw new StartsWithException(expectedStartString, actualString);
+            }
+        }
 
-//            if (actualString != null && Regex.IsMatch(actualString, expectedRegexPattern))
-//                throw new DoesNotMatchException(expectedRegexPattern, actualString);
-//        }
+        #endregion
 
-//        /// <summary>
-//        /// Verifies that a string does not match a regular expression.
-//        /// </summary>
-//        /// <param name="expectedRegex">The regex expected not to match</param>
-//        /// <param name="actualString">The string to be inspected</param>
-//        /// <exception cref="DoesNotMatchException">Thrown when the string matches the regex</exception>
-//        public static void DoesNotMatch(Regex expectedRegex, string actualString)
-//        {
-//            Assert.GuardArgumentNotNull("expectedRegex", expectedRegex);
+        #region EndsWith
 
-//            if (actualString != null && expectedRegex.IsMatch(actualString))
-//                throw new DoesNotMatchException(expectedRegex.ToString(), actualString);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列で終わることを検証する。
+        /// </summary>
+        /// <param name="expectedEndString">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="EndsWithException">文字列が部分文字列で終わらない場合、投げられる</exception>
+        public static void EndsWith(string expectedEndString, string actualString)
+        {
+            EndsWith(expectedEndString, actualString, StringComparison.CurrentCulture);
+        }
 
-//        /// <summary>
-//        /// Verifies that two strings are equivalent.
-//        /// </summary>
-//        /// <param name="expected">The expected string value.</param>
-//        /// <param name="actual">The actual string value.</param>
-//        /// <exception cref="EqualException">Thrown when the strings are not equivalent.</exception>
-//        public static void Equal(string expected, string actual)
-//        {
-//            Equal(expected, actual, false, false, false);
-//        }
+        /// <summary>
+        /// 文字列が部分文字列で終わることを検証する。
+        /// </summary>
+        /// <param name="expectedEndString">期待値（部分文字列）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <param name="stringComparison">文字列比較</param>
+        /// <exception cref="EndsWithException">文字列が部分文字列で終わらない場合、投げられる</exception>
+        public static void EndsWith(string expectedEndString, string actualString, StringComparison stringComparison)
+        {
+            GuardArgumentNotNull(nameof(expectedEndString), expectedEndString);
 
-//        /// <summary>
-//        /// Verifies that two strings are equivalent.
-//        /// </summary>
-//        /// <param name="expected">The expected string value.</param>
-//        /// <param name="actual">The actual string value.</param>
-//        /// <param name="ignoreCase">If set to <c>true</c>, ignores cases differences. The invariant culture is used.</param>
-//        /// <param name="ignoreLineEndingDifferences">If set to <c>true</c>, treats \r\n, \r, and \n as equivalent.</param>
-//        /// <param name="ignoreWhiteSpaceDifferences">If set to <c>true</c>, treats spaces and tabs (in any non-zero quantity) as equivalent.</param>
-//        /// <exception cref="EqualException">Thrown when the strings are not equivalent.</exception>
-//        public static void Equal(string expected, string actual, bool ignoreCase = false, bool ignoreLineEndingDifferences = false, bool ignoreWhiteSpaceDifferences = false)
-//        {
-//            // Start out assuming the one of the values is null
-//            int expectedIndex = -1;
-//            int actualIndex = -1;
-//            int expectedLength = 0;
-//            int actualLength = 0;
+            if (actualString == null || !actualString.EndsWith(expectedEndString, stringComparison))
+            {
+                throw new EndsWithException(expectedEndString, actualString);
+            }
+        }
 
-//            if (expected == null)
-//            {
-//                if (actual == null)
-//                    return;
-//            }
-//            else if (actual != null)
-//            {
-//                // Walk the string, keeping separate indices since we can skip variable amounts of
-//                // data based on ignoreLineEndingDifferences and ignoreWhiteSpaceDifferences.
-//                expectedIndex = 0;
-//                actualIndex = 0;
-//                expectedLength = expected.Length;
-//                actualLength = actual.Length;
+        #endregion
 
-//                while (expectedIndex < expectedLength && actualIndex < actualLength)
-//                {
-//                    char expectedChar = expected[expectedIndex];
-//                    char actualChar = actual[actualIndex];
+        #region Matches
 
-//                    if (ignoreLineEndingDifferences && IsLineEnding(expectedChar) && IsLineEnding(actualChar))
-//                    {
-//                        expectedIndex = SkipLineEnding(expected, expectedIndex);
-//                        actualIndex = SkipLineEnding(actual, actualIndex);
-//                    }
-//                    else if (ignoreWhiteSpaceDifferences && IsWhiteSpace(expectedChar) && IsWhiteSpace(actualChar))
-//                    {
-//                        expectedIndex = SkipWhitespace(expected, expectedIndex);
-//                        actualIndex = SkipWhitespace(actual, actualIndex);
-//                    }
-//                    else
-//                    {
-//                        if (ignoreCase)
-//                        {
-//                            expectedChar = Char.ToUpperInvariant(expectedChar);
-//                            actualChar = Char.ToUpperInvariant(actualChar);
-//                        }
+        /// <summary>
+        /// 文字列が正規表現にマッチすることを検証する。
+        /// </summary>
+        /// <param name="expectedRegexPattern">期待値（正規表現）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="MatchesException">文字列が正規表現にマッチしない場合、投げられる</exception>
+        public static void Matches(string expectedRegexPattern, string actualString)
+        {
+            GuardArgumentNotNull(nameof(expectedRegexPattern), expectedRegexPattern);
 
-//                        if (expectedChar != actualChar)
-//                        {
-//                            break;
-//                        }
+            if (actualString == null || !Regex.IsMatch(actualString, expectedRegexPattern))
+            {
+                throw new MatchesException(expectedRegexPattern, actualString);
+            }
+        }
 
-//                        expectedIndex++;
-//                        actualIndex++;
-//                    }
-//                }
-//            }
+        /// <summary>
+        /// 文字列が正規表現にマッチすることを検証する。
+        /// </summary>
+        /// <param name="expectedRegexPattern">期待値（正規表現）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="MatchesException">文字列が正規表現にマッチしない場合、投げられる</exception>
+        public static void Matches(Regex expectedRegex, string actualString)
+        {
+            GuardArgumentNotNull(nameof(expectedRegex), expectedRegex);
 
-//            if (expectedIndex < expectedLength || actualIndex < actualLength)
-//            {
-//                throw new EqualException(expected, actual, expectedIndex, actualIndex);
-//            }
-//        }
+            if (actualString == null || !expectedRegex.IsMatch(actualString))
+            {
+                throw new MatchesException(expectedRegex.ToString(), actualString);
+            }
+        }
 
-//        static bool IsLineEnding(char c)
-//        {
-//            return c == '\r' || c == '\n';
-//        }
+        /// <summary>
+        /// 文字列が正規表現にマッチしないことを検証する。
+        /// </summary>
+        /// <param name="expectedRegexPattern">期待値（正規表現）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="DoesNotMatchException">文字列が正規表現にマッチする場合、投げられる</exception>
+        public static void DoesNotMatch(string expectedRegexPattern, string actualString)
+        {
+            GuardArgumentNotNull(nameof(expectedRegexPattern), expectedRegexPattern);
 
-//        static bool IsWhiteSpace(char c)
-//        {
-//            return c == ' ' || c == '\t';
-//        }
+            if (actualString != null && Regex.IsMatch(actualString, expectedRegexPattern))
+            {
+                throw new DoesNotMatchException(expectedRegexPattern, actualString);
+            }
+        }
 
-//        static int SkipLineEnding(string value, int index)
-//        {
-//            if (value[index] == '\r')
-//            {
-//                ++index;
-//            }
-//            if (index < value.Length && value[index] == '\n')
-//            {
-//                ++index;
-//            }
+        /// <summary>
+        /// 文字列が正規表現にマッチしないことを検証する。
+        /// </summary>
+        /// <param name="expectedRegexPattern">期待値（正規表現）</param>
+        /// <param name="actualString">実測値（文字列）</param>
+        /// <exception cref="DoesNotMatchException">文字列が正規表現にマッチする場合、投げられる</exception>
+        public static void DoesNotMatch(Regex expectedRegex, string actualString)
+        {
+            GuardArgumentNotNull(nameof(expectedRegex), expectedRegex);
 
-//            return index;
-//        }
+            if (actualString != null && expectedRegex.IsMatch(actualString))
+            {
+                throw new DoesNotMatchException(expectedRegex.ToString(), actualString);
+            }
+        }
 
-//        static int SkipWhitespace(string value, int index)
-//        {
-//            while (index < value.Length)
-//            {
-//                switch (value[index])
-//                {
-//                    case ' ':
-//                    case '\t':
-//                        index++;
-//                        break;
+        #endregion
 
-//                    default:
-//                        return index;
-//                }
-//            }
+        #region Equal
 
-//            return index;
-//        }
-//    }
-//}
+        /// <summary>
+        /// 文字列が等しいことを検証する。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <exception cref="EqualException">文字列が等しくない場合、投げられる</exception>
+        public static void Equal(string expected, string actual)
+        {
+            Equal(expected, actual, false, false, false);
+        }
+
+        /// <summary>
+        /// 文字列が等しいことを検証する。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <param name="ignoreCase">大文字・小文字の違いを無視するか</param>
+        /// <param name="ignoreLineEndingDifferences">改行文字（\r\n、\r、\n）の違いを無視するか</param>
+        /// <param name="ignoreWhiteSpaceDifferences">空白文字（タブとスペース）の違いを無視するか</param>
+        /// <exception cref="EqualException">文字列が等しくない場合、投げられる</exception>
+        public static void Equal(string expected, string actual, bool ignoreCase = false, bool ignoreLineEndingDifferences = false, bool ignoreWhiteSpaceDifferences = false)
+        {
+            int expectedIndex  = -1;
+            int actualIndex    = -1;
+            int expectedLength = 0;
+            int actualLength   = 0;
+
+            if (expected == null)
+            {
+                if (actual == null)
+                {
+                    return;
+                }
+            }
+            else if (actual != null)
+            {
+                expectedIndex  = 0;
+                actualIndex    = 0;
+                expectedLength = expected.Length;
+                actualLength   = actual.Length;
+
+                while (expectedIndex < expectedLength && actualIndex < actualLength)
+                {
+                    char expectedChar = expected[expectedIndex];
+                    char actualChar   = actual[actualIndex];
+
+                    if (ignoreLineEndingDifferences && IsLineEnding(expectedChar) && IsLineEnding(actualChar))
+                    {
+                        expectedIndex = SkipLineEnding(expected, expectedIndex);
+                        actualIndex   = SkipLineEnding(actual, actualIndex);
+                    }
+                    else if (ignoreWhiteSpaceDifferences && IsWhiteSpace(expectedChar) && IsWhiteSpace(actualChar))
+                    {
+                        expectedIndex = SkipWhitespace(expected, expectedIndex);
+                        actualIndex   = SkipWhitespace(actual, actualIndex);
+                    }
+                    else
+                    {
+                        if (ignoreCase)
+                        {
+                            expectedChar = char.ToUpperInvariant(expectedChar);
+                            actualChar   = char.ToUpperInvariant(actualChar);
+                        }
+
+                        if (expectedChar != actualChar)
+                        {
+                            break;
+                        }
+
+                        expectedIndex++;
+                        actualIndex++;
+                    }
+                }
+            }
+
+            if (expectedIndex < expectedLength || actualIndex < actualLength)
+            {
+                throw new EqualException(expected, actual, expectedIndex, actualIndex);
+            }
+        }
+
+        /// <summary>
+        /// 指定文字が改行文字か。
+        /// </summary>
+        /// <param name="char">文字</param>
+        /// <returns>指定文字が改行文字か</returns>
+        private static bool IsLineEnding(char @char)
+        {
+            return @char == '\r' || @char == '\n';
+        }
+
+        /// <summary>
+        /// 指定文字が空白文字か。
+        /// </summary>
+        /// <param name="char">文字</param>
+        /// <returns>指定文字が空白文字か</returns>
+        private static bool IsWhiteSpace(char @char)
+        {
+            return @char == ' ' || @char == '\t';
+        }
+
+        /// <summary>
+        /// 改行文字をスキップする。
+        /// </summary>
+        /// <param name="value">文字列</param>
+        /// <param name="index">文字列インデックス</param>
+        /// <returns>改行文字をスキップした文字列インデックス</returns>
+        private static int SkipLineEnding(string value, int index)
+        {
+            if (value[index] == '\r')
+            {
+                ++index;
+            }
+            if (index < value.Length && value[index] == '\n')
+            {
+                ++index;
+            }
+
+            return index;
+        }
+
+        /// <summary>
+        /// 空白文字をスキップする。
+        /// </summary>
+        /// <param name="value">文字列</param>
+        /// <param name="index">文字列インデックス</param>
+        /// <returns>空白文字をスキップした文字列インデックス</returns>
+        private static int SkipWhitespace(string value, int index)
+        {
+            while (index < value.Length)
+            {
+                switch (value[index])
+                {
+                    case ' ':
+                    case '\t':
+                        index++;
+                        break;
+
+                    default:
+                        return index;
+                }
+            }
+
+            return index;
+        }
+
+        #endregion
+
+        #endregion
+    }
+}

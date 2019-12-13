@@ -1,25 +1,28 @@
-//using System;
-//using System.Globalization;
+using System;
+using System.Globalization;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a string unexpectedly matches a regular expression.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class DoesNotMatchException : XunitException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="DoesNotMatchException"/> class.
-//        /// </summary>
-//        /// <param name="expectedRegexPattern">The regular expression pattern expected not to match</param>
-//        /// <param name="actual">The actual value</param>
-//        public DoesNotMatchException(object expectedRegexPattern, object actual)
-//            : base(string.Format(CultureInfo.CurrentCulture, "Assert.DoesNotMatch() Failure:{2}Regex: {0}{2}Value: {1}", expectedRegexPattern, actual, Environment.NewLine))
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// DoesNotMatchアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.DoesNotMatch(...)の失敗時に投げられる。
+    /// </remarks>
+    public class DoesNotMatchException : AssertException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expectedRegexPattern">期待値（正規表現）</param>
+        /// <param name="actual">実測値</param>
+        public DoesNotMatchException(object expectedRegexPattern, object actual)
+            : base(string.Format(CultureInfo.CurrentCulture, "Assert.DoesNotMatch() Failure:{2}Regex: {0}{2}Value: {1}", expectedRegexPattern, actual, Environment.NewLine))
+        {
+        }
+
+        #endregion
+    }
+}

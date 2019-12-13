@@ -1,22 +1,25 @@
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a collection unexpectedly does not contain the expected value.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class ContainsException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="ContainsException"/> class.
-//        /// </summary>
-//        /// <param name="expected">The expected object value</param>
-//        /// <param name="actual">The actual value</param>
-//        public ContainsException(object expected, object actual)
-//            : base(expected, actual, "Assert.Contains() Failure", "Not found", "In value")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// Containsアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.Contains(...)の失敗時に投げられる。
+    /// </remarks>
+    public class ContainsException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        public ContainsException(object expected, object actual)
+            : base(expected, actual, "Assert.Contains() Failure", "Not found", "In value")
+        {
+        }
+
+        #endregion
+    }
+}
