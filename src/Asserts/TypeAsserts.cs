@@ -1,108 +1,115 @@
-﻿//using System;
-//using System.Reflection;
-//using Xunit.Sdk;
+﻿using System;
+using System.Reflection;
 
-//namespace Xunit
-//{
-//#if XUNIT_VISIBILITY_INTERNAL 
-//    internal
-//#else
-//    public
-//#endif
-//    partial class Assert
-//    {
-//        /// <summary>
-//        /// Verifies that an object is of the given type or a derived type.
-//        /// </summary>
-//        /// <typeparam name="T">The type the object should be</typeparam>
-//        /// <param name="object">The object to be evaluated</param>
-//        /// <returns>The object, casted to type T when successful</returns>
-//        /// <exception cref="IsAssignableFromException">Thrown when the object is not the given type</exception>
-//        public static T IsAssignableFrom<T>(object @object)
-//        {
-//            IsAssignableFrom(typeof(T), @object);
-//            return (T)@object;
-//        }
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// アサート。
+    /// </summary>
+    public partial class Assert
+    {
+        #region 静的メソッド
 
-//        /// <summary>
-//        /// Verifies that an object is of the given type or a derived type.
-//        /// </summary>
-//        /// <param name="expectedType">The type the object should be</param>
-//        /// <param name="object">The object to be evaluated</param>
-//        /// <exception cref="IsAssignableFromException">Thrown when the object is not the given type</exception>
-//        public static void IsAssignableFrom(Type expectedType, object @object)
-//        {
-//            Assert.GuardArgumentNotNull("expectedType", expectedType);
+        /// <summary>
+        /// 指定オブジェクトが指定型に代入可能かを検証する。
+        /// </summary>
+        /// <typeparam name="TExpected">指定型</typeparam>
+        /// <param name="object">指定オブジェクト</param>
+        /// <returns>（検証に成功した場合）指定型にキャストした指定オブジェクト</returns>
+        /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられる</exception>
+        public static TExpected IsAssignableFrom<TExpected>(object @object)
+        {
+            IsAssignableFrom(typeof(TExpected), @object);
+            return (TExpected)@object;
+        }
 
-//            if (@object == null || !expectedType.GetTypeInfo().IsAssignableFrom(@object.GetType().GetTypeInfo()))
-//                throw new IsAssignableFromException(expectedType, @object);
-//        }
+        /// <summary>
+        /// 指定オブジェクトが指定型かを検証する。
+        /// </summary>
+        /// <param name="expectedType">指定型</param>
+        /// <param name="object">指定オブジェクト</param>
+        /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられる</exception>
+        public static void IsAssignableFrom(Type expectedType, object @object)
+        {
+            GuardArgumentNotNull(nameof(expectedType), expectedType);
 
-//        /// <summary>
-//        /// Verifies that an object is not exactly the given type.
-//        /// </summary>
-//        /// <typeparam name="T">The type the object should not be</typeparam>
-//        /// <param name="object">The object to be evaluated</param>
-//        /// <exception cref="IsNotTypeException">Thrown when the object is the given type</exception>
-//        public static void IsNotType<T>(object @object)
-//        {
-//            IsNotType(typeof(T), @object);
-//        }
+            if (@object == null || !expectedType.GetTypeInfo().IsAssignableFrom(@object.GetType().GetTypeInfo()))
+            {
+                throw new IsAssignableFromException(expectedType, @object);
+            }
+        }
 
-//        /// <summary>
-//        /// Verifies that an object is not exactly the given type.
-//        /// </summary>
-//        /// <param name="expectedType">The type the object should not be</param>
-//        /// <param name="object">The object to be evaluated</param>
-//        /// <exception cref="IsNotTypeException">Thrown when the object is the given type</exception>
-//        public static void IsNotType(Type expectedType, object @object)
-//        {
-//            Assert.GuardArgumentNotNull("expectedType", expectedType);
+        /// <summary>
+        /// 指定オブジェクトが（派生型ではなく）正確に指定型かを検証する。
+        /// </summary>
+        /// <typeparam name="TExpected">指定型</typeparam>
+        /// <param name="object">指定オブジェクト</param>
+        /// <returns>（検証に成功した場合）指定型にキャストした指定オブジェクト</returns>
+        /// <exception cref="IsTypeException">指定オブジェクトが（派生型ではなく）正確に指定型ではない場合、投げられる</exception>
+        public static TExpected IsType<TExpected>(object @object)
+        {
+            IsType(typeof(TExpected), @object);
+            return (TExpected)@object;
+        }
 
-//            if (@object != null && expectedType.Equals(@object.GetType()))
-//                throw new IsNotTypeException(expectedType, @object);
-//        }
+        /// <summary>
+        /// 指定オブジェクトが（派生型ではなく）正確に指定型かを検証する。
+        /// </summary>
+        /// <param name="expectedType">指定型</param>
+        /// <param name="object">指定オブジェクト</param>
+        /// <exception cref="IsTypeException">指定オブジェクトが（派生型ではなく）正確に指定型ではない場合、投げられる</exception>
+        public static void IsType(Type expectedType, object @object)
+        {
+            GuardArgumentNotNull(nameof(expectedType), expectedType);
 
-//        /// <summary>
-//        /// Verifies that an object is exactly the given type (and not a derived type).
-//        /// </summary>
-//        /// <typeparam name="T">The type the object should be</typeparam>
-//        /// <param name="object">The object to be evaluated</param>
-//        /// <returns>The object, casted to type T when successful</returns>
-//        /// <exception cref="IsTypeException">Thrown when the object is not the given type</exception>
-//        public static T IsType<T>(object @object)
-//        {
-//            IsType(typeof(T), @object);
-//            return (T)@object;
-//        }
+            if (@object == null)
+            {
+                throw new IsTypeException(expectedType.FullName, null);
+            }
 
-//        /// <summary>
-//        /// Verifies that an object is exactly the given type (and not a derived type).
-//        /// </summary>
-//        /// <param name="expectedType">The type the object should be</param>
-//        /// <param name="object">The object to be evaluated</param>
-//        /// <exception cref="IsTypeException">Thrown when the object is not the given type</exception>
-//        public static void IsType(Type expectedType, object @object)
-//        {
-//            Assert.GuardArgumentNotNull("expectedType", expectedType);
+            var actualType = @object.GetType();
+            if (expectedType != actualType)
+            {
+                var expectedTypeName = expectedType.FullName;
+                var actualTypeName   = actualType.FullName;
 
-//            if (@object == null)
-//                throw new IsTypeException(expectedType.FullName, null);
+                if (expectedTypeName == actualTypeName)
+                {
+                    expectedTypeName += string.Format(" ({0})", expectedType.GetTypeInfo().Assembly.GetName().FullName);
+                    actualTypeName   += string.Format(" ({0})", actualType.GetTypeInfo().Assembly.GetName().FullName);
+                }
 
-//            Type actualType = @object.GetType();
-//            if (expectedType != actualType)
-//            {
-//                string expectedTypeName = expectedType.FullName;
-//                string actualTypeName = actualType.FullName;
+                throw new IsTypeException(expectedTypeName, actualTypeName);
+            }
+        }
 
-//                if (expectedTypeName == actualTypeName)
-//                {
-//                    expectedTypeName += string.Format(" ({0})", expectedType.GetTypeInfo().Assembly.GetName().FullName);
-//                    actualTypeName += string.Format(" ({0})", actualType.GetTypeInfo().Assembly.GetName().FullName);
-//                }
+        /// <summary>
+        /// 指定オブジェクトが正確に指定型ではないかを検証する。
+        /// </summary>
+        /// <typeparam name="TExpected">指定型</typeparam>
+        /// <param name="object">指定オブジェクト</param>
+        /// <exception cref="IsNotTypeException">指定オブジェクトが正確に指定型である場合、投げられる</exception>
+        public static void IsNotType<TExpected>(object @object)
+        {
+            IsNotType(typeof(TExpected), @object);
+        }
 
-//                throw new IsTypeException(expectedTypeName, actualTypeName);
-//            }
-//        }
-//    }
-//}
+        /// <summary>
+        /// 指定オブジェクトが正確に指定型ではないかを検証する。
+        /// </summary>
+        /// <param name="expectedType">指定型</param>
+        /// <param name="object">指定オブジェクト</param>
+        /// <exception cref="IsNotTypeException">指定オブジェクトが正確に指定型である場合、投げられる</exception>
+        public static void IsNotType(Type expectedType, object @object)
+        {
+            GuardArgumentNotNull(nameof(expectedType), expectedType);
+
+            if (@object != null && expectedType.Equals(@object.GetType()))
+            {
+                throw new IsNotTypeException(expectedType, @object);
+            }
+        }
+
+        #endregion
+    }
+}

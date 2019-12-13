@@ -122,8 +122,8 @@ namespace SoftCube.Asserts.UnitTests
             [InlineData("foo\n bar", "FoO\r\n  bar", true, true, false, 5, 6)]
             public void 例外を投げる(string expected, string actual, bool ignoreCase, bool ignoreLineEndingDifferences, bool ignoreWhiteSpaceDifferences, int expectedIndex, int actualIndex)
             {
-                var exception      = Record.Exception(() => Assert.Equal(expected, actual, ignoreCase, ignoreLineEndingDifferences, ignoreWhiteSpaceDifferences));
-                var equalException = XAssert.IsType<EqualException>(exception);
+                var ex      = Record.Exception(() => Assert.Equal(expected, actual, ignoreCase, ignoreLineEndingDifferences, ignoreWhiteSpaceDifferences));
+                var equalException = XAssert.IsType<EqualException>(ex);
 
                 XAssert.Equal(expectedIndex, equalException.ExpectedIndex);
                 XAssert.Equal(actualIndex, equalException.ActualIndex);

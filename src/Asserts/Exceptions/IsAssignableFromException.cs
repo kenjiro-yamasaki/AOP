@@ -1,24 +1,27 @@
-﻿//using System;
+﻿using System;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when the value is unexpectedly not of the given type or a derived type.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class IsAssignableFromException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="IsTypeException"/> class.
-//        /// </summary>
-//        /// <param name="expected">The expected type</param>
-//        /// <param name="actual">The actual object value</param>
-//        public IsAssignableFromException(Type expected, object actual)
-//            : base(expected, actual == null ? null : actual.GetType(), "Assert.IsAssignableFrom() Failure")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// IsAssignableFromアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.IsAssignableFrom(...)の失敗時に投げられる。
+    /// </remarks>
+    public class IsAssignableFromException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        public IsAssignableFromException(Type expected, object actual)
+            : base(expected, actual == null ? null : actual.GetType(), "Assert.IsAssignableFrom() Failure")
+        {
+        }
+
+        #endregion
+    }
+}

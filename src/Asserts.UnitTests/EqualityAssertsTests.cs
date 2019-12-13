@@ -51,9 +51,7 @@ namespace SoftCube.Asserts.UnitTests
                 var ex = Record.Exception(() => Assert.NotEqual("actual", "actual"));
 
                 XAssert.IsType<NotEqualException>(ex);
-                XAssert.Equal(@"Assert.NotEqual() Failure" + Environment.NewLine +
-                              @"Expected: Not ""actual""" + Environment.NewLine +
-                              @"Actual:   ""actual""", ex.Message);
+                XAssert.Equal(@"Assert.NotEqual() Failure" + Environment.NewLine + @"Expected: Not ""actual""" + Environment.NewLine + @"Actual:   ""actual""", ex.Message);
             }
 
             #region int
@@ -666,9 +664,7 @@ namespace SoftCube.Asserts.UnitTests
             {
                 var ex = XAssert.Throws<NotEqualException>(() => Assert.NotStrictEqual("actual", "actual"));
 
-                XAssert.Equal(@"Assert.NotEqual() Failure" + Environment.NewLine +
-                              @"Expected: Not ""actual""" + Environment.NewLine +
-                              @"Actual:   ""actual""", ex.Message);
+                XAssert.Equal(@"Assert.NotEqual() Failure" + Environment.NewLine + @"Expected: Not ""actual""" + Environment.NewLine + @"Actual:   ""actual""", ex.Message);
             }
 
             #region int
