@@ -58,7 +58,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <typeparam name="TItem">項目の型</typeparam>
         /// <param name="collection">項目コレクション</param>
-        /// <param name="inspectors">検査コレクション（項目数と検査数は正確に一致しなくてはならない）</param>
+        /// <param name="inspectors">検査コレクション(項目数と検査数は正確に一致しなくてはならない)</param>
         /// <exception cref="CollectionException">検査に合格しない項目がある場合、投げられる</exception>
         public static void Collection<TItem>(IEnumerable<TItem> collection, params Action<TItem>[] inspectors)
         {
@@ -89,13 +89,13 @@ namespace SoftCube.Asserts
         #region Contains
 
         /// <summary>
-        /// 指定項目（期待値）がコレクションに含まれることを検証する。
+        /// 指定項目(期待値)がコレクションに含まれることを検証する。
         /// </summary>
         /// <typeparam name="TItem">項目の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">コレクション</param>
         /// <exception cref="ArgumentNullException"><paramref name="collection"/>がnullである場合、投げられる</exception>
-        /// <exception cref="ContainsException">指定項目（期待値）を含まない場合、投げられる</exception>
+        /// <exception cref="ContainsException">指定項目(期待値)を含まない場合、投げられる</exception>
         public static void Contains<TItem>(TItem expected, IEnumerable<TItem> collection)
         {
             var icollection = collection as ICollection<TItem>;
@@ -108,7 +108,7 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定項目（期待値）がコレクションに含まれることを検証する。
+        /// 指定項目(期待値)がコレクションに含まれることを検証する。
         /// </summary>
         /// <typeparam name="TItem">項目の型</typeparam>
         /// <param name="expected">期待値</param>
@@ -116,7 +116,7 @@ namespace SoftCube.Asserts
         /// <param name="comparer">等値比較子</param>
         /// <exception cref="ArgumentNullException"><paramref name="collection"/>がnullである場合、投げられる</exception>
         /// <exception cref="ArgumentNullException"><paramref name="comparer"/>がnullである場合、投げられる</exception>
-        /// <exception cref="ContainsException">指定項目（期待値）が含まれない場合、投げられる</exception>
+        /// <exception cref="ContainsException">指定項目(期待値)が含まれない場合、投げられる</exception>
         public static void Contains<TItem>(TItem expected, IEnumerable<TItem> collection, IEqualityComparer<TItem> comparer)
         {
             GuardArgumentNotNull(nameof(collection), collection);
@@ -154,14 +154,14 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定キー（期待値）が辞書に含まれることを検証する。
+        /// 指定キー（期待値)が辞書に含まれることを検証する。
         /// </summary>
         /// <typeparam name="TKey">キーの型</typeparam>
         /// <typeparam name="TValue">値の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">辞書</param>
         /// <returns><paramref name="expected"/>に関連した値</returns>
-        /// <exception cref="ContainsException">指定キー（期待値）が含まれない場合、投げられる</exception>
+        /// <exception cref="ContainsException">指定キー（期待値)が含まれない場合、投げられる</exception>
         public static TValue Contains<TKey, TValue>(TKey expected, IReadOnlyDictionary<TKey, TValue> collection)
         {
             GuardArgumentNotNull(nameof(expected), expected);
@@ -176,14 +176,14 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定キー（期待値）が辞書に含まれることを検証する。
+        /// 指定キー（期待値)が辞書に含まれることを検証する。
         /// </summary>
         /// <typeparam name="TKey">キーの型</typeparam>
         /// <typeparam name="TValue">値の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">辞書</param>
         /// <returns><paramref name="expected"/>に関連した値</returns>
-        /// <exception cref="ContainsException">指定キー（期待値）が含まれない場合、投げられる</exception>
+        /// <exception cref="ContainsException">指定キー（期待値)が含まれない場合、投げられる</exception>
         public static TValue Contains<TKey, TValue>(TKey expected, IDictionary<TKey, TValue> collection)
         {
             GuardArgumentNotNull(nameof(expected), expected);
@@ -202,12 +202,12 @@ namespace SoftCube.Asserts
         #region DoesNotContain
 
         /// <summary>
-        /// 指定項目（期待値）がコレクションに含まれないことを検証する。
+        /// 指定項目(期待値)がコレクションに含まれないことを検証する。
         /// </summary>
         /// <typeparam name="TItem">項目の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">コレクション</param>
-        /// <exception cref="DoesNotContainException">指定項目（期待値）を含まる場合、投げられる</exception>
+        /// <exception cref="DoesNotContainException">指定項目(期待値)を含まる場合、投げられる</exception>
         public static void DoesNotContain<TItem>(TItem expected, IEnumerable<TItem> collection)
         {
             var icollection = collection as ICollection<TItem>;
@@ -220,13 +220,13 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定項目（期待値）がコレクションに含まれないことを検証する。
+        /// 指定項目(期待値)がコレクションに含まれないことを検証する。
         /// </summary>
         /// <typeparam name="TItem">項目の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">コレクション</param>
         /// <param name="comparer">等値比較子</param>
-        /// <exception cref="DoesNotContainException">指定項目（期待値）を含まる場合、投げられる</exception>
+        /// <exception cref="DoesNotContainException">指定項目(期待値)を含まる場合、投げられる</exception>
         public static void DoesNotContain<TItem>(TItem expected, IEnumerable<TItem> collection, IEqualityComparer<TItem> comparer)
         {
             GuardArgumentNotNull(nameof(collection), collection);
@@ -262,13 +262,13 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定キー（期待値）が辞書に含まれないことを検証する。
+        /// 指定キー（期待値)が辞書に含まれないことを検証する。
         /// </summary>
         /// <typeparam name="TKey">キーの型</typeparam>
         /// <typeparam name="TValue">値の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">辞書</param>
-        /// <exception cref="DoesNotContainException">指定キー（期待値）が含まれる場合、投げられる</exception>
+        /// <exception cref="DoesNotContainException">指定キー（期待値)が含まれる場合、投げられる</exception>
         public static void DoesNotContain<TKey, TValue>(TKey expected, IReadOnlyDictionary<TKey, TValue> collection)
         {
             GuardArgumentNotNull(nameof(expected), expected);
@@ -278,13 +278,13 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定キー（期待値）が辞書に含まれないことを検証する。
+        /// 指定キー（期待値)が辞書に含まれないことを検証する。
         /// </summary>
         /// <typeparam name="TKey">キーの型</typeparam>
         /// <typeparam name="TValue">値の型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="collection">辞書</param>
-        /// <exception cref="DoesNotContainException">指定キー（期待値）が含まれる場合、投げられる</exception>
+        /// <exception cref="DoesNotContainException">指定キー（期待値)が含まれる場合、投げられる</exception>
         public static void DoesNotContain<TKey, TValue>(TKey expected, IDictionary<TKey, TValue> collection)
         {
             GuardArgumentNotNull(nameof(expected), expected);
@@ -423,7 +423,7 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定項目（期待値）がコレクションに一つだけ含まれることを検証する。
+        /// 指定項目(期待値)がコレクションに一つだけ含まれることを検証する。
         /// </summary>
         /// <param name="collection">コレクション</param>
         /// <param name="expected">期待値</param>

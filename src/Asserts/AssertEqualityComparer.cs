@@ -9,18 +9,18 @@ namespace SoftCube.Asserts
     /// <summary>
     /// アサート用のデフォルト等値比較子。
     /// </summary>
-    /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
+    /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
     internal class AssertEqualityComparer<T> : IEqualityComparer<T>
     {
         #region 定数
 
         /// <summary>
-        /// デフォルトの要素の等値比較子。
+        /// デフォルトの項目の等値比較子。
         /// </summary>
-        private static readonly IEqualityComparer DefaultElementEqualityComparer = new AssertEqualityComparerAdapter<object>(new AssertEqualityComparer<object>());
+        private static readonly IEqualityComparer DefaultItemEqualityComparer = new AssertEqualityComparerAdapter<object>(new AssertEqualityComparer<object>());
 
         /// <summary>
-        /// Nullable<>の型情報。
+        /// <see cref="Nullable<>"/> の型情報。
         /// </summary>
         private static readonly TypeInfo NullableTypeInfo = typeof(Nullable<>).GetTypeInfo();
 
@@ -29,15 +29,15 @@ namespace SoftCube.Asserts
         #region プロパティ
 
         /// <summary>
-        /// 要素の等値比較子ファクトリー。
+        /// 項目の等値比較子ファクトリーを取得します。
         /// </summary>
         /// <remarks>
-        /// 要素の等値比較子は、比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される。
+        /// 項目の等値比較子は、比較対象のオブジェクトが反復子である場合、各項目の等値比較子として使用されます。
         /// </remarks>
-        private Func<IEqualityComparer> ElementEqualityComparerFactory { get; }
+        private Func<IEqualityComparer> ItemEqualityComparerFactory { get; }
 
         /// <summary>
-        /// CompareTypedSetsのメソッド情報。
+        /// <see cref="CompareTypedSets{TElement}(IEnumerable, IEnumerable)"/> のメソッド情報を取得します。
         /// </summary>
         private MethodInfo CompareTypedSetsMethod
         {
@@ -59,10 +59,10 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="elementEaualityComparer">要素の等値比較子（比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される）</param>
-        public AssertEqualityComparer(IEqualityComparer elementEaualityComparer = null)
+        /// <param name="itemEaualityComparer">項目の等値比較子 (比較対象のオブジェクトが反復子である場合、各項目の等値比較子に使用されます)。</param>
+        public AssertEqualityComparer(IEqualityComparer itemEaualityComparer = null)
         {
-            ElementEqualityComparerFactory = () => elementEaualityComparer ?? DefaultElementEqualityComparer;
+            ItemEqualityComparerFactory = () => itemEaualityComparer ?? DefaultItemEqualityComparer;
         }
 
         #endregion
@@ -72,16 +72,16 @@ namespace SoftCube.Asserts
         #region 等値比較子
 
         /// <summary>
-        /// 指定したオブジェクトが等しいかを判断する。
+        /// 指定したオブジェクトが等しいかを判断します。
         /// </summary>
-        /// <param name="x">比較対象のオブジェクト</param>
-        /// <param name="y">比較対象のオブジェクト</param>
-        /// <returns>指定したオブジェクトが等しいか</returns>
+        /// <param name="x">比較対象のオブジェクト。</param>
+        /// <param name="y">比較対象のオブジェクト。</param>
+        /// <returns>指定したオブジェクトが等しいかを示す値。</returns>
         public bool Equals(T x, T y)
         {
             var typeInfo = typeof(T).GetTypeInfo();
 
-            // Nullableである場合、null比較による判断を試みる。
+            // Nullable である場合、null 比較による判断を試みます。
             if (!typeInfo.IsValueType || (typeInfo.IsGenericType && typeInfo.GetGenericTypeDefinition().GetTypeInfo().IsAssignableFrom(NullableTypeInfo)))
             {
                 if (object.Equals(x, default(T)))
@@ -95,13 +95,13 @@ namespace SoftCube.Asserts
                 }
             }
 
-            // IEquatable<T>である場合、IEquatable<T>.Equalsで判断する。
+            // IEquatable<T> である場合、IEquatable<T>.Equals(...) で判断します。
             if (x is IEquatable<T> equatable)
             {
                 return equatable.Equals(y);
             }
 
-            // IComparable<T>である場合、IComparable<T>.CompareToで判断する。
+            // IComparable<T> である場合、IComparable<T>.CompareTo(...) で判断します。
             if (x is IComparable<T> comparableGeneric)
             {
                 try
@@ -110,12 +110,12 @@ namespace SoftCube.Asserts
                 }
                 catch
                 {
-                    // IComparable<T>.CompareToは、状況によって例外を投げる可能性がある。
-                    // 例外が投げられた場合、例外を無視して比較を続ける。
+                    // IComparable<T>.CompareTo(...) は、状況によって例外を投げる可能性があります。
+                    // 例外が投げられた場合、例外を無視して比較を続けます。
                 }
             }
 
-            // IComparableである場合、IComparable<T>.CompareToで判断する。
+            // IComparable である場合、IComparable.CompareTo(...) で判断します。
             if (x is IComparable comparable)
             {
                 try
@@ -124,39 +124,39 @@ namespace SoftCube.Asserts
                 }
                 catch
                 {
-                    // IComparable.CompareToは、状況によって例外を投げる可能性がある。
-                    // 例外が投げられた場合、例外を無視して比較を続ける。
+                    // IComparable.CompareTo(...) は、状況によって例外を投げる可能性があります。
+                    // 例外が投げられた場合、例外を無視して比較を続けます。
                 }
             }
 
-            // 辞書である場合、各要素が等しいかを判断する。
+            // IDictionary である場合、各項目が等しいかを判断します。
             var dictionariesEqual = CheckIfDictionariesAreEqual(x, y);
             if (dictionariesEqual.HasValue)
             {
                 return dictionariesEqual.GetValueOrDefault();
             }
 
-            // 集合である場合、各要素が等しいかを判断する。
+            // ISet である場合、各項目が等しいかを判断します。
             var setsEqual = CheckIfSetsAreEqual(x, y, typeInfo);
             if (setsEqual.HasValue)
             {
                 return setsEqual.GetValueOrDefault();
             }
 
-            // 反復子である場合、各要素が等しいかを判断する。
+            // IEnumerable である場合、各項目が等しいかを判断します。
             var enumerablesEqual = CheckIfEnumerablesAreEqual(x, y);
             if (enumerablesEqual.HasValue)
             {
                 return enumerablesEqual.GetValueOrDefault();
             }
 
-            // IStructuralEquatableである場合、IStructuralEquatable.Equalsで判断する。
-            if (x is IStructuralEquatable structuralEquatable && structuralEquatable.Equals(y, new StructuralEqualityComparer(ElementEqualityComparerFactory())))
+            // IStructuralEquatable である場合、IStructuralEquatable.Equals(...) で判断します。
+            if (x is IStructuralEquatable structuralEquatable && structuralEquatable.Equals(y, new StructuralEqualityComparer(ItemEqualityComparerFactory())))
             {
                 return true;
             }
 
-            // IEquatable<typeof(y)>である場合、IEquatable<typeof(y)>.Equalsで判断する。
+            // IEquatable<typeof(y)> である場合、IEquatable<typeof(y)>.Equals(...) で判断します。
             var iequatableY = typeof(IEquatable<>).MakeGenericType(y.GetType()).GetTypeInfo();
             if (iequatableY.IsAssignableFrom(x.GetType().GetTypeInfo()))
             {
@@ -164,7 +164,7 @@ namespace SoftCube.Asserts
                 return (bool)equalsMethod.Invoke(x, new object[] { y });
             }
 
-            // IComparable<typeof(y)>である場合、IComparable<typeof(y)>.Equalsで判断する。
+            // IComparable<typeof(y)> である場合、IComparable<typeof(y)>.Equals(...) で判断します。
             var icomparableY = typeof(IComparable<>).MakeGenericType(y.GetType()).GetTypeInfo();
             if (icomparableY.IsAssignableFrom(x.GetType().GetTypeInfo()))
             {
@@ -175,24 +175,24 @@ namespace SoftCube.Asserts
                 }
                 catch
                 {
-                    // IComparable<typeof(y)>.CompareToは、状況によって例外を投げる可能性がある。
-                    // 例外が投げられた場合、例外を無視して比較を続ける。
+                    // IComparable<typeof(y)>.CompareTo は、状況によって例外を投げる可能性があります。
+                    // 例外が投げられた場合、例外を無視して比較を続けます。
                 }
             }
 
-            // 上記のいずれでもない場合、object.Equalsで判断する。
+            // 上記のいずれでもない場合、object.Equals(...) で判断します。
             return object.Equals(x, y);
         }
 
-        #region 反復子の比較
+        #region IEnumerable の比較
 
         /// <summary>
-        /// 指定したオブジェクトが反復子である場合、等しいかを判断する。
+        /// 指定したオブジェクトが <see cref="IEnumerable"/> である場合、等しいかを判断します。
         /// </summary>
-        /// <param name="x">比較対象のオブジェクト</param>
-        /// <param name="y">比較対象のオブジェクト</param>
-        /// <returns>指定したオブジェクトが反復子である場合、等しいか（反復子ではない場合、null）</returns>
-        bool? CheckIfEnumerablesAreEqual(T x, T y)
+        /// <param name="x">比較対象のオブジェクト。</param>
+        /// <param name="y">比較対象のオブジェクト。</param>
+        /// <returns>指定したオブジェクトが等しいかを示す値 (<see cref="IEnumerable"/> ではない場合、null)。</returns>
+        private bool? CheckIfEnumerablesAreEqual(T x, T y)
         {
             if (x is IEnumerable enumerableX && y is IEnumerable enumerableY)
             {
@@ -202,7 +202,7 @@ namespace SoftCube.Asserts
                 {
                     enumeratorX = enumerableX.GetEnumerator();
                     enumeratorY = enumerableY.GetEnumerator();
-                    var equalityComparer = ElementEqualityComparerFactory();
+                    var equalityComparer = ItemEqualityComparerFactory();
 
                     while (true)
                     {
@@ -213,8 +213,8 @@ namespace SoftCube.Asserts
                         {
                             if (hasNextX == hasNextY)
                             {
-                                // Array.GetEnumerator()は配列を平坦化し、配列の次元と長さを無視する。
-                                // 配列の次元と長さが等しいかを判断する。
+                                // Array.GetEnumerator() は配列を平坦化し、配列の次元と長さを無視します。
+                                // 配列の次元と長さが等しいかを判断します。
                                 if (enumerableX is Array xArray && enumerableY is Array yArray)
                                 {
                                     // new object[2,1] != new object[2]
@@ -267,15 +267,15 @@ namespace SoftCube.Asserts
 
         #endregion
 
-        #region 辞書の比較
+        #region IDictionary の比較
 
         /// <summary>
-        /// 指定したオブジェクトが辞書である場合、等しいかを判断する。
+        /// 指定したオブジェクトが <see cref="IDictionary"/> である場合、等しいかを判断します。
         /// </summary>
-        /// <param name="x">比較対象のオブジェクト</param>
-        /// <param name="y">比較対象のオブジェクト</param>
-        /// <returns>指定したオブジェクトが辞書である場合、等しいか（辞書ではない場合、null）</returns>
-        bool? CheckIfDictionariesAreEqual(T x, T y)
+        /// <param name="x">比較対象のオブジェクト。</param>
+        /// <param name="y">比較対象のオブジェクト。</param>
+        /// <returns>指定したオブジェクトが等しいかを示す値 (<see cref="IDictionary"/> ではない場合、null)。</returns>
+        private bool? CheckIfDictionariesAreEqual(T x, T y)
         {
             if (x is IDictionary dictionaryX && y is IDictionary dictionaryY)
             {
@@ -284,7 +284,7 @@ namespace SoftCube.Asserts
                     return false;
                 }
 
-                var equalityComparer = ElementEqualityComparerFactory();
+                var equalityComparer = ItemEqualityComparerFactory();
                 var dictionaryYKeys = new HashSet<object>(dictionaryY.Keys.Cast<object>());
 
                 foreach (var key in dictionaryX.Keys)
@@ -315,23 +315,23 @@ namespace SoftCube.Asserts
 
         #endregion
 
-        #region 集合の比較
+        #region ISet<T> の比較
 
         /// <summary>
-        /// 指定したオブジェクトが集合である場合、等しいかを判断する。
+        /// 指定したオブジェクトが <see cref="ISet<T>"/> である場合、等しいかを判断します。
         /// </summary>
-        /// <param name="x">比較対象のオブジェクト</param>
-        /// <param name="y">比較対象のオブジェクト</param>
-        /// <param name="typeInfo">Tの型情報</param>
-        /// <returns>指定したオブジェクトが集合である場合、等しいか（集合ではない場合、null）</returns>
-        bool? CheckIfSetsAreEqual(T x, T y, TypeInfo typeInfo)
+        /// <param name="x">比較対象のオブジェクト。</param>
+        /// <param name="y">比較対象のオブジェクト。</param>
+        /// <param name="typeInfo">Tの型情報。</param>
+        /// <returns>指定したオブジェクトが等しいかを示す値 (<see cref="ISet<T>"/> ではない場合、null)。</returns>
+        private bool? CheckIfSetsAreEqual(T x, T y, TypeInfo typeInfo)
         {
             if (!IsSet(typeInfo))
             {
                 return null;
             }
 
-            if (x is IEnumerable enumX && y is IEnumerable enumY)
+            if (x is IEnumerable enumerableX && y is IEnumerable enumerableY)
             {
                 Type elementType;
                 if (typeof(T).GenericTypeArguments.Length != 1)
@@ -344,7 +344,7 @@ namespace SoftCube.Asserts
                 }
 
                 var method = CompareTypedSetsMethod.MakeGenericMethod(new Type[] { elementType });
-                return (bool)method.Invoke(this, new object[] { enumX, enumY });
+                return (bool)method.Invoke(this, new object[] { enumerableX, enumerableY });
             }
             else
             {
@@ -353,31 +353,31 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定した反復子（集合）が等しいかを判断する。
+        /// 指定した型情報が <see cref="ISet<T>"/> かを判断します。
         /// </summary>
-        /// <typeparam name="TElement">反復子（集合）の要素の型</typeparam>
-        /// <param name="enumX">比較対象の反復子</param>
-        /// <param name="enumY">比較対象の反復子</param>
-        /// <returns>指定した反復子（集合）が等しいか</returns>
-        bool CompareTypedSets<TElement>(IEnumerable enumX, IEnumerable enumY)
-        {
-            var setX = new HashSet<TElement>(enumX.Cast<TElement>());
-            var setY = new HashSet<TElement>(enumY.Cast<TElement>());
-            return setX.SetEquals(setY);
-        }
-
-        /// <summary>
-        /// 指定した型情報が集合か、を判断する。
-        /// </summary>
-        /// <param name="typeInfo">型情報</param>
-        /// <returns>指定した型情報が集合か</returns>
-        bool IsSet(TypeInfo typeInfo)
+        /// <param name="typeInfo">型情報。</param>
+        /// <returns>指定した型情報が <see cref="ISet<T>"/> かを示す値。</returns>
+        private bool IsSet(TypeInfo typeInfo)
         {
             return typeInfo.ImplementedInterfaces
                 .Select(i => i.GetTypeInfo())
                 .Where(ti => ti.IsGenericType)
                 .Select(ti => ti.GetGenericTypeDefinition())
                 .Contains(typeof(ISet<>).GetGenericTypeDefinition());
+        }
+
+        /// <summary>
+        /// 指定した <see cref="IEnumerable"/>(<see cref="ISet<T>"/>) が等しいかを判断します。
+        /// </summary>
+        /// <typeparam name="TItem"><see cref="IEnumerable"/> の項目の型。</typeparam>
+        /// <param name="enumerableX">比較対象のオブジェクト。</param>
+        /// <param name="enumerableY">比較対象のオブジェクト。</param>
+        /// <returns>指定したオブジェクトが等しいかを示す値。</returns>
+        private bool CompareTypedSets<TItem>(IEnumerable enumerableX, IEnumerable enumerableY)
+        {
+            var setX = new HashSet<TItem>(enumerableX.Cast<TItem>());
+            var setY = new HashSet<TItem>(enumerableY.Cast<TItem>());
+            return setX.SetEquals(setY);
         }
 
         #endregion
@@ -387,14 +387,15 @@ namespace SoftCube.Asserts
         #region ハッシュコード
 
         /// <summary>
-        /// ハッシュコードを取得する。
+        /// ハッシュコードを取得します。
         /// </summary>
-        /// <param name="obj">比較対象のオブジェクト</param>
-        /// <returns>ハッシュコード</returns>
+        /// <param name="obj">比較対象のオブジェクト。</param>
+        /// <returns>ハッシュコード。</returns>
         /// <remarks>
-        /// このクラスはGetHashCodeを実装しない。
-        /// このクラスをハッシュコンテナーに使用しないこと。
+        /// このクラスは <see cref="GetHashCode(T)"/> を実装しません。
+        /// このクラスをハッシュコンテナーに使用しないでください。
         /// </remarks>
+        /// <exception cref="NotImplementedException">このメソッドを呼び出された場合、投げられます</exception>
         public int GetHashCode(T obj)
         {
             throw new NotImplementedException();
@@ -407,22 +408,22 @@ namespace SoftCube.Asserts
         #region 内部クラス
 
         /// <summary>
-        /// IStructuralEquatable用の等値比較子。
+        /// <see cref="IStructuralEquatable"/> 用の等値比較子。
         /// </summary>
         private class StructuralEqualityComparer : IEqualityComparer
         {
             #region プロパティ
 
             /// <summary>
-            /// 要素の等値比較子。
+            /// 項目の等値比較子を取得します。
             /// </summary>
             /// <remarks>
-            /// 要素の等値比較子は、比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される。
+            /// 項目の等値比較子は、比較対象のオブジェクトが反復子である場合、各項目の等値比較子に使用されます。
             /// </remarks>
-            private IEqualityComparer ElementEqualityComparer { get; }
+            private IEqualityComparer ItemEqualityComparer { get; }
 
             /// <summary>
-            /// EqualsGenericのメソッド情報。
+            /// <see cref="EqualsGeneric{U}(U, U)"/> のメソッド情報を取得します。
             /// </summary>
             private MethodInfo EqualsGenericMethod
             {
@@ -445,10 +446,10 @@ namespace SoftCube.Asserts
             /// <summary>
             /// コンストラクター。
             /// </summary>
-            /// <param name="elementEqualityComparer">要素の等値比較子（比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される）</param>
-            public StructuralEqualityComparer(IEqualityComparer elementEqualityComparer)
+            /// <param name="itemEqualityComparer">項目の等値比較子 (比較対象のオブジェクトが反復子である場合、各項目の等値比較子に使用されます)。</param>
+            public StructuralEqualityComparer(IEqualityComparer itemEqualityComparer)
             {
-                ElementEqualityComparer = elementEqualityComparer;
+                ItemEqualityComparer = itemEqualityComparer;
             }
 
             #endregion
@@ -458,11 +459,11 @@ namespace SoftCube.Asserts
             #region 等値比較子
 
             /// <summary>
-            /// 指定したオブジェクトが等しいかを判断する。
+            /// 指定したオブジェクトが等しいかを判断します。
             /// </summary>
-            /// <param name="x">比較対象のオブジェクト</param>
-            /// <param name="y">比較対象のオブジェクト</param>
-            /// <returns>指定したオブジェクトが等しいか</returns>
+            /// <param name="x">比較対象のオブジェクト。</param>
+            /// <param name="y">比較対象のオブジェクト。</param>
+            /// <returns>指定したオブジェクトが等しいかを示す値。</returns>
             public new bool Equals(object x, object y)
             {
                 if (x == null)
@@ -474,24 +475,24 @@ namespace SoftCube.Asserts
                     return false;
                 }
 
-                // AssertEqualityComparerから最高の結果を得るために、比較対象のオブジェクトの型を特定する。
-                // 比較対象のオブジェクトの型が同じではない場合、System.Objectであると想定する。
-                // これはインターフェイスなどを共有しているかどうかを確認しようとするC＃コンパイラよりも単純だが、
-                // AssertEqualityComparer<System.Object>が十分に賢いため、ここではやりすぎになる可能性がある。
+                // AssertEqualityComparer から最高の結果を得るために、比較対象のオブジェクトの型を特定します。
+                // 比較対象のオブジェクトの型が同じではない場合、System.Object であると想定します。
+                // これはインターフェイスなどを共有しているかどうかを確認しようとする C＃ コンパイラよりも単純ですが、
+                // AssertEqualityComparer<System.Object> が十分に賢いため、ここではやりすぎになる可能性があります。
                 var objectType = x.GetType() == y.GetType() ? x.GetType() : typeof(object);
                 return (bool)EqualsGenericMethod.MakeGenericMethod(objectType).Invoke(this, new object[] { x, y });
             }
 
             /// <summary>
-            /// 指定したオブジェクトが等しいかを判断する。
+            /// 指定したオブジェクトが等しいかを判断します。
             /// </summary>
-            /// <typeparam name="U"></typeparam>
-            /// <param name="x">比較対象のオブジェクト</param>
-            /// <param name="y">比較対象のオブジェクト</param>
-            /// <returns>指定したオブジェクトが等しいか</returns>
+            /// <typeparam name="U">比較対象のオブジェクトの型。</typeparam>
+            /// <param name="x">比較対象のオブジェクト。</param>
+            /// <param name="y">比較対象のオブジェクト。</param>
+            /// <returns>指定したオブジェクトが等しいかを示す値。</returns>
             private bool EqualsGeneric<U>(U x, U y)
             {
-                return new AssertEqualityComparer<U>(ElementEqualityComparer).Equals(x, y);
+                return new AssertEqualityComparer<U>(ItemEqualityComparer).Equals(x, y);
             }
 
             #endregion
@@ -499,14 +500,15 @@ namespace SoftCube.Asserts
             #region ハッシュコード
 
             /// <summary>
-            /// ハッシュコードを取得する。
+            /// ハッシュコードを取得します。
             /// </summary>
-            /// <param name="obj">比較対象のオブジェクト</param>
-            /// <returns>ハッシュコード</returns>
+            /// <param name="obj">比較対象のオブジェクト。</param>
+            /// <returns>ハッシュコード。</returns>
             /// <remarks>
-            /// このクラスはGetHashCodeを実装しない。
-            /// このクラスをハッシュコンテナーに使用しないこと。
+            /// このクラスは <see cref="GetHashCode(T)"/> を実装しません。
+            /// このクラスをハッシュコンテナーに使用しなでください。
             /// </remarks>
+            /// <exception cref="NotImplementedException">このメソッドを呼び出された場合、投げられます</exception>
             public int GetHashCode(object obj)
             {
                 throw new NotImplementedException();

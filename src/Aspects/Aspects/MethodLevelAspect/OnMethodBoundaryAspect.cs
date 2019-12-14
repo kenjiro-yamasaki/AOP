@@ -26,7 +26,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// アスペクト（カスタムコード）を注入する。
+        /// アスペクト(カスタムコード)を注入する。
         /// </summary>
         /// <param name="method">注入対象のメソッド定義</param>
         protected override void OnInject(MethodDefinition method)
@@ -133,7 +133,7 @@ namespace SoftCube.Aspects
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnException)))));
 
-                // OnExitメソッドを呼び出す（例外時）。
+                // OnExitメソッドを呼び出す(例外時)。
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, aspectIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnExit)))));

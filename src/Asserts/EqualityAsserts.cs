@@ -49,7 +49,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数（有効な値：0～15）</param>
+        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～15)</param>
         /// <exception cref="EqualException"><see cref="double"/>型の値が等しくない場合、投げられる</exception>
         public static void Equal(double expected, double actual, int precision)
         {
@@ -70,7 +70,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数（有効な値：0～28）</param>
+        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～28)</param>
         /// <exception cref="EqualException"><see cref="decimal"/>型の値が等しくない場合、投げられる</exception>
         public static void Equal(decimal expected, decimal actual, int precision)
         {
@@ -159,7 +159,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数（有効な値：0～15）</param>
+        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～15)</param>
         /// <exception cref="NotEqualException"><see cref="double"/>型の値が等しい場合、投げられる</exception>
         public static void NotEqual(double expected, double actual, int precision)
         {
@@ -180,7 +180,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数（有効な値：0～28）</param>
+        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～28)</param>
         /// <exception cref="NotEqualException"><see cref="decimal"/>型の値が等しい場合、投げられる</exception>
         public static void NotEqual(decimal expected, decimal actual, int precision)
         {
@@ -236,7 +236,7 @@ namespace SoftCube.Asserts
         /// 等値比較子を取得する。
         /// </summary>
         /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="elementEaualityComparer">要素の等値比較子（比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される）</param>
+        /// <param name="elementEaualityComparer">項目の等値比較子(比較対象のオブジェクトが反復子である場合、各項目の等値比較子に使用される)</param>
         /// <returns>等値比較子</returns>
         private static IEqualityComparer<T> GetEqualityComparer<T>(IEqualityComparer elementEaualityComparer = null)
         {

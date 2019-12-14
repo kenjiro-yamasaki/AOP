@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SoftCube.Asserts
+﻿namespace SoftCube.Asserts
 {
     /// <summary>
     /// Singleアサート例外。
@@ -13,7 +11,7 @@ namespace SoftCube.Asserts
         #region コンストラクター
 
         /// <summary>
-        /// コンストラクター（コレクションが期待値を含まない場合）。
+        /// コンストラクター（コレクションが期待値を含まない場合)。
         /// </summary>
         /// <param name="expected">期待値</param>
         public SingleException(string expected)
@@ -22,7 +20,7 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// コンストラクター（コレクションが期待値を複数含む場合）。
+        /// コンストラクター（コレクションが期待値を複数含む場合)。
         /// </summary>
         /// <param name="count">コレクションに含まれる期待値の数</param>
         /// <param name="expected">期待値</param>

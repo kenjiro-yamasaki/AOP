@@ -22,7 +22,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// アスペクト（カスタムコード）を注入する。
+        /// アスペクト(カスタムコード)を注入する。
         /// </summary>
         /// <param name="parameter">注入対象のパラメーター定義</param>
         public void Inject(ParameterDefinition parameter)
@@ -36,7 +36,7 @@ namespace SoftCube.Aspects
         }
 
         /// <summary>
-        /// アスペクト（カスタムコード）を注入する。
+        /// アスペクト(カスタムコード)を注入する。
         /// </summary>
         /// <param name="parameter">注入対象のパラメーター定義</param>
         protected abstract void OnInject(ParameterDefinition parameter);

@@ -52,7 +52,7 @@ namespace SoftCube.Asserts
         public IReadOnlyList<Exception> Failures => Errors.Select(e => e.Exception).ToList();
 
         /// <summary>
-        /// コレクションの要素数。
+        /// コレクションの項目数。
         /// </summary>
         private int ItemCount { get; }
 
@@ -68,7 +68,7 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="itemCount">要素数</param>
+        /// <param name="itemCount">項目数</param>
         /// <param name="errors">エラーコレクション</param>
         public AllException(int itemCount, (int Index, object Item, Exception Exception)[] errors)
             : base("Assert.All() Failure")

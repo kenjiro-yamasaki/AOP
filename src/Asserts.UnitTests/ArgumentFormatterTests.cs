@@ -222,7 +222,7 @@ namespace SoftCube.Asserts.UnitTests
         }
 
         [Fact]
-        public static void Format_要素の多い反復型_最初の数個の要素だけをフォーマットする()
+        public static void Format_項目の多い反復型_最初の数個の項目だけをフォーマットする()
         {
             Assert.Equal("[0, 1, 2, 3, 4, ...]", ArgumentFormatter.Format(Enumerable.Range(0, int.MaxValue)));
         }

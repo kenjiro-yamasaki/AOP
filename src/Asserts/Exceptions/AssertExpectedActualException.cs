@@ -34,7 +34,7 @@ namespace SoftCube.Asserts
         public string ActualTitle { get; }
 
         /// <summary>
-        /// 例外メッセージ（期待値と実測値を含む）。
+        /// 例外メッセージ(期待値と実測値を含む)。
         /// </summary>
         public override string Message
         {

@@ -1,36 +1,40 @@
-﻿//using Xunit.Sdk;
+﻿namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// アサート。
+    /// </summary>
+    public static partial class Assert
+    {
+        #region 静的メソッド
 
-//namespace Xunit
-//{
-//#if XUNIT_VISIBILITY_INTERNAL 
-//    internal
-//#else
-//    public
-//#endif
-//    partial class Assert
-//    {
-//        /// <summary>
-//        /// Verifies that two objects are not the same instance.
-//        /// </summary>
-//        /// <param name="expected">The expected object instance</param>
-//        /// <param name="actual">The actual object instance</param>
-//        /// <exception cref="NotSameException">Thrown when the objects are the same instance</exception>
-//        public static void NotSame(object expected, object actual)
-//        {
-//            if (object.ReferenceEquals(expected, actual))
-//                throw new NotSameException();
-//        }
+        /// <summary>
+        /// オブジェクトが同じインスタンスではないことを検証する。
+        /// </summary>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="NotSameException">オブジェクトが同じインスタンスである場合、投げられる。</exception>
+        public static void NotSame(object expected, object actual)
+        {
+            if (object.ReferenceEquals(expected, actual))
+            {
+                throw new NotSameException();
+            }
+        }
 
-//        /// <summary>
-//        /// Verifies that two objects are the same instance.
-//        /// </summary>
-//        /// <param name="expected">The expected object instance</param>
-//        /// <param name="actual">The actual object instance</param>
-//        /// <exception cref="SameException">Thrown when the objects are not the same instance</exception>
-//        public static void Same(object expected, object actual)
-//        {
-//            if (!object.ReferenceEquals(expected, actual))
-//                throw new SameException(expected, actual);
-//        }
-//    }
-//}
+        /// <summary>
+        /// オブジェクトが同じインスタンスではあることを検証する。
+        /// </summary>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="SameException">オブジェクトが同じインスタンスではない場合、投げられる。</exception>
+        public static void Same(object expected, object actual)
+        {
+            if (!object.ReferenceEquals(expected, actual))
+            {
+                throw new SameException(expected, actual);
+            }
+        }
+
+        #endregion
+    }
+}

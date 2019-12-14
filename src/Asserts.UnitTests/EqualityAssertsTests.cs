@@ -484,7 +484,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 異なる要素数の型引数が2つのSetT_NotEqual()
+            public void 異なる項目数の型引数が2つのSetT_NotEqual()
             {
                 var expected = new TwoGenericSet<string, int> { "bar" };
                 var actual   = new TwoGenericSet<string, int> { "foo", "bar" };
@@ -964,7 +964,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 異なる要素数の型引数が2つのSetT_NotEqual()
+            public void 異なる項目数の型引数が2つのSetT_NotEqual()
             {
                 var expected = new TwoGenericSet<string, int> { "bar" };
                 var actual   = new TwoGenericSet<string, int> { "foo", "bar" };

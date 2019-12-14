@@ -20,27 +20,27 @@ namespace SoftCube.Debugs
         internal int Count { get; set; }
 
         /// <summary>
-        /// 合計プロファイル時間（単位：タイマー刻み）。
+        /// 合計プロファイル時間(単位：タイマー刻み)。
         /// </summary>
         internal long TotalTime { get; set; }
 
         /// <summary>
-        /// 最小プロファイル時間（単位：タイマー刻み）。
+        /// 最小プロファイル時間(単位：タイマー刻み)。
         /// </summary>
         private long MinTime { get; set; }
 
         /// <summary>
-        /// 最大プロファイル時間（単位：タイマー刻み）。
+        /// 最大プロファイル時間(単位：タイマー刻み)。
         /// </summary>
         private long MaxTime { get; set; }
 
         /// <summary>
-        /// 最小プロファイル順序（1～）。
+        /// 最小プロファイル順序(1～)。
         /// </summary>
         private int MinSequence { get; set; }
 
         /// <summary>
-        /// 最大プロファイル順序（1～）。
+        /// 最大プロファイル順序(1～)。
         /// </summary>
         private int MaxSequence { get; set; }
 

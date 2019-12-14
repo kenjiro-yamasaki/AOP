@@ -20,18 +20,18 @@ namespace SoftCube.Asserts
         public object Collection { get; set; }
 
         /// <summary>
-        /// 期待値の数（コレクションの項目数）。
+        /// 期待値の数(コレクションの項目数)。
         /// </summary>
         public int ExpectedCount { get; set; }
 
         /// <summary>
-        /// 実測値の数（コレクションの項目数）。
+        /// 実測値の数(コレクションの項目数)。
         /// </summary>
         public int ActualCount { get; set; }
 
         /// <summary>
         /// 最初の比較失敗が起きたインデックス。
-        /// 比較が起きなかった場合（期待値と実測値の数が異なる場合）、-1。
+        /// 比較が起きなかった場合(期待値と実測値の数が異なる場合)、-1。
         /// </summary>
         public int IndexFailurePoint { get; set; }
 
@@ -94,8 +94,8 @@ namespace SoftCube.Asserts
         /// コンストラクター。
         /// </summary>
         /// <param name="collection">テストに失敗したコレクション</param>
-        /// <param name="expectedCount">期待値の数（コレクションの項目数）</param>
-        /// <param name="actualCount">実測値の数（コレクションの項目数）</param>
+        /// <param name="expectedCount">期待値の数(コレクションの項目数)</param>
+        /// <param name="actualCount">実測値の数(コレクションの項目数)</param>
         /// <param name="indexFailurePoint">最初の比較失敗が起きたインデックス</param>
         /// <param name="innerException">内部例外</param>
         public CollectionException(object collection, int expectedCount, int actualCount, int indexFailurePoint = -1, Exception innerException = null)

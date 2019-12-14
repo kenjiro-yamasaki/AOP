@@ -7,7 +7,7 @@ namespace SoftCube.Asserts
     /// <summary>
     /// アサート用のデフォルト大小比較。
     /// </summary>
-    /// <typeparam name="T">比較対象の型</typeparam>
+    /// <typeparam name="T">比較対象の型。</typeparam>
     internal class AssertComparer<T> : IComparer<T>
         where T : IComparable
     {
@@ -23,18 +23,18 @@ namespace SoftCube.Asserts
         #region メソッド
 
         /// <summary>
-        /// 指定したオブジェクトの大小関係を比較する。
+        /// 指定したオブジェクトの大小関係を比較します。
         /// </summary>
-        /// <param name="x">比較対象のオブジェクト</param>
-        /// <param name="y">比較対象のオブジェクト</param>
+        /// <param name="x">比較対象のオブジェクト。</param>
+        /// <param name="y">比較対象のオブジェクト。</param>
         /// <returns>
         /// x＜y ⇒ 0より小さい値。
         /// x＝y ⇒ 0。
         /// x＞y ⇒ 0より大きい値。
         /// </returns>
         /// <remarks>
-        /// nullと参照型との比較は許可されており、例外は投げられない。
-        /// nullは、null以外よりも小さいと見なす。
+        /// nullと参照型との比較は許可されており、例外は投げられません。
+        /// nullは、null以外よりも小さいと見なします。
         /// </remarks>
         public int Compare(T x, T y)
         {

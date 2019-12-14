@@ -15,7 +15,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <typeparam name="TExpected">指定型</typeparam>
         /// <param name="object">指定オブジェクト</param>
-        /// <returns>（検証に成功した場合）指定型にキャストした指定オブジェクト</returns>
+        /// <returns>(検証に成功した場合)指定型にキャストした指定オブジェクト</returns>
         /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられる</exception>
         public static TExpected IsAssignableFrom<TExpected>(object @object)
         {
@@ -40,12 +40,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定オブジェクトが（派生型ではなく）正確に指定型かを検証する。
+        /// 指定オブジェクトが(派生型ではなく)正確に指定型かを検証する。
         /// </summary>
         /// <typeparam name="TExpected">指定型</typeparam>
         /// <param name="object">指定オブジェクト</param>
-        /// <returns>（検証に成功した場合）指定型にキャストした指定オブジェクト</returns>
-        /// <exception cref="IsTypeException">指定オブジェクトが（派生型ではなく）正確に指定型ではない場合、投げられる</exception>
+        /// <returns>(検証に成功した場合)指定型にキャストした指定オブジェクト</returns>
+        /// <exception cref="IsTypeException">指定オブジェクトが(派生型ではなく)正確に指定型ではない場合、投げられる</exception>
         public static TExpected IsType<TExpected>(object @object)
         {
             IsType(typeof(TExpected), @object);
@@ -53,11 +53,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定オブジェクトが（派生型ではなく）正確に指定型かを検証する。
+        /// 指定オブジェクトが(派生型ではなく)正確に指定型かを検証する。
         /// </summary>
         /// <param name="expectedType">指定型</param>
         /// <param name="object">指定オブジェクト</param>
-        /// <exception cref="IsTypeException">指定オブジェクトが（派生型ではなく）正確に指定型ではない場合、投げられる</exception>
+        /// <exception cref="IsTypeException">指定オブジェクトが(派生型ではなく)正確に指定型ではない場合、投げられる</exception>
         public static void IsType(Type expectedType, object @object)
         {
             GuardArgumentNotNull(nameof(expectedType), expectedType);

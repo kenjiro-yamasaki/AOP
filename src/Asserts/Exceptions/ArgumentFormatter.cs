@@ -160,7 +160,7 @@ namespace SoftCube.Asserts
             }
             catch (Exception ex)
             {
-                // 値のフォーマット処理が例外を発生させる場合がある（例えば、ToStringが例外を発生させる場合など）。
+                // 値のフォーマット処理が例外を発生させる場合がある(例えば、ToStringが例外を発生させる場合など)。
                 // このような場合、プログラムを停止させないために例外をキャッチする。
                 return $"{ex.GetType().Name} was thrown formatting an object of type \"{type}\"";
             }
@@ -272,11 +272,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 反復型の値（コレクション）をフォーマットする。
+        /// 反復型の値(コレクション)をフォーマットする。
         /// </summary>
-        /// <param name="values">反復型の値（コレクション）</param>
+        /// <param name="values">反復型の値(コレクション)</param>
         /// <param name="depth">ネストの深さ</param>
-        /// <returns>フォーマットされた反復型の値（コレクション）</returns>
+        /// <returns>フォーマットされた反復型の値(コレクション)</returns>
         private static string FormatEnumerable(IEnumerable<object> values, int depth)
         {
             if (depth == MaxDepth)
