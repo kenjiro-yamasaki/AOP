@@ -1,108 +1,133 @@
-﻿//using System;
-//using System.Globalization;
-//using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when Assert.Collection fails.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class CollectionException : XunitException
-//    {
-//        readonly string innerException;
-//        readonly string innerStackTrace;
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// Collectionアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.Collection(...)の失敗時に投げられる。
+    /// </remarks>
+    public class CollectionException : AssertException
+    {
+        #region プロパティ
 
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="CollectionException"/> class.
-//        /// </summary>
-//        /// <param name="collection">The collection that failed the test.</param>
-//        /// <param name="expectedCount">The expected number of items in the collection.</param>
-//        /// <param name="actualCount">The actual number of items in the collection.</param>
-//        /// <param name="indexFailurePoint">The index of the position where the first comparison failure occurred.</param>
-//        /// <param name="innerException">The exception that was thrown during the comparison failure.</param>
-//        public CollectionException(object collection, int expectedCount, int actualCount, int indexFailurePoint = -1, Exception innerException = null)
-//            : base("Assert.Collection() Failure")
-//        {
-//            Collection = collection;
-//            ExpectedCount = expectedCount;
-//            ActualCount = actualCount;
-//            IndexFailurePoint = indexFailurePoint;
-//            this.innerException = FormatInnerException(innerException);
-//            innerStackTrace = innerException == null ? null : innerException.StackTrace;
-//        }
+        /// <summary>
+        /// テストに失敗したコレクション。
+        /// </summary>
+        public object Collection { get; set; }
 
-//        /// <summary>
-//        /// The collection that failed the test.
-//        /// </summary>
-//        public object Collection { get; set; }
+        /// <summary>
+        /// 期待値の数（コレクションの項目数）。
+        /// </summary>
+        public int ExpectedCount { get; set; }
 
-//        /// <summary>
-//        /// The actual number of items in the collection.
-//        /// </summary>
-//        public int ActualCount { get; set; }
+        /// <summary>
+        /// 実測値の数（コレクションの項目数）。
+        /// </summary>
+        public int ActualCount { get; set; }
 
-//        /// <summary>
-//        /// The expected number of items in the collection.
-//        /// </summary>
-//        public int ExpectedCount { get; set; }
+        /// <summary>
+        /// 最初の比較失敗が起きたインデックス。
+        /// 比較が起きなかった場合（期待値と実測値の数が異なる場合）、-1。
+        /// </summary>
+        public int IndexFailurePoint { get; set; }
 
-//        /// <summary>
-//        /// The index of the position where the first comparison failure occurred, or -1 if
-//        /// comparisions did not occur (because the actual and expected counts differed).
-//        /// </summary>
-//        public int IndexFailurePoint { get; set; }
+        /// <summary>
+        /// メッセージ。
+        /// </summary>
+        public override string Message
+        {
+            get
+            {
+                if (0 <= IndexFailurePoint)
+                {
+                    return string.Format(
+                        CultureInfo.CurrentCulture,
+                        "{0}{4}Collection: {1}{4}Error during comparison of item at index {2}{4}Inner exception: {3}",
+                        base.Message,
+                        ArgumentFormatter.Format(Collection),
+                        IndexFailurePoint,
+                        FormatInnerException(InnerException),
+                        Environment.NewLine);
+                }
 
-//        /// <inheritdoc/>
-//        public override string Message
-//        {
-//            get
-//            {
-//                if (IndexFailurePoint >= 0)
-//                    return string.Format(CultureInfo.CurrentCulture,
-//                                         "{0}{4}Collection: {1}{4}Error during comparison of item at index {2}{4}Inner exception: {3}",
-//                                         base.Message,
-//                                         ArgumentFormatter.Format(Collection),
-//                                         IndexFailurePoint,
-//                                         innerException,
-//                                         Environment.NewLine);
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    "{0}{4}Collection: {1}{4}Expected item count: {2}{4}Actual item count:   {3}",
+                    base.Message,
+                    ArgumentFormatter.Format(Collection),
+                    ExpectedCount,
+                    ActualCount,
+                    Environment.NewLine);
+            }
+        }
 
-//                return string.Format(CultureInfo.CurrentCulture,
-//                                     "{0}{4}Collection: {1}{4}Expected item count: {2}{4}Actual item count:   {3}",
-//                                     base.Message,
-//                                     ArgumentFormatter.Format(Collection),
-//                                     ExpectedCount,
-//                                     ActualCount,
-//                                     Environment.NewLine);
-//            }
-//        }
+        /// <summary>
+        /// スタックトレース。
+        /// </summary>
+        public override string StackTrace
+        {
+            get
+            {
+                if (InnerStackTrace == null)
+                {
+                    return base.StackTrace;
+                }
 
-//        /// <inheritdoc/>
-//        public override string StackTrace
-//        {
-//            get
-//            {
-//                if (innerStackTrace == null)
-//                    return base.StackTrace;
+                return InnerStackTrace + Environment.NewLine + base.StackTrace;
+            }
+        }
 
-//                return innerStackTrace + Environment.NewLine + base.StackTrace;
-//            }
-//        }
+        /// <summary>
+        /// 内部スタックトレース。
+        /// </summary>
+        private string InnerStackTrace { get; }
 
-//        static string FormatInnerException(Exception innerException)
-//        {
-//            if (innerException == null)
-//                return null;
+        #endregion
 
-//            var lines = innerException.Message
-//                                      .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-//                                      .Select((value, idx) => idx > 0 ? "        " + value : value);
+        #region コンストラクター
 
-//            return string.Join(Environment.NewLine, lines);
-//        }
-//    }
-//}
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="collection">テストに失敗したコレクション</param>
+        /// <param name="expectedCount">期待値の数（コレクションの項目数）</param>
+        /// <param name="actualCount">実測値の数（コレクションの項目数）</param>
+        /// <param name="indexFailurePoint">最初の比較失敗が起きたインデックス</param>
+        /// <param name="innerException">内部例外</param>
+        public CollectionException(object collection, int expectedCount, int actualCount, int indexFailurePoint = -1, Exception innerException = null)
+            : base("Assert.Collection() Failure", innerException)
+        {
+            Collection        = collection;
+            ExpectedCount     = expectedCount;
+            ActualCount       = actualCount;
+            IndexFailurePoint = indexFailurePoint;
+            InnerStackTrace   = innerException == null ? null : innerException.StackTrace;
+        }
+
+        #endregion
+
+        #region 静的メソッド
+
+        /// <summary>
+        /// 内部例外をフォーマットする。
+        /// </summary>
+        /// <param name="innerException">内部例外</param>
+        /// <returns>フォーマットされた内部例外</returns>
+        static string FormatInnerException(Exception innerException)
+        {
+            if (innerException == null)
+            {
+                return null;
+            }
+
+            var lines = innerException.Message.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Select((value, idx) => idx > 0 ? "        " + value : value);
+            return string.Join(Environment.NewLine, lines);
+        }
+
+        #endregion
+    }
+}

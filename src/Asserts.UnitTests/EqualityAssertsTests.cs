@@ -57,7 +57,7 @@ namespace SoftCube.Asserts.UnitTests
             #region int
 
             [Fact]
-            public void 同値のint_Equal()
+            public void 等値のint_Equal()
             {
                 int expected = 42;
                 int actual   = 42;
@@ -81,7 +81,7 @@ namespace SoftCube.Asserts.UnitTests
             #region double
 
             [Fact]
-            public void 同値のdouble_Equal()
+            public void 等値のdouble_Equal()
             {
                 var expected = 0.11111;
                 var actual   = 0.11444;
@@ -105,7 +105,7 @@ namespace SoftCube.Asserts.UnitTests
             #region Decimal
 
             [Fact]
-            public void 同値のDecimal_Equal()
+            public void 等値のDecimal_Equal()
             {
                 var expected = 0.11111M;
                 var actual   = 0.11444M;
@@ -129,7 +129,7 @@ namespace SoftCube.Asserts.UnitTests
             #region string
 
             [Fact]
-            public void 同値のstring_Equal()
+            public void 等値のstring_Equal()
             {
                 var expected = "bob";
                 var actual   = "bob";
@@ -200,7 +200,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値のIComparableかつCompareToが例外を投げる_Equal()
+            public void 等値のIComparableかつCompareToが例外を投げる_Equal()
             {
                 var expected = Substitute.For<IComparable>();
                 var actual   = expected;
@@ -264,7 +264,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値のIComparableTかつCompareToが例外を投げる_Equal()
+            public void 等値のIComparableTかつCompareToが例外を投げる_Equal()
             {
                 var expected = Substitute.For<IComparable<object>>();
                 var actual   = expected;
@@ -306,7 +306,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値と判断するIEquatableT_Equal()
+            public void 等値と判断するIEquatableT_Equal()
             {
                 var expected = Substitute.For<IEquatable<int>>();
                 var actual   = 1;
@@ -332,7 +332,7 @@ namespace SoftCube.Asserts.UnitTests
             #region IStructualEquatable
 
             [Fact]
-            public void 同値のIStructuralEquatable_Equal()
+            public void 等値のIStructuralEquatable_Equal()
             {
                 var expected = new Tuple<string>("a");
                 var actual   = new Tuple<string>("a");
@@ -366,7 +366,7 @@ namespace SoftCube.Asserts.UnitTests
             #region IDictionary
 
             [Fact]
-            public void 同値のDictionary_Equal()
+            public void 等値のDictionary_Equal()
             {
                 var expected = new Dictionary<string, string> { ["foo"] = "bar" };
                 var actual   = new Dictionary<string, string> { ["foo"] = "bar" };
@@ -381,7 +381,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値で異なる型のDictionary_Equal()
+            public void 等値で異なる型のDictionary_Equal()
             {
                 var expected = new Dictionary<string, string> { ["foo"] = "bar" };
                 var actual   = new ConcurrentDictionary<string, string>(expected);
@@ -426,7 +426,7 @@ namespace SoftCube.Asserts.UnitTests
             #region ISet<T>
 
             [Fact]
-            public void 同値のSetT_Equal()
+            public void 等値のSetT_Equal()
             {
                 var expected = new HashSet<string> { "foo", "bar" };
                 var actual   = new HashSet<string> { "foo", "bar" };
@@ -441,7 +441,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の型が異なるSetT_Equal()
+            public void 等値の型が異なるSetT_Equal()
             {
                 var expected = new HashSet<string> { "bar", "foo" };
                 var actual   = new SortedSet<string> { "foo", "bar" };
@@ -454,7 +454,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の型引数が2つのSetT_Equal()
+            public void 等値の型引数が2つのSetT_Equal()
             {
                 var expected = new TwoGenericSet<string, int> { "foo", "bar" };
                 var actual   = new TwoGenericSet<string, int> { "foo", "bar" };
@@ -531,7 +531,7 @@ namespace SoftCube.Asserts.UnitTests
             #region IEnumerable
 
             [Fact]
-            public void 同値のIEnumerable_Equal()
+            public void 等値のIEnumerable_Equal()
             {
                 var expected = new string[] { "foo", "bar" };
                 var actual   = (IReadOnlyCollection<string>)new ReadOnlyCollection<string>(expected);
@@ -557,7 +557,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の配列_Equal()
+            public void 等値の配列_Equal()
             {
                 var expected = new string[] { "foo", "bar" };
                 var actual   = new object[] { "foo", "bar" };
@@ -583,7 +583,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の多次元配列_Equal()
+            public void 等値の多次元配列_Equal()
             {
                 var expected = new string[,] { { "foo" }, { "bar" } };
                 var actual   = new string[,] { { "foo" }, { "bar" } };
@@ -626,7 +626,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の深いネスト_Equal()
+            public void 等値の深いネスト_Equal()
             {
                 var expected = new List<object> { new List<object> { new List<object> { "a" } } };
                 var actual   = new List<object> { new List<object> { new List<object> { "a" } } };
@@ -670,7 +670,7 @@ namespace SoftCube.Asserts.UnitTests
             #region int
 
             [Fact]
-            public void 同値のint_Equal()
+            public void 等値のint_Equal()
             {
                 int expected = 42;
                 int actual   = 42;
@@ -694,7 +694,7 @@ namespace SoftCube.Asserts.UnitTests
             #region string
 
             [Fact]
-            public void 同値のstring_Equal()
+            public void 等値のstring_Equal()
             {
                 var expected = "bob";
                 var actual   = "bob";
@@ -797,7 +797,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値と判断するIEquatableT_NotEqual()
+            public void 等値と判断するIEquatableT_NotEqual()
             {
                 var expected = Substitute.For<IEquatable<int>>();
                 var actual   = 1;
@@ -812,7 +812,7 @@ namespace SoftCube.Asserts.UnitTests
             #region IStructualEquatable
 
             [Fact]
-            public void 同値のIStructualEquatable_Equal()
+            public void 等値のIStructualEquatable_Equal()
             {
                 var expected = new Tuple<string>("a");
                 var actual   = new Tuple<string>("a");
@@ -846,7 +846,7 @@ namespace SoftCube.Asserts.UnitTests
             #region IDictionary
 
             [Fact]
-            public void 同値のDictionary_NotEqual()
+            public void 等値のDictionary_NotEqual()
             {
                 var expected = new Dictionary<string, string> { ["foo"] = "bar" };
                 var actual   = new Dictionary<string, string> { ["foo"] = "bar" };
@@ -861,7 +861,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値で異なる型のDictionary_NotEqual()
+            public void 等値で異なる型のDictionary_NotEqual()
             {
                 var expected = new Dictionary<string, string> { ["foo"] = "bar" };
                 var actual   = new ConcurrentDictionary<string, string>(expected);
@@ -906,7 +906,7 @@ namespace SoftCube.Asserts.UnitTests
             #region ISet<T>
 
             [Fact]
-            public void 同値のSetT_NotEqual()
+            public void 等値のSetT_NotEqual()
             {
                 var expected = new HashSet<string> { "foo", "bar" };
                 var actual   = new HashSet<string> { "foo", "bar" };
@@ -921,7 +921,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の型が異なるSetT_NotEqual()
+            public void 等値の型が異なるSetT_NotEqual()
             {
                 var expected = new HashSet<string> { "bar", "foo" };
                 var actual   = new SortedSet<string> { "foo", "bar" };
@@ -934,7 +934,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の型引数が2つのSetT_NotEqual()
+            public void 等値の型引数が2つのSetT_NotEqual()
             {
                 var expected = new TwoGenericSet<string, int> { "foo", "bar" };
                 var actual   = new TwoGenericSet<string, int> { "foo", "bar" };
@@ -1011,7 +1011,7 @@ namespace SoftCube.Asserts.UnitTests
             #region IEnumerable
 
             [Fact]
-            public void 同値のIEnumerable_NotEqual()
+            public void 等値のIEnumerable_NotEqual()
             {
                 var expected = new string[] { "foo", "bar" };
                 var actual   = (IReadOnlyCollection<string>)new ReadOnlyCollection<string>(expected);
@@ -1037,7 +1037,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の配列_NotEqual()
+            public void 等値の配列_NotEqual()
             {
                 var expected = new string[] { "foo", "bar" };
                 var actual   = new object[] { "foo", "bar" };
@@ -1063,7 +1063,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の多次元配列_NotEqual()
+            public void 等値の多次元配列_NotEqual()
             {
                 var expected = new string[,] { { "foo" }, { "bar" } };
                 var actual   = new string[,] { { "foo" }, { "bar" } };
@@ -1106,7 +1106,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同値の深いネスト_NotEqual()
+            public void 等値の深いネスト_NotEqual()
             {
                 var expected = new List<object> { new List<object> { new List<object> { "a" } } };
                 var actual   = new List<object> { new List<object> { new List<object> { "a" } } };
@@ -1133,7 +1133,7 @@ namespace SoftCube.Asserts.UnitTests
             #region int
 
             [Fact]
-            public void 同値のint_Equal()
+            public void 等値のint_Equal()
             {
                 int expected = 42;
                 int actual   = 24;

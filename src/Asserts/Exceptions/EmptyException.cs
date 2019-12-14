@@ -1,24 +1,27 @@
-//using System;
-//using System.Collections;
+using System;
+using System.Collections;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a collection is unexpectedly not empty.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class EmptyException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="EmptyException"/> class.
-//        /// </summary>
-//        public EmptyException(IEnumerable collection)
-//            : base("<empty>", ArgumentFormatter.Format(collection), "Assert.Empty() Failure")
-//        {
-//        }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// Emptyアサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、Assert.Empty(...)の失敗時に投げられる。
+    /// </remarks>
+    public class EmptyException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="collection">検証に失敗したコレクション</param>
+        public EmptyException(IEnumerable collection)
+            : base("<empty>", ArgumentFormatter.Format(collection), "Assert.Empty() Failure")
+        {
+        }
+
+        #endregion
+    }
+}

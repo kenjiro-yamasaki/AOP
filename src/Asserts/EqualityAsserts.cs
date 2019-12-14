@@ -32,7 +32,7 @@ namespace SoftCube.Asserts
         /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="comparer">同値比較</param>
+        /// <param name="comparer">等値比較子</param>
         /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられる</exception>
         public static void Equal<T>(T expected, T actual, IEqualityComparer<T> comparer)
         {
@@ -109,7 +109,7 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 型のデフォルトの同値比較を使用し、オブジェクトが等しいことを正確に検証する。
+        /// 型のデフォルトの等値比較子を使用し、オブジェクトが等しいことを正確に検証する。
         /// </summary>
         /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
         /// <param name="expected">期待値</param>
@@ -142,7 +142,7 @@ namespace SoftCube.Asserts
         /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実測値</param>
-        /// <param name="comparer">同値比較</param>
+        /// <param name="comparer">等値比較子</param>
         /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられる</exception>
         public static void NotEqual<T>(T expected, T actual, IEqualityComparer<T> comparer)
         {
@@ -219,7 +219,7 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 型のデフォルトの同値比較を使用し、オブジェクトが等しくないことを正確に検証する。
+        /// 型のデフォルトの等値比較子を使用し、オブジェクトが等しくないことを正確に検証する。
         /// </summary>
         /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
         /// <param name="expected">期待値</param>
@@ -233,11 +233,11 @@ namespace SoftCube.Asserts
         #endregion
 
         /// <summary>
-        /// 同値比較を取得する。
+        /// 等値比較子を取得する。
         /// </summary>
         /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="elementEaualityComparer">要素の同値比較（比較対象のオブジェクトが反復子である場合、各要素の同値比較に使用される）</param>
-        /// <returns>同値比較</returns>
+        /// <param name="elementEaualityComparer">要素の等値比較子（比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される）</param>
+        /// <returns>等値比較子</returns>
         private static IEqualityComparer<T> GetEqualityComparer<T>(IEqualityComparer elementEaualityComparer = null)
         {
             return new AssertEqualityComparer<T>(elementEaualityComparer);

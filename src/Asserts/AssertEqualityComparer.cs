@@ -7,7 +7,7 @@ using System.Reflection;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// アサート用のデフォルト同値比較。
+    /// アサート用のデフォルト等値比較子。
     /// </summary>
     /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
     internal class AssertEqualityComparer<T> : IEqualityComparer<T>
@@ -15,7 +15,7 @@ namespace SoftCube.Asserts
         #region 定数
 
         /// <summary>
-        /// デフォルトの要素の同値比較。
+        /// デフォルトの要素の等値比較子。
         /// </summary>
         private static readonly IEqualityComparer DefaultElementEqualityComparer = new AssertEqualityComparerAdapter<object>(new AssertEqualityComparer<object>());
 
@@ -29,10 +29,10 @@ namespace SoftCube.Asserts
         #region プロパティ
 
         /// <summary>
-        /// 要素の同値比較ファクトリー。
+        /// 要素の等値比較子ファクトリー。
         /// </summary>
         /// <remarks>
-        /// 要素の同値比較は、比較対象のオブジェクトが反復子である場合、各要素の同値比較に使用される。
+        /// 要素の等値比較子は、比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される。
         /// </remarks>
         private Func<IEqualityComparer> ElementEqualityComparerFactory { get; }
 
@@ -59,7 +59,7 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="elementEaualityComparer">要素の同値比較（比較対象のオブジェクトが反復子である場合、各要素の同値比較に使用される）</param>
+        /// <param name="elementEaualityComparer">要素の等値比較子（比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される）</param>
         public AssertEqualityComparer(IEqualityComparer elementEaualityComparer = null)
         {
             ElementEqualityComparerFactory = () => elementEaualityComparer ?? DefaultElementEqualityComparer;
@@ -69,7 +69,7 @@ namespace SoftCube.Asserts
 
         #region メソッド
 
-        #region 同値比較
+        #region 等値比較子
 
         /// <summary>
         /// 指定したオブジェクトが等しいかを判断する。
@@ -407,17 +407,17 @@ namespace SoftCube.Asserts
         #region 内部クラス
 
         /// <summary>
-        /// IStructuralEquatable用の同値比較。
+        /// IStructuralEquatable用の等値比較子。
         /// </summary>
         private class StructuralEqualityComparer : IEqualityComparer
         {
             #region プロパティ
 
             /// <summary>
-            /// 要素の同値比較。
+            /// 要素の等値比較子。
             /// </summary>
             /// <remarks>
-            /// 要素の同値比較は、比較対象のオブジェクトが反復子である場合、各要素の同値比較に使用される。
+            /// 要素の等値比較子は、比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される。
             /// </remarks>
             private IEqualityComparer ElementEqualityComparer { get; }
 
@@ -445,7 +445,7 @@ namespace SoftCube.Asserts
             /// <summary>
             /// コンストラクター。
             /// </summary>
-            /// <param name="elementEqualityComparer">要素の同値比較（比較対象のオブジェクトが反復子である場合、各要素の同値比較に使用される）</param>
+            /// <param name="elementEqualityComparer">要素の等値比較子（比較対象のオブジェクトが反復子である場合、各要素の等値比較子に使用される）</param>
             public StructuralEqualityComparer(IEqualityComparer elementEqualityComparer)
             {
                 ElementEqualityComparer = elementEqualityComparer;
@@ -455,7 +455,7 @@ namespace SoftCube.Asserts
 
             #region メソッド
 
-            #region 同値比較
+            #region 等値比較子
 
             /// <summary>
             /// 指定したオブジェクトが等しいかを判断する。

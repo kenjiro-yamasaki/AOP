@@ -14,7 +14,6 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="object">オブジェクト</param>
         /// <exception cref="NotNullException">オブジェクト参照がnullの場合、投げられる</exception>
-        [Conditional("DEBUG")]
         public static void NotNull(object @object)
         {
             if (@object == null)
@@ -28,7 +27,6 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="object">オブジェクト</param>
         /// <exception cref="NullException">オブジェクト参照が非nullの場合、投げられる</exception>
-        [Conditional("DEBUG")]
         public static void Null(object @object)
         {
             if (@object != null)

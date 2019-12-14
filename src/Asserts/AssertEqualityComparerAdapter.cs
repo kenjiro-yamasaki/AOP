@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// アサート用の同値比較アダプター。
+    /// アサート用の等値比較子アダプター。
     /// </summary>
     /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
     internal class AssertEqualityComparerAdapter<T> : IEqualityComparer
@@ -13,7 +13,7 @@ namespace SoftCube.Asserts
         #region プロパティ
 
         /// <summary>
-        /// 内部同値比較。
+        /// 内部等値比較子。
         /// </summary>
         private IEqualityComparer<T> InnerComparer { get; }
 
@@ -24,7 +24,7 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="innerComparer">アダプトされる内部同値比較</param>
+        /// <param name="innerComparer">アダプトされる内部等値比較子</param>
         public AssertEqualityComparerAdapter(IEqualityComparer<T> innerComparer)
         {
             this.InnerComparer = innerComparer;

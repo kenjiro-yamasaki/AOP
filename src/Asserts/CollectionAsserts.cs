@@ -1,463 +1,528 @@
-﻿//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.Linq;
-//using Xunit.Sdk;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-//namespace Xunit
-//{
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    partial class Assert
-//    {
-//        /// <summary>
-//        /// Verifies that all items in the collection pass when executed against
-//        /// action.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be verified</typeparam>
-//        /// <param name="collection">The collection</param>
-//        /// <param name="action">The action to test each item against</param>
-//        /// <exception cref="AllException">Thrown when the collection contains at least one non-matching element</exception>
-//        public static void All<T>(IEnumerable<T> collection, Action<T> action)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
-//            Assert.GuardArgumentNotNull("action", action);
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// アサート。
+    /// </summary>
+    public static partial class Assert
+    {
+        #region 静的メソッド
 
-//            var errors = new Stack<Tuple<int, object, Exception>>();
-//            var array = collection.ToArray();
+        #region All
 
-//            for (var idx = 0; idx < array.Length; ++idx)
-//            {
-//                try
-//                {
-//                    action(array[idx]);
-//                }
-//                catch (Exception ex)
-//                {
-//                    errors.Push(new Tuple<int, object, Exception>(idx, array[idx], ex));
-//                }
-//            }
+        /// <summary>
+        /// すべての項目が検査に合格することを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">項目コレクション</param>
+        /// <param name="inspector">検査</param>
+        /// <exception cref="ArgumentNullException"><paramref name="collection"/>がnullである場合、投げられる</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="inspector"/>がnullである場合、投げられる</exception>
+        /// <exception cref="AllException">検査に合格しない項目がある場合、投げられる</exception>
+        public static void All<TItem>(IEnumerable<TItem> collection, Action<TItem> inspector)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
+            GuardArgumentNotNull(nameof(inspector), inspector);
 
-//            if (errors.Count > 0)
-//                throw new AllException(array.Length, errors.ToArray());
-//        }
+            var errors = new Stack<(int Index, object Object, Exception Exception)>();
+            var array  = collection.ToArray();
 
-//        /// <summary>
-//        /// Verifies that a collection contains exactly a given number of elements, which meet
-//        /// the criteria provided by the element inspectors.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be verified</typeparam>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <param name="elementInspectors">The element inspectors, which inspect each element in turn. The
-//        /// total number of element inspectors must exactly match the number of elements in the collection.</param>
-//        public static void Collection<T>(IEnumerable<T> collection, params Action<T>[] elementInspectors)
-//        {
-//            T[] elements = collection.ToArray();
-//            int expectedCount = elementInspectors.Length;
-//            int actualCount = elements.Length;
+            for (var index = 0; index < array.Length; index++)
+            {
+                try
+                {
+                    inspector(array[index]);
+                }
+                catch (Exception ex)
+                {
+                    errors.Push((index, array[index], ex));
+                }
+            }
 
-//            if (expectedCount != actualCount)
-//                throw new CollectionException(collection, expectedCount, actualCount);
+            if (0 < errors.Count)
+            {
+                throw new AllException(array.Length, errors.ToArray());
+            }
+        }
 
-//            for (int idx = 0; idx < actualCount; idx++)
-//            {
-//                try
-//                {
-//                    elementInspectors[idx](elements[idx]);
-//                }
-//                catch (Exception ex)
-//                {
-//                    throw new CollectionException(collection, expectedCount, actualCount, idx, ex);
-//                }
-//            }
-//        }
+        #endregion
 
-//        /// <summary>
-//        /// Verifies that a collection contains a given object.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be verified</typeparam>
-//        /// <param name="expected">The object expected to be in the collection</param>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <exception cref="ContainsException">Thrown when the object is not present in the collection</exception>
-//        public static void Contains<T>(T expected, IEnumerable<T> collection)
-//        {
-//            // If an equality comparer is not explicitly provided, call into ICollection<T>.Contains which may
-//            // use the collection's equality comparer for types like HashSet and Dictionary.
-//            var icollection = collection as ICollection<T>;
-//            if (icollection != null && icollection.Contains(expected))
-//                return;
+        #region Collection
 
-//            // We don't throw if either ICollection<T>.Contains or our custom equality comparer says the collection
-//            // has the item.
-//            Contains(expected, collection, GetEqualityComparer<T>());
-//        }
+        /// <summary>
+        /// すべての項目が、それぞれの対応する検査に合格することを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">項目コレクション</param>
+        /// <param name="inspectors">検査コレクション（項目数と検査数は正確に一致しなくてはならない）</param>
+        /// <exception cref="CollectionException">検査に合格しない項目がある場合、投げられる</exception>
+        public static void Collection<TItem>(IEnumerable<TItem> collection, params Action<TItem>[] inspectors)
+        {
+            var items         = collection.ToArray();
+            int expectedCount = inspectors.Length;
+            int actualCount   = items.Length;
 
-//        /// <summary>
-//        /// Verifies that a collection contains a given object, using an equality comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be verified</typeparam>
-//        /// <param name="expected">The object expected to be in the collection</param>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <param name="comparer">The comparer used to equate objects in the collection with the expected object</param>
-//        /// <exception cref="ContainsException">Thrown when the object is not present in the collection</exception>
-//        public static void Contains<T>(T expected, IEnumerable<T> collection, IEqualityComparer<T> comparer)
-//        {
-//            Assert.GuardArgumentNotNull("comparer", comparer);
-//            Assert.GuardArgumentNotNull("collection", collection);
+            if (expectedCount != actualCount)
+            {
+                throw new CollectionException(collection, expectedCount, actualCount);
+            }
 
-//            if (collection.Contains(expected, comparer))
-//                return;
+            for (int index = 0; index < actualCount; index++)
+            {
+                try
+                {
+                    inspectors[index](items[index]);
+                }
+                catch (Exception ex)
+                {
+                    throw new CollectionException(collection, expectedCount, actualCount, index, ex);
+                }
+            }
+        }
 
-//            throw new ContainsException(expected, collection);
-//        }
+        #endregion
 
-//        /// <summary>
-//        /// Verifies that a collection contains a given object.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be verified</typeparam>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <param name="filter">The filter used to find the item you're ensuring the collection contains</param>
-//        /// <exception cref="ContainsException">Thrown when the object is not present in the collection</exception>
-//        public static void Contains<T>(IEnumerable<T> collection, Predicate<T> filter)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
-//            Assert.GuardArgumentNotNull("filter", filter);
+        #region Contains
 
-//            foreach (var item in collection)
-//                if (filter(item))
-//                    return;
+        /// <summary>
+        /// 指定項目（期待値）がコレクションに含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">コレクション</param>
+        /// <exception cref="ArgumentNullException"><paramref name="collection"/>がnullである場合、投げられる</exception>
+        /// <exception cref="ContainsException">指定項目（期待値）を含まない場合、投げられる</exception>
+        public static void Contains<TItem>(TItem expected, IEnumerable<TItem> collection)
+        {
+            var icollection = collection as ICollection<TItem>;
+            if (icollection != null && icollection.Contains(expected))
+            {
+                return;
+            }
 
-//            throw new ContainsException("(filter expression)", collection);
-//        }
+            Contains(expected, collection, GetEqualityComparer<TItem>());
+        }
 
-//        /// <summary>
-//        /// Verifies that a dictionary contains a given key.
-//        /// </summary>
-//        /// <typeparam name="TKey">The type of the keys of the object to be verified.</typeparam>
-//        /// <typeparam name="TValue">The type of the values of the object to be verified.</typeparam>
-//        /// <param name="expected">The object expected to be in the collection.</param>
-//        /// <param name="collection">The collection to be inspected.</param>
-//        /// <returns>The value associated with <paramref name="expected"/>.</returns>
-//        /// <exception cref="ContainsException">Thrown when the object is not present in the collection</exception>
-//        public static TValue Contains<TKey, TValue>(TKey expected, IReadOnlyDictionary<TKey, TValue> collection)
-//        {
-//            Assert.GuardArgumentNotNull("expected", expected);
-//            Assert.GuardArgumentNotNull("collection", collection);
+        /// <summary>
+        /// 指定項目（期待値）がコレクションに含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">コレクション</param>
+        /// <param name="comparer">等値比較子</param>
+        /// <exception cref="ArgumentNullException"><paramref name="collection"/>がnullである場合、投げられる</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="comparer"/>がnullである場合、投げられる</exception>
+        /// <exception cref="ContainsException">指定項目（期待値）が含まれない場合、投げられる</exception>
+        public static void Contains<TItem>(TItem expected, IEnumerable<TItem> collection, IEqualityComparer<TItem> comparer)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
+            GuardArgumentNotNull(nameof(comparer), comparer);
 
-//            if (!collection.TryGetValue(expected, out var value))
-//                throw new ContainsException(expected, collection.Keys);
+            if (collection.Contains(expected, comparer))
+            {
+                return;
+            }
 
-//            return value;
-//        }
+            throw new ContainsException(expected, collection);
+        }
 
-//        /// <summary>
-//        /// Verifies that a dictionary contains a given key.
-//        /// </summary>
-//        /// <typeparam name="TKey">The type of the keys of the object to be verified.</typeparam>
-//        /// <typeparam name="TValue">The type of the values of the object to be verified.</typeparam>
-//        /// <param name="expected">The object expected to be in the collection.</param>
-//        /// <param name="collection">The collection to be inspected.</param>
-//        /// <returns>The value associated with <paramref name="expected"/>.</returns>
-//        /// <exception cref="ContainsException">Thrown when the object is not present in the collection</exception>
-//        public static TValue Contains<TKey, TValue>(TKey expected, IDictionary<TKey, TValue> collection)
-//        {
-//            Assert.GuardArgumentNotNull("expected", expected);
-//            Assert.GuardArgumentNotNull("collection", collection);
+        /// <summary>
+        /// フィルターに通る項目がコレクションに含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">コレクション</param>
+        /// <param name="filter">フィルター</param>
+        /// <exception cref="ContainsException">フィルターに通る項目が含まれない場合、投げられる</exception>
+        public static void Contains<TItem>(IEnumerable<TItem> collection, Predicate<TItem> filter)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
+            GuardArgumentNotNull(nameof(filter), filter);
 
-//            if (!collection.TryGetValue(expected, out var value))
-//                throw new ContainsException(expected, collection.Keys);
+            foreach (var item in collection)
+            {
+                if (filter(item))
+                {
+                    return;
+                }
+            }
 
-//            return value;
-//        }
+            throw new ContainsException("(filter expression)", collection);
+        }
 
-//        /// <summary>
-//        /// Verifies that a collection does not contain a given object.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be compared</typeparam>
-//        /// <param name="expected">The object that is expected not to be in the collection</param>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the object is present inside the container</exception>
-//        public static void DoesNotContain<T>(T expected, IEnumerable<T> collection)
-//        {
-//            // If an equality comparer is not explicitly provided, call into ICollection<T>.Contains which may
-//            // use the collection's equality comparer for types like HashSet and Dictionary.
-//            var icollection = collection as ICollection<T>;
-//            if (icollection != null && icollection.Contains(expected))
-//                throw new DoesNotContainException(expected, collection);
+        /// <summary>
+        /// 指定キー（期待値）が辞書に含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TKey">キーの型</typeparam>
+        /// <typeparam name="TValue">値の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">辞書</param>
+        /// <returns><paramref name="expected"/>に関連した値</returns>
+        /// <exception cref="ContainsException">指定キー（期待値）が含まれない場合、投げられる</exception>
+        public static TValue Contains<TKey, TValue>(TKey expected, IReadOnlyDictionary<TKey, TValue> collection)
+        {
+            GuardArgumentNotNull(nameof(expected), expected);
+            GuardArgumentNotNull(nameof(collection), collection);
 
-//            // We don't throw only if both ICollection<T>.Contains and our custom equality comparer say the collection
-//            // doesn't have the item.
-//            DoesNotContain(expected, collection, GetEqualityComparer<T>());
-//        }
+            if (!collection.TryGetValue(expected, out var value))
+            {
+                throw new ContainsException(expected, collection.Keys);
+            }
 
-//        /// <summary>
-//        /// Verifies that a collection does not contain a given object, using an equality comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be compared</typeparam>
-//        /// <param name="expected">The object that is expected not to be in the collection</param>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <param name="comparer">The comparer used to equate objects in the collection with the expected object</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the object is present inside the container</exception>
-//        public static void DoesNotContain<T>(T expected, IEnumerable<T> collection, IEqualityComparer<T> comparer)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
-//            Assert.GuardArgumentNotNull("comparer", comparer);
+            return value;
+        }
 
-//            if (!collection.Contains(expected, comparer))
-//                return;
+        /// <summary>
+        /// 指定キー（期待値）が辞書に含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TKey">キーの型</typeparam>
+        /// <typeparam name="TValue">値の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">辞書</param>
+        /// <returns><paramref name="expected"/>に関連した値</returns>
+        /// <exception cref="ContainsException">指定キー（期待値）が含まれない場合、投げられる</exception>
+        public static TValue Contains<TKey, TValue>(TKey expected, IDictionary<TKey, TValue> collection)
+        {
+            GuardArgumentNotNull(nameof(expected), expected);
+            GuardArgumentNotNull(nameof(collection), collection);
 
-//            throw new DoesNotContainException(expected, collection);
-//        }
+            if (!collection.TryGetValue(expected, out var value))
+            {
+                throw new ContainsException(expected, collection.Keys);
+            }
 
-//        /// <summary>
-//        /// Verifies that a collection does not contain a given object.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the object to be compared</typeparam>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <param name="filter">The filter used to find the item you're ensuring the collection does not contain</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the object is present inside the container</exception>
-//        public static void DoesNotContain<T>(IEnumerable<T> collection, Predicate<T> filter)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
-//            Assert.GuardArgumentNotNull("filter", filter);
+            return value;
+        }
 
-//            foreach (var item in collection)
-//                if (filter(item))
-//                    throw new DoesNotContainException("(filter expression)", collection);
-//        }
+        #endregion
 
-//        /// <summary>
-//        /// Verifies that a dictionary does not contain a given key.
-//        /// </summary>
-//        /// <typeparam name="TKey">The type of the keys of the object to be verified.</typeparam>
-//        /// <typeparam name="TValue">The type of the values of the object to be verified.</typeparam>
-//        /// <param name="expected">The object expected to be in the collection.</param>
-//        /// <param name="collection">The collection to be inspected.</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the object is present in the collection</exception>
-//        public static void DoesNotContain<TKey, TValue>(TKey expected, IReadOnlyDictionary<TKey, TValue> collection)
-//        {
-//            Assert.GuardArgumentNotNull("expected", expected);
-//            Assert.GuardArgumentNotNull("collection", collection);
+        #region DoesNotContain
 
-//            DoesNotContain(expected, collection.Keys);
-//        }
+        /// <summary>
+        /// 指定項目（期待値）がコレクションに含まれないことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">コレクション</param>
+        /// <exception cref="DoesNotContainException">指定項目（期待値）を含まる場合、投げられる</exception>
+        public static void DoesNotContain<TItem>(TItem expected, IEnumerable<TItem> collection)
+        {
+            var icollection = collection as ICollection<TItem>;
+            if (icollection != null && icollection.Contains(expected))
+            {
+                throw new DoesNotContainException(expected, collection);
+            }
 
-//        /// <summary>
-//        /// Verifies that a dictionary does not contain a given key.
-//        /// </summary>
-//        /// <typeparam name="TKey">The type of the keys of the object to be verified.</typeparam>
-//        /// <typeparam name="TValue">The type of the values of the object to be verified.</typeparam>
-//        /// <param name="expected">The object expected to be in the collection.</param>
-//        /// <param name="collection">The collection to be inspected.</param>
-//        /// <exception cref="DoesNotContainException">Thrown when the object is present in the collection</exception>
-//        public static void DoesNotContain<TKey, TValue>(TKey expected, IDictionary<TKey, TValue> collection)
-//        {
-//            Assert.GuardArgumentNotNull("expected", expected);
-//            Assert.GuardArgumentNotNull("collection", collection);
+            DoesNotContain(expected, collection, GetEqualityComparer<TItem>());
+        }
 
-//            DoesNotContain(expected, collection.Keys);
-//        }
+        /// <summary>
+        /// 指定項目（期待値）がコレクションに含まれないことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">コレクション</param>
+        /// <param name="comparer">等値比較子</param>
+        /// <exception cref="DoesNotContainException">指定項目（期待値）を含まる場合、投げられる</exception>
+        public static void DoesNotContain<TItem>(TItem expected, IEnumerable<TItem> collection, IEqualityComparer<TItem> comparer)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
+            GuardArgumentNotNull(nameof(comparer), comparer);
 
-//        /// <summary>
-//        /// Verifies that a collection is empty.
-//        /// </summary>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <exception cref="ArgumentNullException">Thrown when the collection is null</exception>
-//        /// <exception cref="EmptyException">Thrown when the collection is not empty</exception>
-//        public static void Empty(IEnumerable collection)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
+            if (!collection.Contains(expected, comparer))
+            {
+                return;
+            }
 
-//            var enumerator = collection.GetEnumerator();
-//            try
-//            {
-//                if (enumerator.MoveNext())
-//                    throw new EmptyException(collection);
-//            }
-//            finally
-//            {
-//                (enumerator as IDisposable)?.Dispose();
-//            }
-//        }
+            throw new DoesNotContainException(expected, collection);
+        }
 
-//        /// <summary>
-//        /// Verifies that two sequences are equivalent, using a default comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the objects to be compared</typeparam>
-//        /// <param name="expected">The expected value</param>
-//        /// <param name="actual">The value to be compared against</param>
-//        /// <exception cref="EqualException">Thrown when the objects are not equal</exception>
-//        public static void Equal<T>(IEnumerable<T> expected, IEnumerable<T> actual)
-//        {
-//            Equal<IEnumerable<T>>(expected, actual, GetEqualityComparer<IEnumerable<T>>());
-//        }
+        /// <summary>
+        /// フィルターに通る項目がコレクションに含まれないことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">コレクション</param>
+        /// <param name="filter">フィルター</param>
+        /// <exception cref="DoesNotContainException">フィルターに通る項目が含まれる場合、投げられる</exception>
+        public static void DoesNotContain<T>(IEnumerable<T> collection, Predicate<T> filter)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
+            GuardArgumentNotNull(nameof(filter), filter);
 
-//        /// <summary>
-//        /// Verifies that two sequences are equivalent, using a custom equatable comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the objects to be compared</typeparam>
-//        /// <param name="expected">The expected value</param>
-//        /// <param name="actual">The value to be compared against</param>
-//        /// <param name="comparer">The comparer used to compare the two objects</param>
-//        /// <exception cref="EqualException">Thrown when the objects are not equal</exception>
-//        public static void Equal<T>(IEnumerable<T> expected, IEnumerable<T> actual, IEqualityComparer<T> comparer)
-//        {
-//            Equal<IEnumerable<T>>(expected, actual, GetEqualityComparer<IEnumerable<T>>(new AssertEqualityComparerAdapter<T>(comparer)));
-//        }
+            foreach (var item in collection)
+            {
+                if (filter(item))
+                {
+                    throw new DoesNotContainException("(filter expression)", collection);
+                }
+            }
+        }
 
-//        /// <summary>
-//        /// Verifies that a collection is not empty.
-//        /// </summary>
-//        /// <param name="collection">The collection to be inspected</param>
-//        /// <exception cref="ArgumentNullException">Thrown when a null collection is passed</exception>
-//        /// <exception cref="NotEmptyException">Thrown when the collection is empty</exception>
-//        public static void NotEmpty(IEnumerable collection)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
+        /// <summary>
+        /// 指定キー（期待値）が辞書に含まれないことを検証する。
+        /// </summary>
+        /// <typeparam name="TKey">キーの型</typeparam>
+        /// <typeparam name="TValue">値の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">辞書</param>
+        /// <exception cref="DoesNotContainException">指定キー（期待値）が含まれる場合、投げられる</exception>
+        public static void DoesNotContain<TKey, TValue>(TKey expected, IReadOnlyDictionary<TKey, TValue> collection)
+        {
+            GuardArgumentNotNull(nameof(expected), expected);
+            GuardArgumentNotNull(nameof(collection), collection);
 
-//            var enumerator = collection.GetEnumerator();
-//            try
-//            {
-//                if (!enumerator.MoveNext())
-//                    throw new NotEmptyException();
-//            }
-//            finally
-//            {
-//                (enumerator as IDisposable)?.Dispose();
-//            }
-//        }
+            DoesNotContain(expected, collection.Keys);
+        }
 
-//        /// <summary>
-//        /// Verifies that two sequences are not equivalent, using a default comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the objects to be compared</typeparam>
-//        /// <param name="expected">The expected object</param>
-//        /// <param name="actual">The actual object</param>
-//        /// <exception cref="NotEqualException">Thrown when the objects are equal</exception>
-//        public static void NotEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
-//        {
-//            NotEqual<IEnumerable<T>>(expected, actual, GetEqualityComparer<IEnumerable<T>>());
-//        }
+        /// <summary>
+        /// 指定キー（期待値）が辞書に含まれないことを検証する。
+        /// </summary>
+        /// <typeparam name="TKey">キーの型</typeparam>
+        /// <typeparam name="TValue">値の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="collection">辞書</param>
+        /// <exception cref="DoesNotContainException">指定キー（期待値）が含まれる場合、投げられる</exception>
+        public static void DoesNotContain<TKey, TValue>(TKey expected, IDictionary<TKey, TValue> collection)
+        {
+            GuardArgumentNotNull(nameof(expected), expected);
+            GuardArgumentNotNull(nameof(collection), collection);
 
-//        /// <summary>
-//        /// Verifies that two sequences are not equivalent, using a custom equality comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the objects to be compared</typeparam>
-//        /// <param name="expected">The expected object</param>
-//        /// <param name="actual">The actual object</param>
-//        /// <param name="comparer">The comparer used to compare the two objects</param>
-//        /// <exception cref="NotEqualException">Thrown when the objects are equal</exception>
-//        public static void NotEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual, IEqualityComparer<T> comparer)
-//        {
-//            NotEqual<IEnumerable<T>>(expected, actual, GetEqualityComparer<IEnumerable<T>>(new AssertEqualityComparerAdapter<T>(comparer)));
-//        }
+            DoesNotContain(expected, collection.Keys);
+        }
 
-//        /// <summary>
-//        /// Verifies that the given collection contains only a single
-//        /// element of the given type.
-//        /// </summary>
-//        /// <param name="collection">The collection.</param>
-//        /// <returns>The single item in the collection.</returns>
-//        /// <exception cref="SingleException">Thrown when the collection does not contain
-//        /// exactly one element.</exception>
-//        public static object Single(IEnumerable collection)
-//        {
-//            return Single(collection.Cast<object>());
-//        }
+        #endregion
 
-//        /// <summary>
-//        /// Verifies that the given collection contains only a single
-//        /// element of the given value. The collection may or may not
-//        /// contain other values.
-//        /// </summary>
-//        /// <param name="collection">The collection.</param>
-//        /// <param name="expected">The value to find in the collection.</param>
-//        /// <returns>The single item in the collection.</returns>
-//        /// <exception cref="SingleException">Thrown when the collection does not contain
-//        /// exactly one element.</exception>
-//        public static void Single(IEnumerable collection, object expected)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
+        #region Empty
 
-//            GetSingleResult(collection.Cast<object>(), item => object.Equals(item, expected), ArgumentFormatter.Format(expected), out Exception toThrow);
+        /// <summary>
+        /// コレクションが空であることを検証する。
+        /// </summary>
+        /// <param name="collection">コレクション</param>
+        /// <exception cref="ArgumentNullException">コレクションがnullの場合、投げられる</exception>
+        /// <exception cref="EmptyException">コレクションが空の場合、投げられる</exception>
+        public static void Empty(IEnumerable collection)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
 
-//            if (toThrow != null)
-//                throw toThrow;
-//        }
+            var enumerator = collection.GetEnumerator();
+            try
+            {
+                if (enumerator.MoveNext())
+                {
+                    throw new EmptyException(collection);
+                }
+            }
+            finally
+            {
+                (enumerator as IDisposable)?.Dispose();
+            }
+        }
 
-//        /// <summary>
-//        /// Verifies that the given collection contains only a single
-//        /// element of the given type.
-//        /// </summary>
-//        /// <typeparam name="T">The collection type.</typeparam>
-//        /// <param name="collection">The collection.</param>
-//        /// <returns>The single item in the collection.</returns>
-//        /// <exception cref="SingleException">Thrown when the collection does not contain
-//        /// exactly one element.</exception>
-//        public static T Single<T>(IEnumerable<T> collection)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
+        #endregion
 
-//            T result = GetSingleResult(collection, null, null, out Exception toThrow);
+        #region Equal
 
-//            if (toThrow != null)
-//                throw toThrow;
+        /// <summary>
+        /// コレクションの項目数と各項目が等しいことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <exception cref="EqualException">コレクションの項目数と各項目が等しくない場合、投げられる</exception>
+        public static void Equal<TItem>(IEnumerable<TItem> expected, IEnumerable<TItem> actual)
+        {
+            Equal(expected, actual, GetEqualityComparer<IEnumerable<TItem>>());
+        }
 
-//            return result;
-//        }
+        /// <summary>
+        /// コレクションの項目数と各項目が等しいことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <param name="comparer">等値比較子</param>
+        /// <exception cref="EqualException">コレクションの項目数と各項目が等しくない場合、投げられる</exception>
+        public static void Equal<TItem>(IEnumerable<TItem> expected, IEnumerable<TItem> actual, IEqualityComparer<TItem> comparer)
+        {
+            Equal(expected, actual, GetEqualityComparer<IEnumerable<TItem>>(new AssertEqualityComparerAdapter<TItem>(comparer)));
+        }
 
-//        /// <summary>
-//        /// Verifies that the given collection contains only a single
-//        /// element of the given type which matches the given predicate. The
-//        /// collection may or may not contain other values which do not
-//        /// match the given predicate.
-//        /// </summary>
-//        /// <typeparam name="T">The collection type.</typeparam>
-//        /// <param name="collection">The collection.</param>
-//        /// <param name="predicate">The item matching predicate.</param>
-//        /// <returns>The single item in the filtered collection.</returns>
-//        /// <exception cref="SingleException">Thrown when the filtered collection does
-//        /// not contain exactly one element.</exception>
-//        public static T Single<T>(IEnumerable<T> collection, Predicate<T> predicate)
-//        {
-//            Assert.GuardArgumentNotNull("collection", collection);
-//            Assert.GuardArgumentNotNull("predicate", predicate);
+        #endregion
 
-//            T result = GetSingleResult(collection, predicate, "(filter expression)", out Exception toThrow);
+        #region NotEmpty
 
-//            if (toThrow != null)
-//                throw toThrow;
+        /// <summary>
+        /// コレクションが空ではないことを検証する。
+        /// </summary>
+        /// <param name="collection">コレクション</param>
+        /// <exception cref="ArgumentNullException">コレクションがnullの場合、投げられる</exception>
+        /// <exception cref="NotEmptyException">コレクションが空である場合、投げられる</exception>
+        public static void NotEmpty(IEnumerable collection)
+        {
+            GuardArgumentNotNull("collection", collection);
 
-//            return result;
-//        }
+            var enumerator = collection.GetEnumerator();
+            try
+            {
+                if (!enumerator.MoveNext())
+                {
+                    throw new NotEmptyException();
+                }
+            }
+            finally
+            {
+                (enumerator as IDisposable)?.Dispose();
+            }
+        }
 
-//        private static T GetSingleResult<T>(IEnumerable<T> collection, Predicate<T> predicate, string expectedArgument, out Exception exceptionToThrow)
-//        {
-//            int count = 0;
-//            T result = default(T);
+        #endregion
 
-//            foreach (T item in collection)
-//                if (predicate == null || predicate(item))
-//                    if (++count == 1)
-//                        result = item;
+        #region NotEqual
 
-//            switch (count)
-//            {
-//                case 0:
-//                    exceptionToThrow = SingleException.Empty(expectedArgument);
-//                    break;
-//                case 1:
-//                    exceptionToThrow = null;
-//                    break;
-//                default:
-//                    exceptionToThrow = SingleException.MoreThanOne(count, expectedArgument);
-//                    break;
-//            }
+        /// <summary>
+        /// コレクションの項目数と各項目が等しくないことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <exception cref="NotEqualException">コレクションの項目数と各項目が等しい場合、投げられる</exception>
+        public static void NotEqual<TItem>(IEnumerable<TItem> expected, IEnumerable<TItem> actual)
+        {
+            NotEqual(expected, actual, GetEqualityComparer<IEnumerable<TItem>>());
+        }
 
-//            return result;
-//        }
-//    }
-//}
+        /// <summary>
+        /// コレクションの項目数と各項目が等しくないことを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実測値</param>
+        /// <param name="comparer">等値比較子</param>
+        /// <exception cref="NotEqualException">コレクションの項目数と各項目が等しい場合、投げられる</exception>
+        public static void NotEqual<TItem>(IEnumerable<TItem> expected, IEnumerable<TItem> actual, IEqualityComparer<TItem> comparer)
+        {
+            NotEqual(expected, actual, GetEqualityComparer<IEnumerable<TItem>>(new AssertEqualityComparerAdapter<TItem>(comparer)));
+        }
+
+        #endregion
+
+        #region Single
+
+        /// <summary>
+        /// コレクションに項目が一つだけ含まれることを検証する。
+        /// </summary>
+        /// <param name="collection">コレクション</param>
+        /// <returns>コレクションの唯一の項目</returns>
+        /// <exception cref="SingleException">項目が一つではない場合、投げられる</exception>
+        public static object Single(IEnumerable collection)
+        {
+            return Single(collection.Cast<object>());
+        }
+
+        /// <summary>
+        /// 指定項目（期待値）がコレクションに一つだけ含まれることを検証する。
+        /// </summary>
+        /// <param name="collection">コレクション</param>
+        /// <param name="expected">期待値</param>
+        /// <exception cref="SingleException">項目が一つではない場合、投げられる</exception>
+        public static void Single(IEnumerable collection, object expected)
+        {
+            GuardArgumentNotNull("collection", collection);
+
+            var (_, exception) = GetSingleResult(collection.Cast<object>(), item => object.Equals(item, expected), ArgumentFormatter.Format(expected));
+
+            if (exception != null)
+            {
+                throw exception;
+            }
+        }
+
+        /// <summary>
+        /// コレクションに項目が一つだけ含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">コレクション</param>
+        /// <returns>コレクションの唯一の項目</returns>
+        /// <exception cref="SingleException">項目が一つではない場合、投げられる</exception>
+        public static TItem Single<TItem>(IEnumerable<TItem> collection)
+        {
+            GuardArgumentNotNull("collection", collection);
+
+            var (result, exception) = GetSingleResult(collection, null, null);
+
+            if (exception != null)
+            {
+                throw exception;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 指定述語にマッチする項目がコレクションに一つだけ含まれることを検証する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">コレクション</param>
+        /// <param name="predicate">述語</param>
+        /// <returns>指定述語にマッチする項目</returns>
+        /// <exception cref="SingleException">指定述語にマッチする項目が一つではない場合、投げられる</exception>
+        public static TItem Single<TItem>(IEnumerable<TItem> collection, Predicate<TItem> predicate)
+        {
+            GuardArgumentNotNull(nameof(collection), collection);
+            GuardArgumentNotNull(nameof(predicate), predicate);
+
+            var (result, exception) = GetSingleResult(collection, predicate, "(filter expression)");
+
+            if (exception != null)
+            {
+                throw exception;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 指定述語にマッチするSingleの検索結果を取得する。
+        /// </summary>
+        /// <typeparam name="TItem">項目の型</typeparam>
+        /// <param name="collection">コレクション</param>
+        /// <param name="predicate">述語</param>
+        /// <param name="expected">期待値</param>
+        /// <returns>最初に述語にマッチした項目, 投げるべき例外</returns>
+        private static (TItem Item, SingleException Exception) GetSingleResult<TItem>(IEnumerable<TItem> collection, Predicate<TItem> predicate, string expected)
+        {
+            int count = 0;
+            var result = default(TItem);
+
+            foreach (var item in collection)
+            {
+                if (predicate == null || predicate(item))
+                {
+                    if (++count == 1)
+                    {
+                        result = item;
+                    }
+                }
+            }
+
+            switch (count)
+            {
+                case 0:
+                    return (result , new SingleException(expected));
+
+                case 1:
+                    return (result , null);
+
+                default:
+                    return (result, new SingleException(count, expected));
+            }
+        }
+
+        #endregion
+
+        #endregion
+    }
+}
