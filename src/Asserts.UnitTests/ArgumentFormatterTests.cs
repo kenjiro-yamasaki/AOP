@@ -7,16 +7,16 @@ using Xunit;
 
 namespace SoftCube.Asserts.UnitTests
 {
-    using Assert = Xunit.Assert;
+    using XAssert = Xunit.Assert;
 
     public class ArgumentFormatterTests
     {
         #region null
 
         [Fact]
-        public static void Format_Null_適切にフォーマットする()
+        public static void Format_Null_正しくフォーマットする()
         {
-            Assert.Equal("null", ArgumentFormatter.Format(null));
+            XAssert.Equal("null", ArgumentFormatter.Format(null));
         }
 
         #endregion
@@ -46,9 +46,9 @@ namespace SoftCube.Asserts.UnitTests
         [InlineData('\uFFFE', "0xfffe")]
         [InlineData(char.MinValue, @"'\0'")]
         [InlineData(char.MaxValue, "0xffff")]
-        public static void Format_Char_適切にフォーマットする(char value, string expected)
+        public static void Format_Char_正しくフォーマットする(char value, string expected)
         {
-            Assert.Equal(expected, ArgumentFormatter.Format(value));
+            XAssert.Equal(expected, ArgumentFormatter.Format(value));
         }
 
         #endregion
@@ -72,9 +72,9 @@ namespace SoftCube.Asserts.UnitTests
         [InlineData("\t", @"""\t""")] // tab
         [InlineData("\f", @"""\f""")] // formfeed
         [InlineData("----|----1----|----2----|----3----|----4----|----5-", "\"----|----1----|----2----|----3----|----4----|----5\"...")] // truncation
-        public static void Format_String_適切にフォーマットする(string value, string expected)
+        public static void Format_String_正しくフォーマットする(string value, string expected)
         {
-            Assert.Equal(expected, ArgumentFormatter.Format(value));
+            XAssert.Equal(expected, ArgumentFormatter.Format(value));
         }
 
         #endregion
@@ -82,9 +82,9 @@ namespace SoftCube.Asserts.UnitTests
         #region decimal
 
         [Fact]
-        public static void Format_Decimal_適切にフォーマットする()
+        public static void Format_Decimal_正しくフォーマットする()
         {
-            Assert.Equal(123.45M.ToString(), ArgumentFormatter.Format(123.45M));
+            XAssert.Equal(123.45M.ToString(), ArgumentFormatter.Format(123.45M));
         }
 
         #endregion
@@ -92,19 +92,19 @@ namespace SoftCube.Asserts.UnitTests
         #region DateTime、DateTimeOffset
 
         [Fact]
-        public static void Format_DateTimeValue_適切にフォーマットする()
+        public static void Format_DateTimeValue_正しくフォーマットする()
         {
             var now = DateTime.UtcNow;
 
-            Assert.Equal(now.ToString("o"), ArgumentFormatter.Format(now));
+            XAssert.Equal(now.ToString("o"), ArgumentFormatter.Format(now));
         }
 
         [Fact]
-        public static void Format_DateTimeOffset_適切にフォーマットする()
+        public static void Format_DateTimeOffset_正しくフォーマットする()
         {
             var now = DateTimeOffset.UtcNow;
 
-            Assert.Equal(now.ToString("o"), ArgumentFormatter.Format(now));
+            XAssert.Equal(now.ToString("o"), ArgumentFormatter.Format(now));
         }
 
         #endregion
@@ -121,11 +121,11 @@ namespace SoftCube.Asserts.UnitTests
         [InlineData(0, "Value0")]
         [InlineData(1, "Value1")]
         [InlineData(42, "42")]
-        public static void Format_Flags属性が付かない列挙子_適切にフォーマットする(int enumValue, string expected)
+        public static void Format_Flags属性が付かない列挙子_正しくフォーマットする(int enumValue, string expected)
         {
             var actual = ArgumentFormatter.Format((NonFlagsEnum)enumValue);
 
-            Assert.Equal(expected, actual);
+            XAssert.Equal(expected, actual);
         }
 
         [Flags]
@@ -141,11 +141,11 @@ namespace SoftCube.Asserts.UnitTests
         [InlineData(1, "Value1")]
         [InlineData(3, "Value1 | Value2")]
         [InlineData(7, "7")]
-        public static void Format_Flags属性が付く列挙子_適切にフォーマットする(int enumValue, string expected)
+        public static void Format_Flags属性が付く列挙子_正しくフォーマットする(int enumValue, string expected)
         {
             var actual = ArgumentFormatter.Format((FlagsEnum)enumValue);
 
-            Assert.Equal(expected, actual);
+            XAssert.Equal(expected, actual);
         }
 
         #endregion
@@ -160,31 +160,31 @@ namespace SoftCube.Asserts.UnitTests
         [InlineData(typeof(Dictionary<int, string>), "typeof(System.Collections.Generic.Dictionary<int, string>)")]
         [InlineData(typeof(List<>), "typeof(System.Collections.Generic.List<>)")]
         [InlineData(typeof(Dictionary<,>), "typeof(System.Collections.Generic.Dictionary<,>)")]
-        public void Format_Type_適切にフォーマットする(Type type, string expectedResult)
+        public void Format_Type_正しくフォーマットする(Type type, string expectedResult)
         {
-            Assert.Equal(expectedResult, ArgumentFormatter.Format(type));
+            XAssert.Equal(expectedResult, ArgumentFormatter.Format(type));
         }
 
         [Fact]
-        public void Format_型引数が1つのジェネリックの型引数_適切にフォーマットする()
+        public void Format_型引数が1つのジェネリックの型引数_正しくフォーマットする()
         {
             var typeInfo              = typeof(List<>).GetTypeInfo();
             var genericTypeParameters = typeInfo.GenericTypeParameters;
             var parameterType         = genericTypeParameters.First();
 
-            Assert.Equal("typeof(T)", ArgumentFormatter.Format(parameterType));
+            XAssert.Equal("typeof(T)", ArgumentFormatter.Format(parameterType));
         }
 
         [Fact]
-        public void Format_型引数が2つのジェネリックの型引数_適切にフォーマットする()
+        public void Format_型引数が2つのジェネリックの型引数_正しくフォーマットする()
         {
             var typeInfo              = typeof(Dictionary<,>).GetTypeInfo();
             var genericTypeParameters = typeInfo.GenericTypeParameters;
             var parameterTKey         = genericTypeParameters.First();
             var parameterTValue       = genericTypeParameters.Last();
 
-            Assert.Equal("typeof(TKey)", ArgumentFormatter.Format(parameterTKey));
-            Assert.Equal("typeof(TValue)", ArgumentFormatter.Format(parameterTValue));
+            XAssert.Equal("typeof(TKey)", ArgumentFormatter.Format(parameterTKey));
+            XAssert.Equal("typeof(TValue)", ArgumentFormatter.Format(parameterTValue));
         }
 
         #endregion
@@ -192,49 +192,49 @@ namespace SoftCube.Asserts.UnitTests
         #region Task
 
         [Fact]
-        public static async void Format_Task_適切にフォーマットする()
+        public static async void Format_Task_正しくフォーマットする()
         {
             var task = Task.Run(() => { });
             await task;
 
-            Assert.Equal("Task { Status = RanToCompletion }", ArgumentFormatter.Format(task));
+            XAssert.Equal("Task { Status = RanToCompletion }", ArgumentFormatter.Format(task));
         }
 
         [Fact]
-        public static void Format_GenericTask_適切にフォーマットする()
+        public static void Format_GenericTask_正しくフォーマットする()
         {
             var source = new TaskCompletionSource<int>();
             source.SetException(new DivideByZeroException());
 
-            Assert.Equal("Task<int> { Status = Faulted }", ArgumentFormatter.Format(source.Task));
+            XAssert.Equal("Task<int> { Status = Faulted }", ArgumentFormatter.Format(source.Task));
         }
 
         #endregion
 
-        #region 反復型
+        #region IEnumerable
 
         [Fact]
-        public static void Format_反復型_適切にフォーマットする()
+        public static void Format_IEnumerable_正しくフォーマットする()
         {
             var expected = $"[1, {2.3M}, \"Hello, world!\"]";
 
-            Assert.Equal(expected, ArgumentFormatter.Format(new object[] { 1, 2.3M, "Hello, world!" }));
+            XAssert.Equal(expected, ArgumentFormatter.Format(new object[] { 1, 2.3M, "Hello, world!" }));
         }
 
         [Fact]
-        public static void Format_項目の多い反復型_最初の数個の項目だけをフォーマットする()
+        public static void Format_項目の多いIEnumerable_最初の数個の項目だけをフォーマットする()
         {
-            Assert.Equal("[0, 1, 2, 3, 4, ...]", ArgumentFormatter.Format(Enumerable.Range(0, int.MaxValue)));
+            XAssert.Equal("[0, 1, 2, 3, 4, ...]", ArgumentFormatter.Format(Enumerable.Range(0, int.MaxValue)));
         }
 
         [Fact]
-        public static void Format_再帰する反復型_最大ネスト深さでフォーマットを打ち切る()
+        public static void Format_再帰するIEnumerable_最大ネスト深さでフォーマットを打ち切る()
         {
             var looping = new object[2];
             looping[0] = 42;
             looping[1] = looping;
 
-            Assert.Equal("[42, [42, [...]]]", ArgumentFormatter.Format(looping));
+            XAssert.Equal("[42, [42, [...]]]", ArgumentFormatter.Format(looping));
         }
 
         #endregion
@@ -259,11 +259,11 @@ namespace SoftCube.Asserts.UnitTests
         }
 
         [Fact]
-        public static void Format_シンプルなクラス_適切にフォーマットする()
+        public static void Format_シンプルなクラス_正しくフォーマットする()
         {
             var expected = $"SimpleClass {{ PublicField = 42, PublicProperty = {21.12M} }}";
 
-            Assert.Equal(expected, ArgumentFormatter.Format(new SimpleClass()));
+            XAssert.Equal(expected, ArgumentFormatter.Format(new SimpleClass()));
         }
 
         #endregion
@@ -278,11 +278,11 @@ namespace SoftCube.Asserts.UnitTests
         }
 
         [Fact]
-        public static void Format_クラスを所有するクラス_適切にフォーマットする()
+        public static void Format_クラスを所有するクラス_正しくフォーマットする()
         {
             var expected = $"ClassWithSimpleClass {{ Char = 'A', SimpleClass = SimpleClass {{ PublicField = 42, PublicProperty = {21.12M} }}, String = \"Hello, world!\" }}";
 
-            Assert.Equal(expected, ArgumentFormatter.Format(new ClassWithSimpleClass()));
+            XAssert.Equal(expected, ArgumentFormatter.Format(new ClassWithSimpleClass()));
         }
 
         #endregion
@@ -312,7 +312,7 @@ namespace SoftCube.Asserts.UnitTests
         {
             var expected = $@"BigClass {{ Field1 = 42, Field2 = ""Hello, world!"", Property1 = {21.12}, Property2 = typeof(SoftCube.Asserts.UnitTests.ArgumentFormatterTests+BigClass), Property3 = 2014-04-17T07:45:23.0000000+00:00, ... }}";
 
-            Assert.Equal(expected, ArgumentFormatter.Format(new BigClass()));
+            XAssert.Equal(expected, ArgumentFormatter.Format(new BigClass()));
         }
 
         #endregion
@@ -328,7 +328,7 @@ namespace SoftCube.Asserts.UnitTests
         [Fact]
         public static void Format_ループするクラス_最大ネスト深さでフォーマットを打ち切る()
         {
-            Assert.Equal("LoopingClass { Me = LoopingClass { Me = LoopingClass { ... } } }", ArgumentFormatter.Format(new LoopingClass()));
+            XAssert.Equal("LoopingClass { Me = LoopingClass { Me = LoopingClass { ... } } }", ArgumentFormatter.Format(new LoopingClass()));
         }
 
         #endregion
@@ -343,7 +343,7 @@ namespace SoftCube.Asserts.UnitTests
         [Fact]
         public static void Format_ToStringをオーバーライドするクラス_ToStringを戻す()
         {
-            Assert.Equal("This is what you should show", ArgumentFormatter.Format(new ClassWithToString()));
+            XAssert.Equal("This is what you should show", ArgumentFormatter.Format(new ClassWithToString()));
         }
 
         #endregion
@@ -356,17 +356,17 @@ namespace SoftCube.Asserts.UnitTests
         }
 
         [Fact]
-        public static void Format_例外を投げるgetプロパティを所有するクラス_適切にフォーマットする()
+        public static void Format_例外を投げるgetプロパティを所有するクラス_正しくフォーマットする()
         {
-            Assert.Equal("ClassWithThrowingGetter { MyThrowingProperty = (throws NotImplementedException) }", ArgumentFormatter.Format(new ClassWithThrowingGetter()));
+            XAssert.Equal("ClassWithThrowingGetter { MyThrowingProperty = (throws NotImplementedException) }", ArgumentFormatter.Format(new ClassWithThrowingGetter()));
         }
 
         #endregion
 
         [Fact]
-        public static void Format_空のクラス_適切にフォーマットする()
+        public static void Format_空のクラス_正しくフォーマットする()
         {
-            Assert.Equal("Object { }", ArgumentFormatter.Format(new object()));
+            XAssert.Equal("Object { }", ArgumentFormatter.Format(new object()));
         }
 
         #endregion

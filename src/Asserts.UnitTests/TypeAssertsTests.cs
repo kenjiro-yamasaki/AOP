@@ -11,13 +11,13 @@ namespace SoftCube.Asserts.UnitTests
         public class IsAssignableFrom_Generic
         {
             [Fact]
-            public void nullオブジェクト_例外を投げる()
+            public void null_失敗する()
             {
                 XAssert.Throws<IsAssignableFromException>(() => Assert.IsAssignableFrom<object>(null));
             }
 
             [Fact]
-            public void 同じ型_例外を投げない()
+            public void 同じ型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -25,7 +25,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 基底型_例外を投げない()
+            public void 基底型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -33,7 +33,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void インターフェイス_例外を投げない()
+            public void インターフェイス_成功する()
             {
                 var expected = Substitute.For<IDisposable>();
 
@@ -41,7 +41,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 互換性のない型_例外を投げる()
+            public void 互換性のない型_失敗する()
             {
                 var ex = XAssert.Throws<IsAssignableFromException>(() => Assert.IsAssignableFrom<InvalidCastException>(new InvalidOperationException()));
 
@@ -52,7 +52,7 @@ namespace SoftCube.Asserts.UnitTests
             public void 戻り値が正しい()
             {
                 var expected = new InvalidCastException();
-                var actual = Assert.IsAssignableFrom<InvalidCastException>(expected);
+                var actual   = Assert.IsAssignableFrom<InvalidCastException>(expected);
 
                 XAssert.Same(expected, actual);
             }
@@ -61,13 +61,13 @@ namespace SoftCube.Asserts.UnitTests
         public class IsAssignableFrom_NonGeneric
         {
             [Fact]
-            public void nullオブジェクト_例外を投げる()
+            public void null_失敗する()
             {
                 XAssert.Throws<IsAssignableFromException>(() => Assert.IsAssignableFrom(typeof(object), null));
             }
 
             [Fact]
-            public void 同じ型_例外を投げない()
+            public void 同じ型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -75,7 +75,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 基底型_例外を投げない()
+            public void 基底型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -83,7 +83,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void インターフェイス_例外を投げない()
+            public void インターフェイス_成功する()
             {
                 var expected = Substitute.For<IDisposable>();
 
@@ -91,7 +91,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 互換性のない型_例外を投げる()
+            public void 互換性のない型_失敗する()
             {
                 var ex = XAssert.Throws<IsAssignableFromException>(() => Assert.IsAssignableFrom(typeof(InvalidCastException), new InvalidOperationException()));
 
@@ -102,7 +102,7 @@ namespace SoftCube.Asserts.UnitTests
         public class IsType_Generic
         {
             [Fact]
-            public void 同じ型_例外を投げない()
+            public void 同じ型_成功する()
             {
                 InvalidCastException expected = new InvalidCastException();
 
@@ -110,7 +110,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 違う型_例外を投げる()
+            public void 違う型_成功する()
             {
                 var ex = XAssert.Throws<IsTypeException>(() => Assert.IsType<InvalidCastException>(new InvalidOperationException()));
 
@@ -118,7 +118,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void nullオブジェクト_例外を投げる()
+            public void null_失敗する()
             {
                 XAssert.Throws<IsTypeException>(() => Assert.IsType<object>(null));
             }
@@ -137,7 +137,7 @@ namespace SoftCube.Asserts.UnitTests
         public class IsType_NonGeneric
         {
             [Fact]
-            public void 同じ型_例外を投げない()
+            public void 同じ型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -145,7 +145,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 違う型_例外を投げる()
+            public void 違う型_失敗する()
             {
                 var ex = XAssert.Throws<IsTypeException>(() => Assert.IsType(typeof(InvalidCastException), new InvalidOperationException()));
 
@@ -153,7 +153,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void nullオブジェクト_例外を投げる()
+            public void null_失敗する()
             {
                 XAssert.Throws<IsTypeException>(() => Assert.IsType(typeof(object), null));
             }
@@ -162,7 +162,7 @@ namespace SoftCube.Asserts.UnitTests
         public class IsNotType_Generic
         {
             [Fact]
-            public void 違う型_例外を投げない()
+            public void 違う型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -170,7 +170,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同じ型_例外を投げる()
+            public void 同じ型_失敗する()
             {
                 var ex = XAssert.Throws<IsNotTypeException>(() => Assert.IsNotType<InvalidCastException>(new InvalidCastException()));
 
@@ -178,7 +178,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void nullオブジェクト_例外を投げない()
+            public void null_成功する()
             {
                 Assert.IsNotType<object>(null);
             }
@@ -187,7 +187,7 @@ namespace SoftCube.Asserts.UnitTests
         public class IsNotType_NonGeneric
         {
             [Fact]
-            public void 違う型_例外を投げない()
+            public void 違う型_成功する()
             {
                 var expected = new InvalidCastException();
 
@@ -195,7 +195,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 同じ型_例外を投げる()
+            public void 同じ型_失敗する()
             {
                 var ex = XAssert.Throws<IsNotTypeException>(() => Assert.IsNotType(typeof(InvalidCastException), new InvalidCastException()));
 
@@ -203,7 +203,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void nullオブジェクト_例外を投げない()
+            public void null_成功する()
             {
                 Assert.IsNotType(typeof(object), null);
             }

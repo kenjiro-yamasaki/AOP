@@ -10,13 +10,13 @@ namespace SoftCube.Asserts.UnitTests
         public class NotNull
         {
             [Fact]
-            public void NotNullを指定_例外を投げない()
+            public void NotNullを指定_成功する()
             {
                 Assert.NotNull(new object());
             }
 
             [Fact]
-            public void Nullを指定_例外を投げる()
+            public void Nullを指定_失敗する()
             {
                 var ex = XAssert.Throws<NotNullException>(() => Assert.NotNull(null));
 
@@ -27,13 +27,13 @@ namespace SoftCube.Asserts.UnitTests
         public class Null
         {
             [Fact]
-            public void Nullを指定_例外を投げない()
+            public void Nullを指定_成功する()
             {
                 Assert.Null(null);
             }
 
             [Fact]
-            public void NotNullを指定_例外を投げる()
+            public void NotNullを指定_失敗する()
             {
                 var ex = XAssert.Throws<NullException>(() => Assert.Null(new object()));
 

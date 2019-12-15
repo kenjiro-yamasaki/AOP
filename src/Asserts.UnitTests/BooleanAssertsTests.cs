@@ -10,13 +10,13 @@ namespace SoftCube.Asserts.UnitTests
         public class False
         {
             [Fact]
-            public static void falseを指定_例外を投げない()
+            public static void falseを指定_成功する()
             {
                 Assert.False(false);
             }
 
             [Fact]
-            public static void trueを指定_例外を投げる()
+            public static void trueを指定_失敗する()
             {
                 var ex = XAssert.Throws<FalseException>(() => Assert.False(true));
 
@@ -24,7 +24,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public static void nullを指定_例外を投げる()
+            public static void nullを指定_失敗する()
             {
                 var ex = XAssert.Throws<FalseException>(() => Assert.False(null));
 
@@ -43,13 +43,13 @@ namespace SoftCube.Asserts.UnitTests
         public class True
         {
             [Fact]
-            public static void trueを指定_例外を投げない()
+            public static void trueを指定_成功する()
             {
                 Assert.True(true);
             }
 
             [Fact]
-            public static void falseを指定_例外を投げなる()
+            public static void falseを指定_失敗する()
             {
                 var ex = XAssert.Throws<TrueException>(() => Assert.True(false));
 
@@ -57,7 +57,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public static void nullを指定_例外を投げる()
+            public static void nullを指定_失敗する()
             {
                 var ex = XAssert.Throws<TrueException>(() => Assert.True(null));
 

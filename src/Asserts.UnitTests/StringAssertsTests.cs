@@ -11,13 +11,19 @@ namespace SoftCube.Asserts.UnitTests
         public class Contains
         {
             [Fact]
-            public void 部分文字列を含む_例外を投げない()
+            public void 期待値がnull_ArgumentNullExceptionを投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.Contains((string)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 部分文字列を含む_成功する()
             {
                 Assert.Contains("wor", "Hello, world!");
             }
 
             [Fact]
-            public void 部分文字列の大文字小文字が違う_例外を投げる()
+            public void 部分文字列の大文字小文字が違う_失敗する()
             {
                 var ex = XAssert.Throws<ContainsException>(() => Assert.Contains("WORLD", "Hello, world!"));
 
@@ -25,21 +31,15 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 部分文字列を含まない_例外を投げる()
+            public void 部分文字列を含まない_失敗する()
             {
                 XAssert.Throws<ContainsException>(() => Assert.Contains("hey", "Hello, world!"));
             }
 
             [Fact]
-            public void 実測値にnullを指定_例外を投げる()
+            public void 実測値がnull_失敗する()
             {
                 XAssert.Throws<ContainsException>(() => Assert.Contains("foo", (string)null));
-            }
-
-            [Fact]
-            public void 期待値にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.Contains((string)null, "Hello, world!"));
             }
         }
 
@@ -55,33 +55,33 @@ namespace SoftCube.Asserts.UnitTests
         public class DoesNotContain
         {
             [Fact]
-            public void 部分文字列を含まない_例外を投げない()
+            public void 期待値にnullを指定_ArgumentNullException例外を投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.DoesNotContain((string)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 部分文字列を含まない_成功する()
             {
                 Assert.DoesNotContain("hey", "Hello, world!");
             }
 
             [Fact]
-            public void 部分文字列の大文字小文字が違う_例外を投げない()
+            public void 部分文字列の大文字小文字が違う_成功する()
             {
                 Assert.DoesNotContain("WORLD", "Hello, world!");
             }
 
             [Fact]
-            public void 部分文字列を含む_例外を投げる()
+            public void 部分文字列を含む_失敗する()
             {
                 XAssert.Throws<DoesNotContainException>(() => Assert.DoesNotContain("world", "Hello, world!"));
             }
 
             [Fact]
-            public void 実測値にnullを指定_例外を投げない()
+            public void 実測値にnullを指定_成功する()
             {
                 Assert.DoesNotContain("foo", (string)null);
-            }
-
-            [Fact]
-            public void 期待値にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.DoesNotContain((string)null, "Hello, world!"));
             }
         }
 
@@ -106,7 +106,7 @@ namespace SoftCube.Asserts.UnitTests
             [InlineData(" ", "\t", false, false, true)]
             [InlineData(" \t", "\t ", false, false, true)]
             [InlineData("    ", "\t", false, false, true)]
-            public void 例外を投げない(string value1, string value2, bool ignoreCase, bool ignoreLineEndingDifferences, bool ignoreWhiteSpaceDifferences)
+            public void 成功する(string value1, string value2, bool ignoreCase, bool ignoreLineEndingDifferences, bool ignoreWhiteSpaceDifferences)
             {
                 Assert.Equal(value1, value2, ignoreCase, ignoreLineEndingDifferences, ignoreWhiteSpaceDifferences);
                 Assert.Equal(value2, value1, ignoreCase, ignoreLineEndingDifferences, ignoreWhiteSpaceDifferences);
@@ -120,26 +120,32 @@ namespace SoftCube.Asserts.UnitTests
             [InlineData("foo bar", "foo   Bar", false, true, true, 4, 6)]
             [InlineData("foo \nbar", "FoO  \rbar", true, false, true, 4, 5)]
             [InlineData("foo\n bar", "FoO\r\n  bar", true, true, false, 5, 6)]
-            public void 例外を投げる(string expected, string actual, bool ignoreCase, bool ignoreLineEndingDifferences, bool ignoreWhiteSpaceDifferences, int expectedIndex, int actualIndex)
+            public void 失敗する(string expected, string actual, bool ignoreCase, bool ignoreLineEndingDifferences, bool ignoreWhiteSpaceDifferences, int expectedIndex, int actualIndex)
             {
-                var ex      = Record.Exception(() => Assert.Equal(expected, actual, ignoreCase, ignoreLineEndingDifferences, ignoreWhiteSpaceDifferences));
-                var equalException = XAssert.IsType<EqualException>(ex);
+                var actualEx = Record.Exception(() => Assert.Equal(expected, actual, ignoreCase, ignoreLineEndingDifferences, ignoreWhiteSpaceDifferences));
 
-                XAssert.Equal(expectedIndex, equalException.ExpectedIndex);
-                XAssert.Equal(actualIndex, equalException.ActualIndex);
+                var ex = XAssert.IsType<EqualException>(actualEx);
+                XAssert.Equal(expectedIndex, ex.ExpectedIndex);
+                XAssert.Equal(actualIndex, ex.ActualIndex);
             }
         }
 
         public class StartsWith
         {
             [Fact]
-            public void 部分文字列から始まる_例外を投げない()
+            public void 期待値にnullを指定_ArgumentNullException例外を投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.StartsWith((string)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 部分文字列から始まる_成功する()
             {
                 Assert.StartsWith("Hello", "Hello, world!");
             }
 
             [Fact]
-            public void 部分文字列の大文字小文字が違う_例外を投げる()
+            public void 部分文字列の大文字小文字が違う_失敗する()
             {
                 var ex = Record.Exception(() => Assert.StartsWith("HELLO", "Hello"));
 
@@ -148,21 +154,15 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 部分文字列から始まらない_例外を投げる()
+            public void 部分文字列から始まらない_失敗する()
             {
                 XAssert.Throws<StartsWithException>(() => Assert.StartsWith("hey", "Hello, world!"));
             }
 
             [Fact]
-            public void 実測値にnullを指定_例外を投げる()
+            public void 実測値にnullを指定_失敗する()
             {
                 XAssert.Throws<StartsWithException>(() => Assert.StartsWith("foo", null));
-            }
-
-            [Fact]
-            public void 期待値にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.StartsWith((string)null, "Hello, world!"));
             }
         }
 
@@ -178,13 +178,19 @@ namespace SoftCube.Asserts.UnitTests
         public class EndsWith
         {
             [Fact]
-            public void 部分文字列で終わる_例外を投げない()
+            public void 期待値にnullを指定_ArgumentNullException例外を投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.EndsWith((string)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 部分文字列で終わる_成功する()
             {
                 Assert.EndsWith("world!", "Hello, world!");
             }
 
             [Fact]
-            public void 部分文字列の大文字小文字が違う_例外を投げる()
+            public void 部分文字列の大文字小文字が違う_失敗する()
             {
                 var ex = Record.Exception(() => Assert.EndsWith("WORLD!", "world!"));
 
@@ -193,21 +199,15 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 部分文字列で終わらない_例外を投げる()
+            public void 部分文字列で終わらない_失敗する()
             {
                 XAssert.Throws<EndsWithException>(() => Assert.EndsWith("hey", "Hello, world!"));
             }
 
             [Fact]
-            public void 実測値にnullを指定_例外を投げる()
+            public void 実測値にnullを指定_失敗する()
             {
                 XAssert.Throws<EndsWithException>(() => Assert.EndsWith("foo", null));
-            }
-
-            [Fact]
-            public void 期待値にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.EndsWith((string)null, "Hello, world!"));
             }
         }
 
@@ -223,13 +223,19 @@ namespace SoftCube.Asserts.UnitTests
         public class Matches_WithString
         {
             [Fact]
-            public void 正規表現にマッチする_例外を投げない()
+            public void 実測値にnullを指定_失敗する()
+            {
+                XAssert.Throws<MatchesException>(() => Assert.Matches(@"\w+", (string)null));
+            }
+
+            [Fact]
+            public void 正規表現にマッチする_成功する()
             {
                 Assert.Matches(@"\w", "Hello");
             }
 
             [Fact]
-            public void 正規表現にマッチしない_例外を投げる()
+            public void 正規表現にマッチしない_失敗する()
             {
                 var ex = Record.Exception(() => Assert.Matches(@"\d+", "Hello, world!"));
 
@@ -238,22 +244,22 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 正規表現にnullを指定_例外を投げる()
+            public void 正規表現にnullを指定_ArgumentNullException例外を投げる()
             {
                 XAssert.Throws<ArgumentNullException>(() => Assert.Matches((string)null, "Hello, world!"));
-            }
-
-            [Fact]
-            public void 実測値にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<MatchesException>(() => Assert.Matches(@"\w+", (string)null));
             }
         }
 
         public class Matches_WithRegex
         {
             [Fact]
-            public void 正規表現にマッチする_例外を投げない()
+            public void 正規表現にnullを指定_ArgumentNullException例外を投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.Matches((Regex)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 正規表現にマッチする_成功する()
             {
                 Assert.Matches(new Regex(@"\w+"), "Hello");
             }
@@ -265,7 +271,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 正規表現にマッチしない_例外を投げる()
+            public void 正規表現にマッチしない_失敗する()
             {
                 var ex = Record.Exception(() => Assert.Matches(new Regex(@"\d+"), "Hello, world!"));
 
@@ -274,28 +280,28 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 実測値にnullを指定_例外を投げる()
+            public void 実測値にnullを指定_失敗する()
             {
                 XAssert.Throws<MatchesException>(() => Assert.Matches(new Regex(@"\w+"), (string)null));
-            }
-
-            [Fact]
-            public void 正規表現にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.Matches((Regex)null, "Hello, world!"));
             }
         }
 
         public class DoesNotMatch_WithString
         {
             [Fact]
-            public void 正規表現にマッチしない_例外を投げない()
+            public void 正規表現にnullを指定_ArgumentNullException例外を投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.DoesNotMatch((string)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 正規表現にマッチしない_成功する()
             {
                 Assert.DoesNotMatch(@"\d", "Hello");
             }
 
             [Fact]
-            public void 正規表現にマッチする_例外を投げる()
+            public void 正規表現にマッチする_失敗する()
             {
                 var ex = Record.Exception(() => Assert.DoesNotMatch(@"\w", "Hello, world!"));
 
@@ -304,13 +310,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 正規表現にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.DoesNotMatch((string)null, "Hello, world!"));
-            }
-
-            [Fact]
-            public void 実測値にnullを指定_例外を投げない()
+            public void 実測値にnullを指定_成功する()
             {
                 Assert.DoesNotMatch(@"\w+", (string)null);
             }
@@ -319,13 +319,19 @@ namespace SoftCube.Asserts.UnitTests
         public class DoesNotMatch_WithRegex
         {
             [Fact]
-            public void 正規表現にマッチしない_例外を投げない()
+            public void 正規表現にnullを指定_ArgumentNullException例外を投げる()
+            {
+                XAssert.Throws<ArgumentNullException>(() => Assert.DoesNotMatch((Regex)null, "Hello, world!"));
+            }
+
+            [Fact]
+            public void 正規表現にマッチしない_成功する()
             {
                 Assert.DoesNotMatch(new Regex(@"\d"), "Hello");
             }
 
             [Fact]
-            public void 正規表現にマッチする_例外を投げる()
+            public void 正規表現にマッチする_失敗する()
             {
                 var ex = Record.Exception(() => Assert.DoesNotMatch(new Regex(@"\w"), "Hello, world!"));
 
@@ -334,13 +340,7 @@ namespace SoftCube.Asserts.UnitTests
             }
 
             [Fact]
-            public void 正規表現にnullを指定_例外を投げる()
-            {
-                XAssert.Throws<ArgumentNullException>(() => Assert.DoesNotMatch((Regex)null, "Hello, world!"));
-            }
-
-            [Fact]
-            public void 実測値にnullを指定_例外を投げない()
+            public void 実測値にnullを指定_成功する()
             {
                 Assert.DoesNotMatch(new Regex(@"\w+"), (string)null);
             }
