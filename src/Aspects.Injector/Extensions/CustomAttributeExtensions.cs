@@ -14,7 +14,7 @@ namespace SoftCube.Aspects.Injector
         /// <summary>
         /// CustomAttributeが表現するアスペクトを生成する。
         /// </summary>
-        /// <typeparam name="TAttribute">CustomAttributeが表現するアスペクトの型</typeparam>
+        /// <typeparam name="TAttribute">CustomAttributeが表現するアスペクトの型。</typeparam>
         /// <param name="customAttribute">CustomAttribute</param>
         /// <returns>CustomAttributeが表現するアスペクト</returns>
         internal static TAspect Create<TAspect>(this CustomAttribute customAttribute)

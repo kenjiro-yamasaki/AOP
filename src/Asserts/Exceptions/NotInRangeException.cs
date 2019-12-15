@@ -1,71 +1,55 @@
-//using System.Globalization;
+using System.Globalization;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a value is unexpectedly in the given range.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class NotInRangeException : XunitException
-//    {
-//        readonly string actual;
-//        readonly string high;
-//        readonly string low;
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// NotInRange アサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、<see cref="Assert.NotInRange"/> の失敗時に投げられます。
+    /// </remarks>
+    public class NotInRangeException : AssertException
+    {
+        #region プロパティ
 
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="NotInRangeException"/> class.
-//        /// </summary>
-//        /// <param name="actual">The actual object value</param>
-//        /// <param name="low">The low value of the range</param>
-//        /// <param name="high">The high value of the range</param>
-//        public NotInRangeException(object actual, object low, object high)
-//            : base("Assert.NotInRange() Failure")
-//        {
-//            this.low = low == null ? null : low.ToString();
-//            this.high = high == null ? null : high.ToString();
-//            this.actual = actual == null ? null : actual.ToString();
-//        }
+        /// <summary>
+        /// 実測値。
+        /// </summary>
+        public string Actual { get; }
 
-//        /// <summary>
-//        /// Gets the actual object value
-//        /// </summary>
-//        public string Actual
-//        {
-//            get { return actual; }
-//        }
+        /// <summary>
+        /// 上限値。
+        /// </summary>
+        public string High { get; }
 
-//        /// <summary>
-//        /// Gets the high value of the range
-//        /// </summary>
-//        public string High
-//        {
-//            get { return high; }
-//        }
+        /// <summary>
+        /// 下限値。
+        /// </summary>
+        public string Low { get; }
 
-//        /// <summary>
-//        /// Gets the low value of the range
-//        /// </summary>
-//        public string Low
-//        {
-//            get { return low; }
-//        }
+        /// <summary>
+        /// メッセージ。
+        /// </summary>
+        public override string Message => string.Format(CultureInfo.CurrentCulture, "{0}\r\nRange:  ({1} - {2})\r\nActual: {3}", base.Message, Low, High, Actual ?? "(null)");
 
-//        /// <summary>
-//        /// Gets a message that describes the current exception.
-//        /// </summary>
-//        /// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
-//        public override string Message
-//        {
-//            get
-//            {
-//                return string.Format(CultureInfo.CurrentCulture,
-//                                     "{0}\r\nRange:  ({1} - {2})\r\nActual: {3}",
-//                                     base.Message, Low, High, Actual ?? "(null)");
-//            }
-//        }
-//    }
-//}
+        #endregion
+
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="actual">実測値。</param>
+        /// <param name="low">下限値。</param>
+        /// <param name="high">上限値。</param>
+        public NotInRangeException(object actual, object low, object high)
+            : base("Assert.NotInRange() Failure")
+        {
+            Actual = actual == null ? null : actual.ToString();
+            Low    = low == null ? null : low.ToString();
+            High   = high == null ? null : high.ToString();
+        }
+
+        #endregion
+    }
+}

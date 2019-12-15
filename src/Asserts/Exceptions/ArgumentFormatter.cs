@@ -242,7 +242,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="value">参照型の値</param>
         /// <param name="depth">ネストの深さ</param>
-        /// <param name="type">参照型</param>
+        /// <param name="type">参照型。</param>
         /// <returns>フォーマットされた参照型の値</returns>
         private static string FormatReferenceValue(object value, int depth, Type type)
         {
@@ -301,8 +301,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// 型名をフォーマットする。
         /// </summary>
-        /// <param name="type">型</param>
-        /// <returns>フォーマットされた型</returns>
+        /// <param name="type">型。</param>
+        /// <returns>フォーマットされた型。</returns>
         private static string FormatTypeName(Type type)
         {
             var typeInfo = type.GetTypeInfo();

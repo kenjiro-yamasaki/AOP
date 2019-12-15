@@ -1,22 +1,27 @@
-//using System.Collections;
+using System.Collections;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a set is not a proper subset of another set.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class ProperSubsetException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="ProperSubsetException"/> class.
-//        /// </summary>
-//        public ProperSubsetException(IEnumerable expected, IEnumerable actual)
-//            : base(expected, actual, "Assert.ProperSubset() Failure")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// ProperSubset アサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、<see cref="Assert.ProperSubset"/> の失敗時に投げられます。
+    /// </remarks>
+    public class ProperSubsetException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        public ProperSubsetException(IEnumerable expected, IEnumerable actual)
+            : base(expected, actual, "Assert.ProperSubset() Failure")
+        {
+        }
+
+        #endregion
+    }
+}

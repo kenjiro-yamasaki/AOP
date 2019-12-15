@@ -4,7 +4,7 @@ namespace SoftCube.Asserts
     /// Nullアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Null(...)の失敗時に投げられる。
+    /// 本例外は、Assert.Null(...)の失敗時に投げられます。
     /// </remarks>
     public class NullException : AssertExpectedActualException
     {
@@ -13,7 +13,7 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="actual">実測値</param>
+        /// <param name="actual">実測値。</param>
         public NullException(object actual)
             : base(null, actual, "Assert.Null() Failure")
         {

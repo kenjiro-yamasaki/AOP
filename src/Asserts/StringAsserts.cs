@@ -13,23 +13,23 @@ namespace SoftCube.Asserts
         #region Contains
 
         /// <summary>
-        /// 文字列が部分文字列を含むことを検証する。
+        /// 文字列が部分文字列を含むことを検証します。
         /// </summary>
         /// <param name="expectedSubstring">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="ContainsException">文字列が部分文字列を含まない場合、投げられる</exception>
+        /// <exception cref="ContainsException">文字列が部分文字列を含まない場合、投げられます。</exception>
         public static void Contains(string expectedSubstring, string actualString)
         {
             Contains(expectedSubstring, actualString, StringComparison.CurrentCulture);
         }
 
         /// <summary>
-        /// 文字列が部分文字列を含むことを検証する。
+        /// 文字列が部分文字列を含むことを検証します。
         /// </summary>
         /// <param name="expectedSubstring">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
         /// <param name="stringComparison">文字列比較</param>
-        /// <exception cref="ContainsException">文字列が部分文字列を含まない場合、投げられる</exception>
+        /// <exception cref="ContainsException">文字列が部分文字列を含まない場合、投げられます。</exception>
         public static void Contains(string expectedSubstring, string actualString, StringComparison stringComparison)
         {
             GuardArgumentNotNull(nameof(expectedSubstring), expectedSubstring);
@@ -41,23 +41,23 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 文字列が部分文字列を含まないことを検証する。
+        /// 文字列が部分文字列を含まないことを検証します。
         /// </summary>
         /// <param name="expectedSubstring">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="DoesNotContainException">文字列が部分文字列を含む場合、投げられる</exception>
+        /// <exception cref="DoesNotContainException">文字列が部分文字列を含む場合、投げられます。</exception>
         public static void DoesNotContain(string expectedSubstring, string actualString)
         {
             DoesNotContain(expectedSubstring, actualString, StringComparison.CurrentCulture);
         }
 
         /// <summary>
-        /// 文字列が部分文字列を含まないことを検証する。
+        /// 文字列が部分文字列を含まないことを検証します。
         /// </summary>
         /// <param name="expectedSubstring">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
         /// <param name="stringComparison">文字列比較</param>
-        /// <exception cref="DoesNotContainException">文字列が部分文字列を含む場合、投げられる</exception>
+        /// <exception cref="DoesNotContainException">文字列が部分文字列を含む場合、投げられます。</exception>
         public static void DoesNotContain(string expectedSubstring, string actualString, StringComparison stringComparison)
         {
             GuardArgumentNotNull(nameof(expectedSubstring), expectedSubstring);
@@ -73,23 +73,23 @@ namespace SoftCube.Asserts
         #region StartsWith
 
         /// <summary>
-        /// 文字列が部分文字列から始まることを検証する。
+        /// 文字列が部分文字列から始まることを検証します。
         /// </summary>
         /// <param name="expectedStartString">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="StartsWithException">文字列が部分文字列から始まらない場合、投げられる</exception>
+        /// <exception cref="StartsWithException">文字列が部分文字列から始まらない場合、投げられます。</exception>
         public static void StartsWith(string expectedStartString, string actualString)
         {
             StartsWith(expectedStartString, actualString, StringComparison.CurrentCulture);
         }
 
         /// <summary>
-        /// 文字列が部分文字列から始まることを検証する。
+        /// 文字列が部分文字列から始まることを検証します。
         /// </summary>
         /// <param name="expectedStartString">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
         /// <param name="stringComparison">文字列比較</param>
-        /// <exception cref="StartsWithException">文字列が部分文字列から始まらない場合、投げられる</exception>
+        /// <exception cref="StartsWithException">文字列が部分文字列から始まらない場合、投げられます。</exception>
         public static void StartsWith(string expectedStartString, string actualString, StringComparison stringComparison)
         {
             GuardArgumentNotNull(nameof(expectedStartString), expectedStartString);
@@ -105,23 +105,23 @@ namespace SoftCube.Asserts
         #region EndsWith
 
         /// <summary>
-        /// 文字列が部分文字列で終わることを検証する。
+        /// 文字列が部分文字列で終わることを検証します。
         /// </summary>
         /// <param name="expectedEndString">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="EndsWithException">文字列が部分文字列で終わらない場合、投げられる</exception>
+        /// <exception cref="EndsWithException">文字列が部分文字列で終わらない場合、投げられます。</exception>
         public static void EndsWith(string expectedEndString, string actualString)
         {
             EndsWith(expectedEndString, actualString, StringComparison.CurrentCulture);
         }
 
         /// <summary>
-        /// 文字列が部分文字列で終わることを検証する。
+        /// 文字列が部分文字列で終わることを検証します。
         /// </summary>
         /// <param name="expectedEndString">期待値(部分文字列)</param>
         /// <param name="actualString">実測値(文字列)</param>
         /// <param name="stringComparison">文字列比較</param>
-        /// <exception cref="EndsWithException">文字列が部分文字列で終わらない場合、投げられる</exception>
+        /// <exception cref="EndsWithException">文字列が部分文字列で終わらない場合、投げられます。</exception>
         public static void EndsWith(string expectedEndString, string actualString, StringComparison stringComparison)
         {
             GuardArgumentNotNull(nameof(expectedEndString), expectedEndString);
@@ -137,11 +137,11 @@ namespace SoftCube.Asserts
         #region Matches
 
         /// <summary>
-        /// 文字列が正規表現にマッチすることを検証する。
+        /// 文字列が正規表現にマッチすることを検証します。
         /// </summary>
         /// <param name="expectedRegexPattern">期待値(正規表現)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="MatchesException">文字列が正規表現にマッチしない場合、投げられる</exception>
+        /// <exception cref="MatchesException">文字列が正規表現にマッチしない場合、投げられます。</exception>
         public static void Matches(string expectedRegexPattern, string actualString)
         {
             GuardArgumentNotNull(nameof(expectedRegexPattern), expectedRegexPattern);
@@ -153,11 +153,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 文字列が正規表現にマッチすることを検証する。
+        /// 文字列が正規表現にマッチすることを検証します。
         /// </summary>
         /// <param name="expectedRegexPattern">期待値(正規表現)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="MatchesException">文字列が正規表現にマッチしない場合、投げられる</exception>
+        /// <exception cref="MatchesException">文字列が正規表現にマッチしない場合、投げられます。</exception>
         public static void Matches(Regex expectedRegex, string actualString)
         {
             GuardArgumentNotNull(nameof(expectedRegex), expectedRegex);
@@ -169,11 +169,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 文字列が正規表現にマッチしないことを検証する。
+        /// 文字列が正規表現にマッチしないことを検証します。
         /// </summary>
         /// <param name="expectedRegexPattern">期待値(正規表現)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="DoesNotMatchException">文字列が正規表現にマッチする場合、投げられる</exception>
+        /// <exception cref="DoesNotMatchException">文字列が正規表現にマッチする場合、投げられます。</exception>
         public static void DoesNotMatch(string expectedRegexPattern, string actualString)
         {
             GuardArgumentNotNull(nameof(expectedRegexPattern), expectedRegexPattern);
@@ -185,11 +185,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 文字列が正規表現にマッチしないことを検証する。
+        /// 文字列が正規表現にマッチしないことを検証します。
         /// </summary>
         /// <param name="expectedRegexPattern">期待値(正規表現)</param>
         /// <param name="actualString">実測値(文字列)</param>
-        /// <exception cref="DoesNotMatchException">文字列が正規表現にマッチする場合、投げられる</exception>
+        /// <exception cref="DoesNotMatchException">文字列が正規表現にマッチする場合、投げられます。</exception>
         public static void DoesNotMatch(Regex expectedRegex, string actualString)
         {
             GuardArgumentNotNull(nameof(expectedRegex), expectedRegex);
@@ -205,25 +205,25 @@ namespace SoftCube.Asserts
         #region Equal
 
         /// <summary>
-        /// 文字列が等しいことを検証する。
+        /// 文字列が等しいことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <exception cref="EqualException">文字列が等しくない場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="EqualException">文字列が等しくない場合、投げられます。</exception>
         public static void Equal(string expected, string actual)
         {
             Equal(expected, actual, false, false, false);
         }
 
         /// <summary>
-        /// 文字列が等しいことを検証する。
+        /// 文字列が等しいことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         /// <param name="ignoreCase">大文字・小文字の違いを無視するか</param>
         /// <param name="ignoreLineEndingDifferences">改行文字(\r\n、\r、\n)の違いを無視するか</param>
         /// <param name="ignoreWhiteSpaceDifferences">空白文字(タブとスペース)の違いを無視するか</param>
-        /// <exception cref="EqualException">文字列が等しくない場合、投げられる</exception>
+        /// <exception cref="EqualException">文字列が等しくない場合、投げられます。</exception>
         public static void Equal(string expected, string actual, bool ignoreCase = false, bool ignoreLineEndingDifferences = false, bool ignoreWhiteSpaceDifferences = false)
         {
             int expectedIndex  = -1;

@@ -10,10 +10,10 @@ namespace SoftCube.Asserts
         #region 静的メソッド
 
         /// <summary>
-        /// オブジェクト参照が非nullであることを検証する。
+        /// オブジェクト参照が非nullであることを検証します。
         /// </summary>
         /// <param name="object">オブジェクト</param>
-        /// <exception cref="NotNullException">オブジェクト参照がnullの場合、投げられる</exception>
+        /// <exception cref="NotNullException">オブジェクト参照がnullの場合、投げられます。</exception>
         public static void NotNull(object @object)
         {
             if (@object == null)
@@ -23,10 +23,10 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// オブジェクト参照がnullであることを検証する。
+        /// オブジェクト参照がnullであることを検証します。
         /// </summary>
         /// <param name="object">オブジェクト</param>
-        /// <exception cref="NullException">オブジェクト参照が非nullの場合、投げられる</exception>
+        /// <exception cref="NullException">オブジェクト参照が非nullの場合、投げられます。</exception>
         public static void Null(object @object)
         {
             if (@object != null)

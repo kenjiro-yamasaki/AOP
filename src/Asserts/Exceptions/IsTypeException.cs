@@ -4,8 +4,8 @@ namespace SoftCube.Asserts
     /// IsTypeアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.IsType(...)の失敗時に投げられる。
-    /// 上記のアサートは、期待値と実測値の型が正確に一致することを検証する。
+    /// 本例外は、Assert.IsType(...)の失敗時に投げられます。
+    /// 上記のアサートは、期待値と実測値の型が正確に一致することを検証します。
     /// </remarks>
     public class IsTypeException : AssertExpectedActualException
     {

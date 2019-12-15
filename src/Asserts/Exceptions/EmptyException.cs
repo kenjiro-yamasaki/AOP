@@ -7,7 +7,7 @@ namespace SoftCube.Asserts
     /// Emptyアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Empty(...)の失敗時に投げられる。
+    /// 本例外は、Assert.Empty(...)の失敗時に投げられます。
     /// </remarks>
     public class EmptyException : AssertExpectedActualException
     {

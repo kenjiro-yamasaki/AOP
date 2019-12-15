@@ -56,6 +56,4 @@ namespace SoftCube.Asserts.UnitTests
             }
         }
     }
-
 }
-

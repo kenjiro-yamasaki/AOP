@@ -1,74 +1,89 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using Xunit.Sdk;
+﻿using System;
+using System.Collections.Generic;
 
-//namespace Xunit
-//{
-//#if XUNIT_VISIBILITY_INTERNAL 
-//    internal
-//#else
-//    public
-//#endif
-//    partial class Assert
-//    {
-//        /// <summary>
-//        /// Verifies that a value is within a given range.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the value to be compared</typeparam>
-//        /// <param name="actual">The actual value to be evaluated</param>
-//        /// <param name="low">The (inclusive) low value of the range</param>
-//        /// <param name="high">The (inclusive) high value of the range</param>
-//        /// <exception cref="InRangeException">Thrown when the value is not in the given range</exception>
-//        public static void InRange<T>(T actual, T low, T high) where T : IComparable
-//        {
-//            InRange(actual, low, high, GetComparer<T>());
-//        }
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// アサート。
+    /// </summary>
+    public static partial class Assert
+    {
+        #region 静的メソッド
 
-//        /// <summary>
-//        /// Verifies that a value is within a given range, using a comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the value to be compared</typeparam>
-//        /// <param name="actual">The actual value to be evaluated</param>
-//        /// <param name="low">The (inclusive) low value of the range</param>
-//        /// <param name="high">The (inclusive) high value of the range</param>
-//        /// <param name="comparer">The comparer used to evaluate the value's range</param>
-//        /// <exception cref="InRangeException">Thrown when the value is not in the given range</exception>
-//        public static void InRange<T>(T actual, T low, T high, IComparer<T> comparer)
-//        {
-//            Assert.GuardArgumentNotNull("comparer", comparer);
+        #region InRange
 
-//            if (comparer.Compare(low, actual) > 0 || comparer.Compare(actual, high) > 0)
-//                throw new InRangeException(actual, low, high);
-//        }
+        /// <summary>
+        /// 実測値が指定範囲内かを検証します。
+        /// </summary>
+        /// <typeparam name="T">値の型。</typeparam>
+        /// <param name="actual">実測値。</param>
+        /// <param name="low">下限値（範囲は下限値を含む）。</param>
+        /// <param name="high">上限値（範囲は上限値を含む）。</param>
+        /// <exception cref="InRangeException">実測値が指定範囲外である場合、投げられます。</exception>
+        public static void InRange<T>(T actual, T low, T high)
+            where T : IComparable
+        {
+            InRange(actual, low, high, GetComparer<T>());
+        }
 
-//        /// <summary>
-//        /// Verifies that a value is not within a given range, using the default comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the value to be compared</typeparam>
-//        /// <param name="actual">The actual value to be evaluated</param>
-//        /// <param name="low">The (inclusive) low value of the range</param>
-//        /// <param name="high">The (inclusive) high value of the range</param>
-//        /// <exception cref="NotInRangeException">Thrown when the value is in the given range</exception>
-//        public static void NotInRange<T>(T actual, T low, T high) where T : IComparable
-//        {
-//            NotInRange(actual, low, high, GetComparer<T>());
-//        }
+        /// <summary>
+        /// 実測値が指定範囲内かを検証します。
+        /// </summary>
+        /// <typeparam name="T">値の型。</typeparam>
+        /// <param name="actual">実測値。</param>
+        /// <param name="low">下限値（範囲は下限値を含む）。</param>
+        /// <param name="high">上限値（範囲は上限値を含む）。</param>
+        /// <param name="comparer">比較子</param>
+        /// <exception cref="InRangeException">実測値が指定範囲外である場合、投げられます。</exception>
+        public static void InRange<T>(T actual, T low, T high, IComparer<T> comparer)
+        {
+            GuardArgumentNotNull("comparer", comparer);
 
-//        /// <summary>
-//        /// Verifies that a value is not within a given range, using a comparer.
-//        /// </summary>
-//        /// <typeparam name="T">The type of the value to be compared</typeparam>
-//        /// <param name="actual">The actual value to be evaluated</param>
-//        /// <param name="low">The (inclusive) low value of the range</param>
-//        /// <param name="high">The (inclusive) high value of the range</param>
-//        /// <param name="comparer">The comparer used to evaluate the value's range</param>
-//        /// <exception cref="NotInRangeException">Thrown when the value is in the given range</exception>
-//        public static void NotInRange<T>(T actual, T low, T high, IComparer<T> comparer)
-//        {
-//            Assert.GuardArgumentNotNull("comparer", comparer);
+            if (comparer.Compare(low, actual) > 0 || comparer.Compare(actual, high) > 0)
+            {
+                throw new InRangeException(actual, low, high);
+            }
+        }
 
-//            if (comparer.Compare(low, actual) <= 0 && comparer.Compare(actual, high) <= 0)
-//                throw new NotInRangeException(actual, low, high);
-//        }
-//    }
-//}
+        #endregion
+
+        #region NotInRange
+
+        /// <summary>
+        /// 実測値が指定範囲外かを検証します。
+        /// </summary>
+        /// <typeparam name="T">値の型。</typeparam>
+        /// <param name="actual">実測値。</param>
+        /// <param name="low">下限値（範囲は下限値を含む）。</param>
+        /// <param name="high">上限値（範囲は上限値を含む）。</param>
+        /// <exception cref="NotInRangeException">実測値が指定範囲内である場合、投げられます。</exception>
+        public static void NotInRange<T>(T actual, T low, T high)
+            where T : IComparable
+        {
+            NotInRange(actual, low, high, GetComparer<T>());
+        }
+
+        /// <summary>
+        /// 実測値が指定範囲外かを検証します。
+        /// </summary>
+        /// <typeparam name="T">値の型。</typeparam>
+        /// <param name="actual">実測値。</param>
+        /// <param name="low">下限値（範囲は下限値を含む）。</param>
+        /// <param name="high">上限値（範囲は上限値を含む）。</param>
+        /// <param name="comparer">比較子</param>
+        /// <exception cref="NotInRangeException">実測値が指定範囲内である場合、投げられます。</exception>
+        public static void NotInRange<T>(T actual, T low, T high, IComparer<T> comparer)
+        {
+            GuardArgumentNotNull("comparer", comparer);
+
+            if (comparer.Compare(low, actual) <= 0 && comparer.Compare(actual, high) <= 0)
+            {
+                throw new NotInRangeException(actual, low, high);
+            }
+        }
+
+        #endregion
+
+        #endregion
+    }
+}

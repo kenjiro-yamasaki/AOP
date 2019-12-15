@@ -7,7 +7,7 @@ namespace SoftCube.Asserts
     /// <summary>
     /// アサート用の等値比較子アダプター。
     /// </summary>
-    /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
+    /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
     internal class AssertEqualityComparerAdapter<T> : IEqualityComparer
     {
         #region プロパティ

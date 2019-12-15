@@ -9,7 +9,7 @@ namespace SoftCube.Asserts
     /// Allアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.All(...)の失敗時に投げられる。
+    /// 本例外は、Assert.All(...)の失敗時に投げられます。
     /// </remarks>
     public class AllException : AssertException
     {

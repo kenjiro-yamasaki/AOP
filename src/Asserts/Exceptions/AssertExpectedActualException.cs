@@ -7,7 +7,7 @@ using System.Reflection;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// 期待値と実測値のアサート例外。
+    /// 期待値。と実測値のアサート例外。
     /// </summary>
     public class AssertExpectedActualException : AssertException
     {
@@ -55,8 +55,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         /// <param name="userMessage">ユーザーメッセージ</param>
         /// <param name="expectedTitle">期待値のタイトル</param>
         /// <param name="actualTitle">実測値のタイトル</param>
@@ -68,8 +68,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         /// <param name="message">メッセージ</param>
         /// <param name="expectedTitle">期待値のタイトル</param>
         /// <param name="actualTitle">実測値のタイトル</param>

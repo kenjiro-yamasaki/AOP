@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -15,25 +14,25 @@ namespace SoftCube.Asserts
         #region Equal
 
         /// <summary>
-        /// オブジェクトが等しいことを検証する。
+        /// オブジェクトが等しいことを検証します。
         /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられる</exception>
+        /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられます。</exception>
         public static void Equal<T>(T expected, T actual)
         {
             Equal(expected, actual, GetEqualityComparer<T>());
         }
 
         /// <summary>
-        /// オブジェクトが等しいことを検証する。
+        /// オブジェクトが等しいことを検証します。
         /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="comparer">等値比較子</param>
-        /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられる</exception>
+        /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="comparer">等値比較子。</param>
+        /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられます。</exception>
         public static void Equal<T>(T expected, T actual, IEqualityComparer<T> comparer)
         {
             GuardArgumentNotNull(nameof(comparer), comparer);
@@ -45,12 +44,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// <see cref="double"/>型の値が等しいことを検証する。
+        /// <see cref="double"/>型の値が等しいことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～15)</param>
-        /// <exception cref="EqualException"><see cref="double"/>型の値が等しくない場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～15)。</param>
+        /// <exception cref="EqualException"><see cref="double"/>型の値が等しくない場合、投げられます。</exception>
         public static void Equal(double expected, double actual, int precision)
         {
             var expectedRounded = Math.Round(expected, precision);
@@ -66,12 +65,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// <see cref="decimal"/>型の値が等しいことを検証する。
+        /// <see cref="decimal"/>型の値が等しいことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～28)</param>
-        /// <exception cref="EqualException"><see cref="decimal"/>型の値が等しくない場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～28)。</param>
+        /// <exception cref="EqualException"><see cref="decimal"/>型の値が等しくない場合、投げられます。</exception>
         public static void Equal(decimal expected, decimal actual, int precision)
         {
             var expectedRounded = Math.Round(expected, precision);
@@ -87,12 +86,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// <see cref="DateTime"/>型の値が等しいことを検証する。
+        /// <see cref="DateTime"/>型の値が等しいことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度</param>
-        /// <exception cref="EqualException"><see cref="DateTime"/>型の値が等しくない場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="precision">比較精度。</param>
+        /// <exception cref="EqualException"><see cref="DateTime"/>型の値が等しくない場合、投げられます。</exception>
         public static void Equal(DateTime expected, DateTime actual, TimeSpan precision)
         {
             var difference = (expected - actual).Duration();
@@ -109,12 +108,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 型のデフォルトの等値比較子を使用し、オブジェクトが等しいことを正確に検証する。
+        /// 型のデフォルトの等値比較子を使用し、オブジェクトが等しいことを正確に検証します。
         /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられる</exception>
+        /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="EqualException">オブジェクトが等しくない場合、投げられます。</exception>
         public static void StrictEqual<T>(T expected, T actual)
         {
             Equal(expected, actual, EqualityComparer<T>.Default);
@@ -125,25 +124,25 @@ namespace SoftCube.Asserts
         #region NotEqual
 
         /// <summary>
-        /// オブジェクトが等しくないことを検証する。
+        /// オブジェクトが等しくないことを検証します。
         /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられる</exception>
+        /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられます。</exception>
         public static void NotEqual<T>(T expected, T actual)
         {
             NotEqual(expected, actual, GetEqualityComparer<T>());
         }
 
         /// <summary>
-        /// オブジェクトが等しくないことを検証する。
+        /// オブジェクトが等しくないことを検証します。
         /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         /// <param name="comparer">等値比較子</param>
-        /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられる</exception>
+        /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられます。</exception>
         public static void NotEqual<T>(T expected, T actual, IEqualityComparer<T> comparer)
         {
             GuardArgumentNotNull("comparer", comparer);
@@ -155,12 +154,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// <see cref="double"/>型の値が等しくないことを検証する。
+        /// <see cref="double"/>型の値が等しくないことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～15)</param>
-        /// <exception cref="NotEqualException"><see cref="double"/>型の値が等しい場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～15)</param>
+        /// <exception cref="NotEqualException"><see cref="double"/>型の値が等しい場合、投げられます。</exception>
         public static void NotEqual(double expected, double actual, int precision)
         {
             var expectedRounded = Math.Round(expected, precision);
@@ -176,12 +175,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// <see cref="decimal"/>型の値が等しくないことを検証する。
+        /// <see cref="decimal"/>型の値が等しくないことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度の小数点以下の桁数(有効な値：0～28)</param>
-        /// <exception cref="NotEqualException"><see cref="decimal"/>型の値が等しい場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～28)</param>
+        /// <exception cref="NotEqualException"><see cref="decimal"/>型の値が等しい場合、投げられます。</exception>
         public static void NotEqual(decimal expected, decimal actual, int precision)
         {
             var expectedRounded = Math.Round(expected, precision);
@@ -197,12 +196,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// <see cref="DateTime"/>型の値が等しくないことを検証する。
+        /// <see cref="DateTime"/>型の値が等しくないことを検証します。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <param name="precision">比較精度</param>
-        /// <exception cref="NotEqualException"><see cref="DateTime"/>型の値が等しい場合、投げられる</exception>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <param name="precision">比較精度。</param>
+        /// <exception cref="NotEqualException"><see cref="DateTime"/>型の値が等しい場合、投げられます。</exception>
         public static void NotEqual(DateTime expected, DateTime actual, TimeSpan precision)
         {
             var difference = (expected - actual).Duration();
@@ -219,29 +218,18 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 型のデフォルトの等値比較子を使用し、オブジェクトが等しくないことを正確に検証する。
+        /// 型のデフォルトの等値比較子を使用し、オブジェクトが等しくないことを正確に検証します。
         /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
-        /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられる</exception>
+        /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        /// <exception cref="NotEqualException">オブジェクトが等しい場合、投げられます。</exception>
         public static void NotStrictEqual<T>(T expected, T actual)
         {
             NotEqual(expected, actual, EqualityComparer<T>.Default);
         }
 
         #endregion
-
-        /// <summary>
-        /// 等値比較子を取得する。
-        /// </summary>
-        /// <typeparam name="T">比較対象のオブジェクトの型</typeparam>
-        /// <param name="elementEaualityComparer">項目の等値比較子(比較対象のオブジェクトが反復子である場合、各項目の等値比較子に使用される)</param>
-        /// <returns>等値比較子</returns>
-        private static IEqualityComparer<T> GetEqualityComparer<T>(IEqualityComparer elementEaualityComparer = null)
-        {
-            return new AssertEqualityComparer<T>(elementEaualityComparer);
-        }
 
         #endregion
     }

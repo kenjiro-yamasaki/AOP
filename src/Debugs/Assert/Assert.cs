@@ -11,10 +11,9 @@ namespace SoftCube.Debugs
         #region メソッド
 
         /// <summary>
-        /// 参照オブジェクトがnullであることを表明する。
+        /// 参照オブジェクトがnullであることを検証します。
         /// </summary>
         /// <param name="object">参照オブジェクト</param>
-        [Conditional("DEBUG")]
         public static void IsNull(object @object)
         {
             if (@object != null)
@@ -24,10 +23,9 @@ namespace SoftCube.Debugs
         }
 
         /// <summary>
-        /// 参照オブジェクトがnullでないことを表明する。
+        /// 参照オブジェクトがnullでないことを検証します。
         /// </summary>
         /// <param name="object">参照オブジェクト</param>
-        [Conditional("DEBUG")]
         public static void IsNotNull(object @object)
         {
             if (@object == null)
@@ -37,10 +35,9 @@ namespace SoftCube.Debugs
         }
 
         /// <summary>
-        /// 条件が真であることを表明する。
+        /// 条件が真であることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
-        [Conditional("DEBUG")]
+        /// <param name="condition">条件。</param>
         public static void IsTrue(bool condition)
         {
             if (!condition)
@@ -50,10 +47,9 @@ namespace SoftCube.Debugs
         }
 
         /// <summary>
-        /// 条件が偽であることを表明する。
+        /// 条件が偽であることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
-        [Conditional("DEBUG")]
+        /// <param name="condition">条件。</param>
         public static void IsFalse(bool condition)
         {
             if (condition)
@@ -63,9 +59,8 @@ namespace SoftCube.Debugs
         }
 
         /// <summary>
-        /// 失敗を表明する。
+        /// 失敗を検証します。
         /// </summary>
-        [Conditional("DEBUG")]
         public static void Fail()
         {
             throw new ArgumentException($"アサートに失敗しました\n{new StackTrace()}");

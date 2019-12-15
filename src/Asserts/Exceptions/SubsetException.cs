@@ -1,22 +1,27 @@
-//using System.Collections;
+using System.Collections;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a set is not a subset of another set.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class SubsetException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="SubsetException"/> class.
-//        /// </summary>
-//        public SubsetException(IEnumerable expected, IEnumerable actual)
-//            : base(expected, actual, "Assert.Subset() Failure")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// Subset アサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、<see cref="Assert.Subset"/> の失敗時に投げられます。
+    /// </remarks>
+    public class SubsetException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        public SubsetException(IEnumerable expected, IEnumerable actual)
+            : base(expected, actual, "Assert.Subset() Failure")
+        {
+        }
+
+        #endregion
+    }
+}

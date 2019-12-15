@@ -1,22 +1,27 @@
-//using System.Collections;
+using System.Collections;
 
-//namespace Xunit.Sdk
-//{
-//    /// <summary>
-//    /// Exception thrown when a set is not a superset of another set.
-//    /// </summary>
-//#if XUNIT_VISIBILITY_INTERNAL
-//    internal
-//#else
-//    public
-//#endif
-//    class SupersetException : AssertActualExpectedException
-//    {
-//        /// <summary>
-//        /// Creates a new instance of the <see cref="SupersetException"/> class.
-//        /// </summary>
-//        public SupersetException(IEnumerable expected, IEnumerable actual)
-//            : base(expected, actual, "Assert.Superset() Failure")
-//        { }
-//    }
-//}
+namespace SoftCube.Asserts
+{
+    /// <summary>
+    /// Superset アサート例外。
+    /// </summary>
+    /// <remarks>
+    /// 本例外は、<see cref="Assert.Superset"/> の失敗時に投げられます。
+    /// </remarks>
+    public class SupersetException : AssertExpectedActualException
+    {
+        #region コンストラクター
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
+        public SupersetException(IEnumerable expected, IEnumerable actual)
+            : base(expected, actual, "Assert.Superset() Failure")
+        {
+        }
+
+        #endregion
+    }
+}

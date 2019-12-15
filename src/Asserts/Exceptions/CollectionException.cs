@@ -8,7 +8,7 @@ namespace SoftCube.Asserts
     /// Collectionアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Collection(...)の失敗時に投げられる。
+    /// 本例外は、Assert.Collection(...)の失敗時に投げられます。
     /// </remarks>
     public class CollectionException : AssertException
     {

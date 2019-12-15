@@ -11,12 +11,12 @@ namespace SoftCube.Asserts
         #region 静的メソッド
 
         /// <summary>
-        /// 指定オブジェクトが指定型に代入可能かを検証する。
+        /// 指定オブジェクトが指定型に代入可能かを検証します。
         /// </summary>
-        /// <typeparam name="TExpected">指定型</typeparam>
+        /// <typeparam name="TExpected">指定型。</typeparam>
         /// <param name="object">指定オブジェクト</param>
         /// <returns>(検証に成功した場合)指定型にキャストした指定オブジェクト</returns>
-        /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられる</exception>
+        /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられます。</exception>
         public static TExpected IsAssignableFrom<TExpected>(object @object)
         {
             IsAssignableFrom(typeof(TExpected), @object);
@@ -24,11 +24,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定オブジェクトが指定型かを検証する。
+        /// 指定オブジェクトが指定型かを検証します。
         /// </summary>
-        /// <param name="expectedType">指定型</param>
+        /// <param name="expectedType">指定型。</param>
         /// <param name="object">指定オブジェクト</param>
-        /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられる</exception>
+        /// <exception cref="IsAssignableFromException">指定オブジェクトが指定型に代入可能ではない場合、投げられます。</exception>
         public static void IsAssignableFrom(Type expectedType, object @object)
         {
             GuardArgumentNotNull(nameof(expectedType), expectedType);
@@ -40,12 +40,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定オブジェクトが(派生型ではなく)正確に指定型かを検証する。
+        /// 指定オブジェクトが(派生型ではなく)正確に指定型かを検証します。
         /// </summary>
-        /// <typeparam name="TExpected">指定型</typeparam>
+        /// <typeparam name="TExpected">指定型。</typeparam>
         /// <param name="object">指定オブジェクト</param>
         /// <returns>(検証に成功した場合)指定型にキャストした指定オブジェクト</returns>
-        /// <exception cref="IsTypeException">指定オブジェクトが(派生型ではなく)正確に指定型ではない場合、投げられる</exception>
+        /// <exception cref="IsTypeException">指定オブジェクトが(派生型ではなく)正確に指定型ではない場合、投げられます。</exception>
         public static TExpected IsType<TExpected>(object @object)
         {
             IsType(typeof(TExpected), @object);
@@ -53,11 +53,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定オブジェクトが(派生型ではなく)正確に指定型かを検証する。
+        /// 指定オブジェクトが(派生型ではなく)正確に指定型かを検証します。
         /// </summary>
-        /// <param name="expectedType">指定型</param>
+        /// <param name="expectedType">指定型。</param>
         /// <param name="object">指定オブジェクト</param>
-        /// <exception cref="IsTypeException">指定オブジェクトが(派生型ではなく)正確に指定型ではない場合、投げられる</exception>
+        /// <exception cref="IsTypeException">指定オブジェクトが(派生型ではなく)正確に指定型ではない場合、投げられます。</exception>
         public static void IsType(Type expectedType, object @object)
         {
             GuardArgumentNotNull(nameof(expectedType), expectedType);
@@ -84,22 +84,22 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 指定オブジェクトが正確に指定型ではないかを検証する。
+        /// 指定オブジェクトが正確に指定型ではないかを検証します。
         /// </summary>
-        /// <typeparam name="TExpected">指定型</typeparam>
+        /// <typeparam name="TExpected">指定型。</typeparam>
         /// <param name="object">指定オブジェクト</param>
-        /// <exception cref="IsNotTypeException">指定オブジェクトが正確に指定型である場合、投げられる</exception>
+        /// <exception cref="IsNotTypeException">指定オブジェクトが正確に指定型である場合、投げられます。</exception>
         public static void IsNotType<TExpected>(object @object)
         {
             IsNotType(typeof(TExpected), @object);
         }
 
         /// <summary>
-        /// 指定オブジェクトが正確に指定型ではないかを検証する。
+        /// 指定オブジェクトが正確に指定型ではないかを検証します。
         /// </summary>
-        /// <param name="expectedType">指定型</param>
+        /// <param name="expectedType">指定型。</param>
         /// <param name="object">指定オブジェクト</param>
-        /// <exception cref="IsNotTypeException">指定オブジェクトが正確に指定型である場合、投げられる</exception>
+        /// <exception cref="IsNotTypeException">指定オブジェクトが正確に指定型である場合、投げられます。</exception>
         public static void IsNotType(Type expectedType, object @object)
         {
             GuardArgumentNotNull(nameof(expectedType), expectedType);

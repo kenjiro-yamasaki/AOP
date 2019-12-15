@@ -4,7 +4,7 @@ namespace SoftCube.Asserts
     /// Containsアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Contains(...)の失敗時に投げられる。
+    /// 本例外は、Assert.Contains(...)の失敗時に投げられます。
     /// </remarks>
     public class ContainsException : AssertExpectedActualException
     {
@@ -13,8 +13,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         public ContainsException(object expected, object actual)
             : base(expected, actual, "Assert.Contains() Failure", "Not found", "In value")
         {

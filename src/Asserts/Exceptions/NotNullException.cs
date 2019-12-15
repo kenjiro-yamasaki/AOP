@@ -4,7 +4,7 @@ namespace SoftCube.Asserts
     /// 非nullアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.NotNull(...)の失敗時に投げられる。
+    /// 本例外は、Assert.NotNull(...)の失敗時に投げられます。
     /// </remarks>
     public class NotNullException : AssertException
     {

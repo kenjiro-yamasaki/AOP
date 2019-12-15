@@ -12,12 +12,11 @@ namespace SoftCube.Asserts
         #region False
 
         /// <summary>
-        /// 条件がfalseであることを検証する。
+        /// 条件がfalseであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
+        /// <param name="condition">条件。</param>
         /// <param name="message">検証失敗時の例外メッセージ</param>
-        /// <exception cref="FalseException">条件がfalseでない場合、投げられる</exception>
-        [Conditional("DEBUG")]
+        /// <exception cref="FalseException">条件がfalseでない場合、投げられます。</exception>
         public static void False(bool? condition, string message)
         {
             if (!condition.HasValue || condition.GetValueOrDefault())
@@ -27,34 +26,31 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 条件がfalseであることを検証する。
+        /// 条件がfalseであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
-        /// <exception cref="FalseException">条件がfalseでない場合、投げられる</exception>
-        [Conditional("DEBUG")]
+        /// <param name="condition">条件。</param>
+        /// <exception cref="FalseException">条件がfalseでない場合、投げられます。</exception>
         public static void False(bool condition)
         {
             False((bool?)condition, null);
         }
 
         /// <summary>
-        /// 条件がfalseであることを検証する。
+        /// 条件がfalseであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
-        /// <exception cref="FalseException">条件がfalseでない場合、投げられる</exception>
-        [Conditional("DEBUG")]
+        /// <param name="condition">条件。</param>
+        /// <exception cref="FalseException">条件がfalseでない場合、投げられます。</exception>
         public static void False(bool? condition)
         {
             False(condition, null);
         }
 
         /// <summary>
-        /// 条件がfalseであることを検証する。
+        /// 条件がfalseであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
+        /// <param name="condition">条件。</param>
         /// <param name="message">検証失敗時の例外メッセージ</param>
-        /// <exception cref="FalseException">条件がfalseでない場合、投げられる</exception>
-        [Conditional("DEBUG")]
+        /// <exception cref="FalseException">条件がfalseでない場合、投げられます。</exception>
         public static void False(bool condition, string message)
         {
             False((bool?)condition, message);
@@ -65,11 +61,11 @@ namespace SoftCube.Asserts
         #region True
 
         /// <summary>
-        /// 条件がtrueであることを検証する。
+        /// 条件がtrueであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
+        /// <param name="condition">条件。</param>
         /// <param name="message">検証失敗時の例外メッセージ</param>
-        /// <exception cref="TrueException">条件がtrueでない場合、投げられる</exception>
+        /// <exception cref="TrueException">条件がtrueでない場合、投げられます。</exception>
         public static void True(bool? condition, string message)
         {
             if (!condition.HasValue || !condition.GetValueOrDefault())
@@ -79,33 +75,31 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 条件がtrueであることを検証する。
+        /// 条件がtrueであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
-        /// <exception cref="TrueException">条件がtrueでない場合、投げられる</exception>
-        [Conditional("DEBUG")]
+        /// <param name="condition">条件。</param>
+        /// <exception cref="TrueException">条件がtrueでない場合、投げられます。</exception>
         public static void True(bool condition)
         {
             True((bool?)condition, null);
         }
 
         /// <summary>
-        /// 条件がtrueであることを検証する。
+        /// 条件がtrueであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
-        /// <exception cref="TrueException">条件がtrueでない場合、投げられる</exception>
-        [Conditional("DEBUG")]
+        /// <param name="condition">条件。</param>
+        /// <exception cref="TrueException">条件がtrueでない場合、投げられます。</exception>
         public static void True(bool? condition)
         {
             True(condition, null);
         }
 
         /// <summary>
-        /// 条件がtrueであることを検証する。
+        /// 条件がtrueであることを検証します。
         /// </summary>
-        /// <param name="condition">条件</param>
+        /// <param name="condition">条件。</param>
         /// <param name="message">検証失敗時の例外メッセージ</param>
-        /// <exception cref="TrueException">条件がtrueでない場合、投げられる</exception>
+        /// <exception cref="TrueException">条件がtrueでない場合、投げられます。</exception>
         public static void True(bool condition, string message)
         {
             True((bool?)condition, message);

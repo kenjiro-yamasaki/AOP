@@ -9,7 +9,7 @@ namespace SoftCube.Asserts
     /// Equalアサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Equal(...)の失敗時に投げられる。
+    /// 本例外は、Assert.Equal(...)の失敗時に投げられます。
     /// </remarks>
     public class EqualException : AssertExpectedActualException
     {
@@ -70,8 +70,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         public EqualException(object expected, object actual)
             : base(expected, actual, "Assert.Equal() Failure")
         {
@@ -82,8 +82,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実測値</param>
+        /// <param name="expected">期待値。</param>
+        /// <param name="actual">実測値。</param>
         /// <param name="expectedIndex">期待値の差分インデックス</param>
         /// <param name="actualIndex">実測値の差分インデックス</param>
         public EqualException(string expected, string actual, int expectedIndex, int actualIndex)
