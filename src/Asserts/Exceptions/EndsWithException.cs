@@ -4,10 +4,10 @@ using System.Globalization;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// EndsWithアサート例外。
+    /// EndsWith アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.EndsWith(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.EndsWith"/> の失敗時に投げられます。
     /// </remarks>
     public class EndsWithException : AssertException
     {
@@ -28,12 +28,12 @@ namespace SoftCube.Asserts
         #region 静的メソッド
 
         /// <summary>
-        /// 期待値を省略する。
+        /// 期待値を省略します。
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
         /// <returns>省略された期待値。</returns>
-        static string ShortenExpected(string expected, string actual)
+        private static string ShortenExpected(string expected, string actual)
         {
             if (expected == null || actual == null || actual.Length <= expected.Length)
             {
@@ -44,12 +44,12 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 実測値を省略する。
+        /// 実測値を省略します。
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
         /// <returns>省略された実測値。</returns>
-        static string ShortenActual(string expected, string actual)
+        private static string ShortenActual(string expected, string actual)
         {
             if (expected == null || actual == null || actual.Length <= expected.Length)
             {

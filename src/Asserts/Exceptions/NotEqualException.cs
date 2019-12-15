@@ -1,10 +1,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// NotEqualアサート例外。
+    /// NotEqual アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.NotEqual(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.NotEqual"/> の失敗時に投げられます。
     /// </remarks>
     public class NotEqualException : AssertExpectedActualException
     {

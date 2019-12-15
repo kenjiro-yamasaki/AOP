@@ -5,7 +5,7 @@ using System.Reflection;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// アサート用のデフォルト大小比較。
+    /// アサートのデフォルト比較子。
     /// </summary>
     /// <typeparam name="T">比較対象の型。</typeparam>
     internal class AssertComparer<T> : IComparer<T>
@@ -14,7 +14,7 @@ namespace SoftCube.Asserts
         #region 定数
 
         /// <summary>
-        /// Nullable型情報。
+        /// <see cref="Nullable<>"/> の型情報。
         /// </summary>
         static readonly TypeInfo NullableTypeInfo = typeof(Nullable<>).GetTypeInfo();
 
@@ -28,19 +28,19 @@ namespace SoftCube.Asserts
         /// <param name="x">比較対象のオブジェクト。</param>
         /// <param name="y">比較対象のオブジェクト。</param>
         /// <returns>
-        /// x＜y ⇒ 0より小さい値。
-        /// x＝y ⇒ 0。
-        /// x＞y ⇒ 0より大きい値。
+        /// x < y ⇒ 0 より小さい値。
+        /// x = y ⇒ 0。
+        /// x > y ⇒ 0 より大きい値。
         /// </returns>
         /// <remarks>
-        /// nullと参照型との比較は許可されており、例外は投げられません。
-        /// nullは、null以外よりも小さいと見なします。
+        /// null と参照型との比較は許容されています。例外は投げられません。
+        /// null は、null 以外よりも小さいと見なします。
         /// </remarks>
         public int Compare(T x, T y)
         {
             var typeInfo = typeof(T).GetTypeInfo();
 
-            // nullと比較する。
+            // null と比較します。
             if (!typeInfo.IsValueType || (typeInfo.IsGenericType && typeInfo.GetGenericTypeDefinition().GetTypeInfo().IsAssignableFrom(NullableTypeInfo)))
             {
                 if (Equals(x, default(T)))
@@ -59,13 +59,13 @@ namespace SoftCube.Asserts
                 }
             }
 
-            // 型を比較する。
+            // 型を比較します。
             if (x.GetType() != y.GetType())
             {
                 return -1;
             }
 
-            // 値を比較する。
+            // 値を比較します。
             if (x is IComparable<T> comparable)
             {
                 return comparable.CompareTo(y);

@@ -3,10 +3,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// IsAssignableFromアサート例外。
+    /// IsAssignableFrom アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.IsAssignableFrom(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.IsAssignableFrom"/> の失敗時に投げられます。
     /// </remarks>
     public class IsAssignableFromException : AssertExpectedActualException
     {

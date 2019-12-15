@@ -23,7 +23,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの開始イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public override void OnEntry(MethodExecutionArgs args)
         {
             Console.WriteLine("OnEntry");
@@ -32,7 +32,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの正常終了イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public override void OnSuccess(MethodExecutionArgs args)
         {
             Console.WriteLine("OnSuccess");
@@ -41,7 +41,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの例外終了イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public override void OnException(MethodExecutionArgs args)
         {
             Console.WriteLine("OnException");
@@ -50,7 +50,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの終了イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public override void OnExit(MethodExecutionArgs args)
         {
             Console.WriteLine("OnExit");

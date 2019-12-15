@@ -37,12 +37,12 @@ namespace SoftCube.Asserts
         private const int MaxStringLength = 50;
 
         /// <summary>
-        /// 空のobject配列。
+        /// 空の <see cref="object"/> 配列。
         /// </summary>
         private static readonly object[] EmptyObjects = new object[0];
 
         /// <summary>
-        /// 空のType配列。
+        /// 空の <see cref="Type"/> 配列。
         /// </summary>
         private static readonly Type[] EmptyTypes = new Type[0];
 
@@ -71,21 +71,21 @@ namespace SoftCube.Asserts
         #endregion
 
         /// <summary>
-        /// 値をフォーマットする。
+        /// 値をフォーマットします。
         /// </summary>
-        /// <param name="value">値</param>
-        /// <returns>フォーマットされた値</returns>
+        /// <param name="value">値。</param>
+        /// <returns>フォーマットされた値。</returns>
         public static string Format(object value)
         {
             return Format(value, 1);
         }
 
         /// <summary>
-        /// 値をフォーマットする。
+        /// 値をフォーマットします。
         /// </summary>
-        /// <param name="value">値</param>
-        /// <param name="depth">ネストの深さ</param>
-        /// <returns>フォーマットされた値</returns>
+        /// <param name="value">値。</param>
+        /// <param name="depth">ネストの深さ。</param>
+        /// <returns>フォーマットされた値。</returns>
         private static string Format(object value, int depth)
         {
             if (value == null)
@@ -161,16 +161,16 @@ namespace SoftCube.Asserts
             catch (Exception ex)
             {
                 // 値のフォーマット処理が例外を発生させる場合がある(例えば、ToStringが例外を発生させる場合など)。
-                // このような場合、プログラムを停止させないために例外をキャッチする。
+                // このような場合、プログラムを停止させないために例外をキャッチします。
                 return $"{ex.GetType().Name} was thrown formatting an object of type \"{type}\"";
             }
         }
 
         /// <summary>
-        /// 文字列の値をフォーマットする。
+        /// 文字列の値をフォーマットします。
         /// </summary>
-        /// <param name="string">文字列の値</param>
-        /// <returns>フォーマットされた文字列の値</returns>
+        /// <param name="string">文字列の値。</param>
+        /// <returns>フォーマットされた文字列の値。</returns>
         private static string FormatString(string @string)
         {
             var builder = new StringBuilder(@string.Length);
@@ -182,30 +182,27 @@ namespace SoftCube.Asserts
                 {
                     builder.Append(escapeSequence);
                 }
-                else if (@char < 32) // C0 control char
+                else if (@char < 32)
                 {
                     builder.AppendFormat(@"\x{0}", (+@char).ToString("x2"));
                 }
-                else if (char.IsSurrogatePair(@string, index)) // should handle the case of ch being the last one
+                else if (char.IsSurrogatePair(@string, index))
                 {
-                    // For valid surrogates, append like normal
                     builder.Append(@char);
                     builder.Append(@string[++index]);
                 }
-                // Check for stray surrogates/other invalid chars
                 else if (char.IsSurrogate(@char) || @char == '\uFFFE' || @char == '\uFFFF')
                 {
                     builder.AppendFormat(@"\x{0}", (+@char).ToString("x4"));
                 }
                 else
                 {
-                    //builder.Append($"{(int)@char:x4}"); // Append the char like normal
-                    builder.Append(@char); // Append the char like normal
+                    builder.Append(@char);
                 }
             }
 
             @string = builder.ToString();
-            @string = @string.Replace(@"""", @"\"""); // escape double quotes
+            @string = @string.Replace(@"""", @"\""");
             if (MaxStringLength < @string.Length)
             {
                 string displayed = @string.Substring(0, MaxStringLength);
@@ -214,6 +211,12 @@ namespace SoftCube.Asserts
             return $"\"{@string}\"";
         }
 
+        /// <summary>
+        /// フォーマットされた値をラップし、取得します。
+        /// </summary>
+        /// <param name="getter">値を取得するデリゲート。</param>
+        /// <param name="depth">ネスト深さ。</param>
+        /// <returns>ラップし、フォーマットされた値。</returns>
         private static string WrapAndGetFormattedValue(Func<object> getter, int depth)
         {
             try
@@ -238,15 +241,14 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 参照型の値をフォーマットする。
+        /// 参照型の値をフォーマットします。
         /// </summary>
-        /// <param name="value">参照型の値</param>
-        /// <param name="depth">ネストの深さ</param>
+        /// <param name="value">参照型の値。</param>
+        /// <param name="depth">ネストの深さ。</param>
         /// <param name="type">参照型。</param>
-        /// <returns>フォーマットされた参照型の値</returns>
+        /// <returns>フォーマットされた参照型の値。</returns>
         private static string FormatReferenceValue(object value, int depth, Type type)
         {
-
             if (depth == MaxDepth)
             {
                 return $"{type.Name} {{ ... }}";
@@ -272,11 +274,11 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 反復型の値(コレクション)をフォーマットする。
+        /// 反復型の値 (コレクション) をフォーマットします。
         /// </summary>
-        /// <param name="values">反復型の値(コレクション)</param>
-        /// <param name="depth">ネストの深さ</param>
-        /// <returns>フォーマットされた反復型の値(コレクション)</returns>
+        /// <param name="values">反復型の値 (コレクション)。</param>
+        /// <param name="depth">ネストの深さ。</param>
+        /// <returns>フォーマットされた反復型の値 (コレクション)。</returns>
         private static string FormatEnumerable(IEnumerable<object> values, int depth)
         {
             if (depth == MaxDepth)
@@ -299,7 +301,7 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 型名をフォーマットする。
+        /// 型名をフォーマットします。
         /// </summary>
         /// <param name="type">型。</param>
         /// <returns>フォーマットされた型。</returns>
@@ -355,10 +357,10 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// 
+        /// エスケープ文字の変換を試みます。
         /// </summary>
-        /// <param name="char"></param>
-        /// <returns></returns>
+        /// <param name="char">文字。</param>
+        /// <returns>エスケープ文字かを示す値, エスケープ文字の変換文字列。</returns>
         private static (bool Success, string Value) TryGetEscapeSequence(char @char)
         {
             switch (@char)

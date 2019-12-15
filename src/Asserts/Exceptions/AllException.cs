@@ -6,10 +6,10 @@ using System.Linq;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// Allアサート例外。
+    /// All アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.All(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.All"/> の失敗時に投げられます。
     /// </remarks>
     public class AllException : AssertException
     {
@@ -68,8 +68,8 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="itemCount">項目数</param>
-        /// <param name="errors">エラーコレクション</param>
+        /// <param name="itemCount">項目数。</param>
+        /// <param name="errors">エラーコレクション。</param>
         public AllException(int itemCount, (int Index, object Item, Exception Exception)[] errors)
             : base("Assert.All() Failure")
         {

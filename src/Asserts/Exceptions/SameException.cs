@@ -1,10 +1,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// Sameアサート例外。
+    /// Same アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Same(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.Same"/> の失敗時に投げられます。
     /// </remarks>
     public class SameException : AssertExpectedActualException
     {

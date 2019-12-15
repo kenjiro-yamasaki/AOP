@@ -34,7 +34,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// 列挙子を取得する。
+        /// 列挙子を取得します。
         /// </summary>
         /// <returns>列挙子</returns>
         public IEnumerator<object> GetEnumerator()
@@ -43,7 +43,7 @@ namespace SoftCube.Aspects
         }
 
         /// <summary>
-        /// 列挙子を取得する。
+        /// 列挙子を取得します。
         /// </summary>
         /// <returns>列挙子</returns>
         IEnumerator IEnumerable.GetEnumerator()

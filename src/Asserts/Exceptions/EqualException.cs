@@ -6,10 +6,10 @@ using System.Text;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// Equalアサート例外。
+    /// Equal アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Equal(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.Equal"/> の失敗時に投げられます。
     /// </remarks>
     public class EqualException : AssertExpectedActualException
     {
@@ -35,7 +35,7 @@ namespace SoftCube.Asserts
         /// 差分インデックスが提供されない場合、-1。
         /// </summary>
         /// <remarks>
-        /// 期待値文字列と実測値文字列を比較した差分の先頭を示す。
+        /// 期待値文字列と実測値文字列を比較した差分の先頭を示します。
         /// </remarks>
         public int ExpectedIndex { get; private set; }
 
@@ -44,11 +44,13 @@ namespace SoftCube.Asserts
         /// 差分インデックスが提供されない場合、-1。
         /// </summary>
         /// <remarks>
-        /// 期待値文字列と実測値文字列を比較した差分の先頭を示す。
+        /// 期待値文字列と実測値文字列を比較した差分の先頭を示します。
         /// </remarks>
         public int ActualIndex { get; private set; }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// メッセージ。
+        /// </summary>
         public override string Message
         {
             get
@@ -84,8 +86,8 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
-        /// <param name="expectedIndex">期待値の差分インデックス</param>
-        /// <param name="actualIndex">実測値の差分インデックス</param>
+        /// <param name="expectedIndex">期待値の差分インデックス。</param>
+        /// <param name="actualIndex">実測値の差分インデックス。</param>
         public EqualException(string expected, string actual, int expectedIndex, int actualIndex)
             : base(expected, actual, "Assert.Equal() Failure")
         {
@@ -98,12 +100,12 @@ namespace SoftCube.Asserts
         #region 静的メソッド
 
         /// <summary>
-        /// 値とポインターの表記文字列を取得する。
+        /// 値とポインターの表記文字列を取得します。
         /// </summary>
-        /// <param name="value">値</param>
-        /// <param name="pointerIndex">ポインターインデックス</param>
-        /// <param name="pointer">ポインター</param>
-        /// <returns>値の表記文字列, ポインターの表記文字列</returns>
+        /// <param name="value">値。</param>
+        /// <param name="pointerIndex">ポインターインデックス。</param>
+        /// <param name="pointer">ポインター。</param>
+        /// <returns>値の表記文字列, ポインターの表記文字列。</returns>
         private static (string Value, string Pointer) GetPrintedValueAndPointer(string value, int pointerIndex, char pointer)
         {
             int start          = Math.Max(pointerIndex - 20, 0);
@@ -121,7 +123,7 @@ namespace SoftCube.Asserts
             {
                 char c = value[index];
 
-                // 値の表記文字列を追加する。
+                // 値の表記文字列を追加します。
                 int paddingLength = 1;
                 {
                     string encoding;
@@ -136,7 +138,7 @@ namespace SoftCube.Asserts
                     }
                 }
 
-                // ポインターの表記文字列を追加する。
+                // ポインターの表記文字列を追加します。
                 if (index < pointerIndex)
                 {
                     printedPointer.Append(' ', paddingLength);
@@ -164,9 +166,9 @@ namespace SoftCube.Asserts
         #region メソッド
 
         /// <summary>
-        /// メッセージを生成する。
+        /// メッセージを生成します。
         /// </summary>
-        /// <returns>メッセージ</returns>
+        /// <returns>メッセージ。</returns>
         private string CreateMessage()
         {
             if (ExpectedIndex == -1)
@@ -185,8 +187,7 @@ namespace SoftCube.Asserts
                 printedExpected.Pointer,
                 printedExpected.Value ?? "(null)",
                 printedActual.Value ?? "(null)",
-                printedActual.Pointer
-            );
+                printedActual.Pointer);
         }
 
         #endregion

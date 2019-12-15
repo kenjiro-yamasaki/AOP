@@ -28,17 +28,17 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="userMessage">ユーザーメッセージ</param>
+        /// <param name="userMessage">ユーザーメッセージ。</param>
         public AssertException(string userMessage)
-            : this(userMessage, (Exception)null)
+            : this(userMessage, null)
         {
         }
 
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="userMessage">ユーザーメッセージ</param>
-        /// <param name="innerException">内部例外</param>
+        /// <param name="userMessage">ユーザーメッセージ。</param>
+        /// <param name="innerException">内部例外。</param>
         protected AssertException(string userMessage, Exception innerException)
             : base(userMessage, innerException)
         {

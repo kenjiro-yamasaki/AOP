@@ -1,10 +1,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// trueアサート例外。
+    /// True アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.True(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.True"/> の失敗時に投げられます。
     /// </remarks>
     public class TrueException : AssertExpectedActualException
     {
@@ -14,7 +14,7 @@ namespace SoftCube.Asserts
         /// コンストラクター。
         /// </summary>
         /// <param name="acutual">実測値。</param>
-        /// <param name="message">メッセージ</param>
+        /// <param name="message">メッセージ。</param>
         public TrueException(bool? acutual, string message)
             : base("True", acutual == null ? "(null)" : acutual.ToString(), message ?? "Assert.True() Failure")
         {

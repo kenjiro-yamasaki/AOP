@@ -10,7 +10,7 @@ namespace SoftCube.Aspects.Sample
         /// <summary>
         /// メイン関数。
         /// </summary>
-        /// <param name="args">アプリケーション引数</param>
+        /// <param name="args">アプリケーション引数。</param>
         static void Main(string[] args)
         {
             new LoggerTest().Test("BBB", 101, DateTime.Now);

@@ -1,10 +1,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// DoesNotContainアサート例外。
+    /// DoesNotContain アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.DoesNotContain(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.DoesNotContain"/> の失敗時に投げられます。
     /// </remarks>
     public class DoesNotContainException : AssertExpectedActualException
     {

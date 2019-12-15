@@ -26,7 +26,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// アスペクト(カスタムコード)を注入する。
+        /// アスペクト(カスタムコード)を注入します。
         /// </summary>
         /// <param name="method">注入対象のメソッド定義</param>
         protected override void OnInject(MethodDefinition method)
@@ -40,7 +40,7 @@ namespace SoftCube.Aspects
 
             var module = method.DeclaringType.Module.Assembly.MainModule;
 
-            // ローカル変数を追加する。
+            // ローカル変数を追加します。
             var aspectIndex = processor.Body.Variables.Count();
             processor.Body.Variables.Add(new VariableDefinition(module.ImportReference(GetType())));
 
@@ -70,11 +70,11 @@ namespace SoftCube.Aspects
 
             //
             {
-                // OnMethodBoundaryAspectの派生クラスを生成する。
+                // OnMethodBoundaryAspectの派生クラスを生成します。
                 processor.InsertBefore(first, processor.Create(OpCodes.Newobj, module.ImportReference(GetType().GetConstructor(new Type[] { }))));
                 processor.InsertBefore(first, processor.Create(OpCodes.Stloc, aspectIndex));
 
-                // MethodExecutionArgsを生成する。
+                // MethodExecutionArgsを生成します。
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldarg_0));
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldc_I4, method.Parameters.Count));
                 processor.InsertBefore(first, processor.Create(OpCodes.Newarr, module.ImportReference(typeof(object))));
@@ -103,7 +103,7 @@ namespace SoftCube.Aspects
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(first, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnEntry)))));
 
-                // tryの開始位置を挿入する。
+                // tryの開始位置を挿入します。
                 processor.InsertBefore(first, tryStart = processor.Create(OpCodes.Nop));
             }
 
@@ -121,7 +121,7 @@ namespace SoftCube.Aspects
                 processor.InsertBefore(last, processor.Create(OpCodes.Leave_S, last));
             }
             {
-                // catchの開始位置を挿入する。
+                // catchの開始位置を挿入します。
                 processor.InsertBefore(last, handlerStart = processor.Create(OpCodes.Stloc, exceptionIndex));
 
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
@@ -142,9 +142,9 @@ namespace SoftCube.Aspects
                 processor.InsertBefore(last, processor.Create(OpCodes.Rethrow));
             }
 
-            // 例外ハンドラーを追加する。
+            // 例外ハンドラーを追加します。
             {
-                // finallyハンドラーを追加する。
+                // finallyハンドラーを追加します。
                 var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
                 {
                     CatchType    = module.ImportReference(typeof(Exception)),
@@ -169,7 +169,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの開始イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public virtual void OnEntry(MethodExecutionArgs args)
         {
         }
@@ -177,7 +177,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの正常終了イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public virtual void OnSuccess(MethodExecutionArgs args)
         {
         }
@@ -185,7 +185,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの例外終了イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public virtual void OnException(MethodExecutionArgs args)
         {
         }
@@ -193,7 +193,7 @@ namespace SoftCube.Aspects
         /// <summary>
         /// メッソドの終了イベントハンドラー。
         /// </summary>
-        /// <param name="args">メソッド実行引数</param>
+        /// <param name="args">メソッド実行引数。</param>
         public virtual void OnExit(MethodExecutionArgs args)
         {
         }

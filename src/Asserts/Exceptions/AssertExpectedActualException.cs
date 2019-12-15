@@ -7,7 +7,7 @@ using System.Reflection;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// 期待値。と実測値のアサート例外。
+    /// 期待値と実測値のアサート例外。
     /// </summary>
     public class AssertExpectedActualException : AssertException
     {
@@ -34,7 +34,7 @@ namespace SoftCube.Asserts
         public string ActualTitle { get; }
 
         /// <summary>
-        /// 例外メッセージ(期待値と実測値を含む)。
+        /// 例外メッセージ (期待値と実測値を含む)。
         /// </summary>
         public override string Message
         {
@@ -57,9 +57,9 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
-        /// <param name="userMessage">ユーザーメッセージ</param>
-        /// <param name="expectedTitle">期待値のタイトル</param>
-        /// <param name="actualTitle">実測値のタイトル</param>
+        /// <param name="userMessage">ユーザーメッセージ。</param>
+        /// <param name="expectedTitle">期待値のタイトル。</param>
+        /// <param name="actualTitle">実測値のタイトル。</param>
         public AssertExpectedActualException(object expected, object actual, string userMessage, string expectedTitle = null, string actualTitle = null)
             : this(expected, actual, userMessage, expectedTitle, actualTitle, null)
         {
@@ -70,10 +70,10 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
-        /// <param name="message">メッセージ</param>
-        /// <param name="expectedTitle">期待値のタイトル</param>
-        /// <param name="actualTitle">実測値のタイトル</param>
-        /// <param name="innerException">内部例外</param>
+        /// <param name="message">メッセージ。</param>
+        /// <param name="expectedTitle">期待値のタイトル。</param>
+        /// <param name="actualTitle">実測値のタイトル。</param>
+        /// <param name="innerException">内部例外。</param>
         public AssertExpectedActualException(object expected, object actual, string message, string expectedTitle, string actualTitle, Exception innerException)
             : base(message, innerException)
         {
@@ -93,21 +93,32 @@ namespace SoftCube.Asserts
 
         #region 静的メソッド
 
-        private static string ConvertToString(object value)
+        /// <summary>
+        /// オブジェクトを文字列に変換する。
+        /// </summary>
+        /// <param name="object">オブジェクト。</param>
+        /// <returns>文字列。</returns>
+        private static string ConvertToString(object @object)
         {
-            if (value is string stringValue)
+            if (@object is string stringValue)
             {
                 return stringValue;
             }
 
-            var formattedValue = ArgumentFormatter.Format(value);
-            if (value is IEnumerable)
+            var formattedValue = ArgumentFormatter.Format(@object);
+            if (@object is IEnumerable)
             {
-                formattedValue = string.Format("{0} {1}", ConvertToSimpleTypeName(value.GetType().GetTypeInfo()), formattedValue);
+                formattedValue = string.Format("{0} {1}", ConvertToSimpleTypeName(@object.GetType().GetTypeInfo()), formattedValue);
             }
 
             return formattedValue;
         }
+
+        /// <summary>
+        /// 型情報をシンプルな型名に変換する。
+        /// </summary>
+        /// <param name="typeInfo">型情報。</param>
+        /// <returns>シンプルな型名。</returns>
         private static string ConvertToSimpleTypeName(TypeInfo typeInfo)
         {
             if (!typeInfo.IsGenericType)

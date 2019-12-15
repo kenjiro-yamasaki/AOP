@@ -28,7 +28,7 @@ namespace SoftCube.Asserts
         #region 静的メソッド
 
         /// <summary>
-        /// 実測値を省略する。
+        /// 実測値を省略します。
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>

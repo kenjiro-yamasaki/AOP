@@ -1,10 +1,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// Nullアサート例外。
+    /// Null アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Null(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.Null"/> の失敗時に投げられます。
     /// </remarks>
     public class NullException : AssertExpectedActualException
     {

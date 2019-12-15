@@ -7,7 +7,7 @@ using System.Reflection;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// アサート用のデフォルト等値比較子。
+    /// アサートのデフォルト等値比較子。
     /// </summary>
     /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
     internal class AssertEqualityComparer<T> : IEqualityComparer<T>
@@ -408,7 +408,7 @@ namespace SoftCube.Asserts
         #region 内部クラス
 
         /// <summary>
-        /// <see cref="IStructuralEquatable"/> 用の等値比較子。
+        /// <see cref="IStructuralEquatable"/> の等値比較子。
         /// </summary>
         private class StructuralEqualityComparer : IEqualityComparer
         {

@@ -3,11 +3,10 @@ using System;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// IsNotTypeアサート例外。
+    /// IsNotType アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.IsNotType(...)の失敗時に投げられます。
-    /// 上記のアサートは、期待値と実測値の型が正確に一致しないことを検証します。
+    /// 本例外は、<see cref="Assert.IsNotType"/> の失敗時に投げられます。
     /// </remarks>
     public class IsNotTypeException : AssertExpectedActualException
     {
@@ -16,7 +15,7 @@ namespace SoftCube.Asserts
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="expectedTypeName">期待値(型)</param>
+        /// <param name="expectedTypeName">期待値 (型)。</param>
         /// <param name="actualTypeName">実測値。</param>
         public IsNotTypeException(Type expected, object actual)
             : base(expected, actual == null ? null : actual.GetType(), "Assert.IsNotType() Failure")

@@ -158,7 +158,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
-        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～15)</param>
+        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～15)。</param>
         /// <exception cref="NotEqualException"><see cref="double"/>型の値が等しい場合、投げられます。</exception>
         public static void NotEqual(double expected, double actual, int precision)
         {
@@ -179,7 +179,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="expected">期待値。</param>
         /// <param name="actual">実測値。</param>
-        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～28)</param>
+        /// <param name="precision">比較精度の小数点以下の桁数 (有効な値：0～28)。</param>
         /// <exception cref="NotEqualException"><see cref="decimal"/>型の値が等しい場合、投げられます。</exception>
         public static void NotEqual(decimal expected, decimal actual, int precision)
         {

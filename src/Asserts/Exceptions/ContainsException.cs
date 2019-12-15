@@ -1,10 +1,10 @@
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// Containsアサート例外。
+    /// Contains アサート例外。
     /// </summary>
     /// <remarks>
-    /// 本例外は、Assert.Contains(...)の失敗時に投げられます。
+    /// 本例外は、<see cref="Assert.Contains"/> の失敗時に投げられます。
     /// </remarks>
     public class ContainsException : AssertExpectedActualException
     {

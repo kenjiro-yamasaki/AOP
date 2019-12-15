@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SoftCube.Asserts
 {
     /// <summary>
-    /// アサート用の等値比較子アダプター。
+    /// アサートの等値比較子アダプター。
     /// </summary>
     /// <typeparam name="T">比較対象のオブジェクトの型。</typeparam>
     internal class AssertEqualityComparerAdapter<T> : IEqualityComparer
@@ -35,10 +35,10 @@ namespace SoftCube.Asserts
         #region メソッド
 
         /// <summary>
-        /// 指定したオブジェクトが等しいかを判断する。
+        /// 指定したオブジェクトが等しいかを判断します。
         /// </summary>
-        /// <param name="x">比較対象のオブジェクト</param>
-        /// <param name="y">比較対象のオブジェクト</param>
+        /// <param name="x">比較対象のオブジェクト。</param>
+        /// <param name="y">比較対象のオブジェクト。</param>
         /// <returns>指定したオブジェクトが等しいか</returns>
         public new bool Equals(object x, object y)
         {
@@ -46,9 +46,9 @@ namespace SoftCube.Asserts
         }
 
         /// <summary>
-        /// ハッシュコードを取得する。
+        /// ハッシュコードを取得します。
         /// </summary>
-        /// <param name="obj">比較対象のオブジェクト</param>
+        /// <param name="obj">比較対象のオブジェクト。</param>
         /// <returns>ハッシュコード</returns>
         /// <remarks>
         /// このクラスはGetHashCodeを実装しない。

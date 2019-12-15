@@ -8,7 +8,7 @@ namespace SoftCube.Aspects
     /// 非nullパラメーターアスペクト。
     /// </summary>
     /// <remarks>
-    /// この属性を付けたパラメーターが、nullを許容しないことを明示する。
+    /// この属性を付けたパラメーターが、nullを許容しないことを明示します。
     /// nullを渡された場合、System.ArgumentNullExceptionを投げる。
     /// </remarks>
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
@@ -29,7 +29,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// アスペクト(カスタムコード)を注入する。
+        /// アスペクト(カスタムコード)を注入します。
         /// </summary>
         /// <param name="parameter">注入対象のパラメーター定義</param>
         protected override void OnInject(ParameterDefinition parameter)
