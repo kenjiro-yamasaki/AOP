@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoftCube.Loggers;
+using System;
 
 namespace SoftCube.Aspects
 {
@@ -26,7 +27,7 @@ namespace SoftCube.Aspects
         /// <param name="args">メソッド実行引数。</param>
         public override void OnEntry(MethodExecutionArgs args)
         {
-            Console.WriteLine("OnEntry");
+            Logger.Info("OnEntry");
         }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace SoftCube.Aspects
         /// <param name="args">メソッド実行引数。</param>
         public override void OnSuccess(MethodExecutionArgs args)
         {
-            Console.WriteLine("OnSuccess");
+            Logger.Info("OnSuccess");
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace SoftCube.Aspects
         /// <param name="args">メソッド実行引数。</param>
         public override void OnException(MethodExecutionArgs args)
         {
-            Console.WriteLine("OnException");
+            Logger.Info("OnException");
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace SoftCube.Aspects
         /// <param name="args">メソッド実行引数。</param>
         public override void OnExit(MethodExecutionArgs args)
         {
-            Console.WriteLine("OnExit");
+            Logger.Info("OnExit");
         }
 
         #endregion

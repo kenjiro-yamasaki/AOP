@@ -22,6 +22,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Aspects.Injector\Aspects.Injector.csproj" />
       <ProjectReference Include="..\Aspects\Aspects.csproj" />
+      <ProjectReference Include="..\Loggers\Loggers.csproj" />
     </ItemGroup>
 
     <!--アスペクトコードを注入する-->
