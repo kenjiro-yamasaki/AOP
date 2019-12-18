@@ -16,15 +16,15 @@ namespace SoftCube.Loggers
         /// </summary>
         /// <remarks>
         /// 以下の変数を使用してログ出力の変換パターンを指定します。
-        /// ・date    : ログイベントが発生した時刻 (ローカルタイムゾーン)。
-        /// ・file    : ログイベントが発生したファイル名。
-        /// ・level   : ログイベントのレベル。
-        /// ・line    : ログイベントが発生したファイル行番号。
-        /// ・message : ログイベントのメッセージ。
-        /// ・method  : ログイベントが発生したメソッド名。
+        /// ・date    : ログを出力した時刻 (ローカルタイムゾーン)。
+        /// ・file    : ログを出力したファイル名。
+        /// ・level   : ログレベル。
+        /// ・line    : ログを出力したファイル行番号。
+        /// ・message : ログメッセージ。
+        /// ・method  : ログを出力したメソッド名。
         /// ・newline : 改行文字。
-        /// ・thread  : ログイベントが発生したスレッド番号。
-        /// ・type    : ログイベントが発生した型名。
+        /// ・thread  : ログを出力したスレッド番号。
+        /// ・type    : ログを出力した型名。
         /// </remarks>
         /// <example>
         /// 変換パターンは、以下の例のように指定します。
@@ -129,7 +129,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// トレースログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public void Trace(string message)
         {
             if (message == null)
@@ -147,7 +147,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// デバッグログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public void Debug(string message)
         {
             if (message == null)
@@ -165,7 +165,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// 情報ログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public void Info(string message)
         {
             if (message == null)
@@ -183,7 +183,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// 警告ログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public void Warning(string message)
         {
             if (message == null)
@@ -201,7 +201,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// エラーログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public void Error(string message)
         {
             if (message == null)
@@ -219,7 +219,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// 致命的なエラーログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public void Fatal(string message)
         {
             if (message == null)
@@ -244,7 +244,7 @@ namespace SoftCube.Loggers
         /// 変換パターンを使用して、ログをフォーマットします。
         /// </summary>
         /// <param name="level">ログレベル。</param>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         /// <returns>ログ。</returns>
         private string Format(Level level, string message)
         {

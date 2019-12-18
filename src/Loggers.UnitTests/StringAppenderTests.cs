@@ -2,5 +2,11 @@
 {
     public class StringAppenderTests
     {
+
+
+        public class Logger
+        {
+        }
+
     }
 }

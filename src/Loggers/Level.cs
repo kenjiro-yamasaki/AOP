@@ -8,15 +8,15 @@ namespace SoftCube.Loggers
     public enum Level
     {
         /// <summary>
-        /// トレース。
+        /// トレースログ。
         /// </summary>
         /// <remarks>
-        /// デバッグよりも、更に詳細な情報。
+        /// デバッグログよりも、更に詳細な情報。
         /// </remarks>
         Trace = 0,
 
         /// <summary>
-        /// デバッグ。
+        /// デバッグログ。
         /// </summary>
         /// <remarks>
         /// システムの動作状況に関する詳細な情報。
@@ -24,7 +24,7 @@ namespace SoftCube.Loggers
         Debug = 1,
 
         /// <summary>
-        /// 情報。
+        /// 情報ログ。
         /// </summary>
         /// <remarks>
         /// 実行時の何らかの注目すべき事象（開始や終了など）。
@@ -33,7 +33,7 @@ namespace SoftCube.Loggers
         Info = 2,
 
         /// <summary>
-        /// 警告。
+        /// 警告ログ。
         /// </summary>
         /// <remarks>
         /// 廃止となったAPIの使用、APIの不適切な使用、エラーに近い事象など。
@@ -42,7 +42,7 @@ namespace SoftCube.Loggers
         Warning = 3,
 
         /// <summary>
-        /// エラー。
+        /// エラーログ。
         /// </summary>
         /// <remarks>
         /// 予期しない実行時エラー。
@@ -50,7 +50,7 @@ namespace SoftCube.Loggers
         Error = 4,
 
         /// <summary>
-        /// 致命的なエラー。
+        /// 致命的なエラーログ。
         /// </summary>
         /// <remarks>
         /// プログラムの異常終了を伴うようなもの。
@@ -68,11 +68,11 @@ namespace SoftCube.Loggers
         /// <summary>
         /// ログレベルを表示名に変換する。
         /// </summary>
-        /// <param name="logLevel">ログレベル</param>
+        /// <param name="level">ログレベル</param>
         /// <returns>表示名</returns>
-        public static string ToDisplayName(this Level logLevel)
+        public static string ToDisplayName(this Level level)
         {
-            switch (logLevel)
+            switch (level)
             {
                 case Level.Trace:
                     return "TRACE";

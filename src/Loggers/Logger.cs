@@ -12,7 +12,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// アペンダーコレクション。
         /// </summary>
-        private static IReadOnlyList<Appender> Appenders => appenders;
+        public static IReadOnlyList<Appender> Appenders => appenders;
         private static readonly List<Appender> appenders = new List<Appender>();
 
         #endregion
@@ -52,9 +52,9 @@ namespace SoftCube.Loggers
         #endregion
 
         /// <summary>
-        /// トレースを出力します。
+        /// トレースログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public static void Trace(string message)
         {
             lock (appenders)
@@ -67,9 +67,9 @@ namespace SoftCube.Loggers
         }
 
         /// <summary>
-        /// デバッグを出力します。
+        /// デバッグログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public static void Debug(string message)
         {
             lock (appenders)
@@ -82,9 +82,9 @@ namespace SoftCube.Loggers
         }
 
         /// <summary>
-        /// 情報を出力します。
+        /// 情報ログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public static void Info(string message)
         {
             lock (appenders)
@@ -97,9 +97,9 @@ namespace SoftCube.Loggers
         }
 
         /// <summary>
-        /// 警告を出力します。
+        /// 警告ログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public static void Warning(string message)
         {
             lock (appenders)
@@ -112,9 +112,9 @@ namespace SoftCube.Loggers
         }
 
         /// <summary>
-        /// エラーを出力します。
+        /// エラーログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public static void Error(string message)
         {
             lock (appenders)
@@ -127,9 +127,9 @@ namespace SoftCube.Loggers
         }
 
         /// <summary>
-        /// 致命的なエラーを出力します。
+        /// 致命的なエラーログを出力します。
         /// </summary>
-        /// <param name="message">メッセージ。</param>
+        /// <param name="message">ログメッセージ。</param>
         public static void Fatal(string message)
         {
             lock (appenders)
