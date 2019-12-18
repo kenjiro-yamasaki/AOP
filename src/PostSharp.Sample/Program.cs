@@ -4,7 +4,6 @@ namespace PostSharp.Sample
 {
     class Program
     {
-        [Logger]
         static void Main(string[] args)
         {
             new LoggerTest().Test("BBB");

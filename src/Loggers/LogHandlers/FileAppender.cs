@@ -6,16 +6,16 @@ using System.Text;
 namespace SoftCube.Loggers
 {
     /// <summary>
-    /// ログファイルハンドラー。
+    /// ファイルアペンダー。
     /// </summary>
-    public class LogFileHandler : LogHandler
+    public class FileAppender : Appender
     {
         #region プロパティ
 
         /// <summary>
         /// ストリームライター。
         /// </summary>
-        private StreamWriter Writer { get; set; }
+        private StreamWriter Writer { get; }
 
         #endregion
 
@@ -26,9 +26,18 @@ namespace SoftCube.Loggers
         /// </summary>
         /// <param name="filePath">ファイルパス。</param>
         /// <param name="encoding">エンコーディング。</param>
-        public LogFileHandler(string filePath, Encoding encoding)
+        /// <param name="conversionPattern">変換パターン。</param>
+        /// <param name="minLevel">最小レベル。</param>
+        /// <param name="maxLevel">最大レベル。</param>
+        public FileAppender(string filePath, Encoding encoding, string conversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}", Level minLevel = Level.Trace, Level maxLevel = Level.Fatal)
+            : base(conversionPattern, minLevel, maxLevel)
         {
-            Open(filePath, encoding);
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
+            Writer = new StreamWriter(filePath, append: true, encoding);
         }
 
         #endregion
@@ -49,41 +58,13 @@ namespace SoftCube.Loggers
         {
             if (disposing)
             {
-                Close();
+                lock (Writer)
+                {
+                    Assert.True(Writer != null);
+                    Writer.Close();
+                    Writer.Dispose();
+                }
             }
-        }
-
-        #endregion
-
-        #region 開く
-
-        /// <summary>
-        /// ログファイルを開きます。
-        /// </summary>
-        /// <param name="filePath">ファイルパス。</param>
-        /// <param name="encoding">エンコーディング。</param>
-        private void Open(string filePath, Encoding encoding)
-        {
-            Assert.True(!string.IsNullOrEmpty(filePath));
-            Assert.True(Writer == null);
-
-            Writer = new StreamWriter(filePath, append: true, encoding: encoding);
-        }
-
-        #endregion
-
-        #region 閉じる
-
-        /// <summary>
-        /// ログファイルを閉じます。
-        /// </summary>
-        private void Close()
-        {
-            Assert.True(Writer != null);
-
-            Writer.Close();
-            Writer.Dispose();
-            Writer = null;
         }
 
         #endregion
@@ -94,8 +75,11 @@ namespace SoftCube.Loggers
         /// <param name="log">ログ。</param>
         public override void Log(string log)
         {
-            Writer.Write(log);
-            Writer.Flush();
+            lock (Writer)
+            {
+                Writer.Write(log);
+                Writer.Flush();
+            }
         }
 
         #endregion

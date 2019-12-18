@@ -3,16 +3,16 @@
 namespace SoftCube.Aspects.Injector
 {
     /// <summary>
-    /// MethodDefinitionの拡張メソッド。
+    /// MethodDefinition の拡張メソッド。
     /// </summary>
     internal static class MethodDefinitionExtensions
     {
         #region 静的メソッド
 
         /// <summary>
-        /// アスペクト(カスタムコード)を注入します。
+        /// アスペクト (カスタムコード) を注入します。
         /// </summary>
-        /// <param name="method">注入対象のメソッド</param>
+        /// <param name="method">注入対象のメソッド。</param>
         internal static void Inject(this MethodDefinition method)
         {
             var baseFullName  = $"{nameof(SoftCube)}.{nameof(Aspects)}.{nameof(MethodLevelAspect)}";

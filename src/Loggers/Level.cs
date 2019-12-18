@@ -5,18 +5,18 @@ namespace SoftCube.Loggers
     /// <summary>
     /// ログレベル。
     /// </summary>
-    public enum LogLevel
+    public enum Level
     {
         /// <summary>
-        /// トレース情報。
+        /// トレース。
         /// </summary>
         /// <remarks>
-        /// デバッグ情報よりも、更に詳細な情報。
+        /// デバッグよりも、更に詳細な情報。
         /// </remarks>
         Trace = 0,
 
         /// <summary>
-        /// デバッグ情報。
+        /// デバッグ。
         /// </summary>
         /// <remarks>
         /// システムの動作状況に関する詳細な情報。
@@ -59,7 +59,7 @@ namespace SoftCube.Loggers
     }
 
     /// <summary>
-    /// <see cref="LogLevel"/> の拡張メソッド。
+    /// <see cref="Level"/> の拡張メソッド。
     /// </summary>
     public static class LogLevelExtensions
     {
@@ -70,26 +70,26 @@ namespace SoftCube.Loggers
         /// </summary>
         /// <param name="logLevel">ログレベル</param>
         /// <returns>表示名</returns>
-        public static string ToDisplayName(this LogLevel logLevel)
+        public static string ToDisplayName(this Level logLevel)
         {
             switch (logLevel)
             {
-                case LogLevel.Trace:
+                case Level.Trace:
                     return "TRACE";
 
-                case LogLevel.Debug:
+                case Level.Debug:
                     return "DEBUG";
 
-                case LogLevel.Info:
+                case Level.Info:
                     return "INFO";
 
-                case LogLevel.Warning:
+                case Level.Warning:
                     return "WARNING";
 
-                case LogLevel.Error:
+                case Level.Error:
                     return "ERROR";
 
-                case LogLevel.Fatal:
+                case Level.Fatal:
                     return "FATAL";
 
                 default:

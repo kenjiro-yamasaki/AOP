@@ -26,7 +26,7 @@ namespace SoftCube.Aspects
         #region メソッド
 
         /// <summary>
-        /// アスペクト(カスタムコード)を注入します。
+        /// アスペクト (カスタムコード) を注入します。
         /// </summary>
         /// <param name="method">注入対象のメソッド定義</param>
         protected override void OnInject(MethodDefinition method)
@@ -50,7 +50,7 @@ namespace SoftCube.Aspects
             var exceptionIndex = processor.Body.Variables.Count();
             processor.Body.Variables.Add(new VariableDefinition(module.ImportReference(typeof(Exception))));
 
-            // 命令を書き換える。
+            // 命令を書き換えます。
             var first = processor.Body.Instructions.First();
             var last  = processor.Body.Instructions.Last();
             Instruction tryStart;
@@ -70,11 +70,11 @@ namespace SoftCube.Aspects
 
             //
             {
-                // OnMethodBoundaryAspectの派生クラスを生成します。
+                // OnMethodBoundaryAspect の派生クラスを生成します。
                 processor.InsertBefore(first, processor.Create(OpCodes.Newobj, module.ImportReference(GetType().GetConstructor(new Type[] { }))));
                 processor.InsertBefore(first, processor.Create(OpCodes.Stloc, aspectIndex));
 
-                // MethodExecutionArgsを生成します。
+                // MethodExecutionArgs を生成します。
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldarg_0));
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldc_I4, method.Parameters.Count));
                 processor.InsertBefore(first, processor.Create(OpCodes.Newarr, module.ImportReference(typeof(object))));
@@ -98,22 +98,22 @@ namespace SoftCube.Aspects
                 processor.InsertBefore(first, processor.Create(OpCodes.Call, module.ImportReference(typeof(MethodBase).GetMethod(nameof(MethodBase.GetCurrentMethod), new Type[]{ }))));
                 processor.InsertBefore(first, processor.Create(OpCodes.Callvirt, module.ImportReference(typeof(MethodExecutionArgs).GetProperty(nameof(MethodExecutionArgs.Method)).GetSetMethod())));
 
-                // OnEntryメソッドを呼び出す。
+                // OnEntry メソッドを呼び出します。
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, aspectIndex));
                 processor.InsertBefore(first, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(first, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnEntry)))));
 
-                // tryの開始位置を挿入します。
+                // try の開始位置を挿入します。
                 processor.InsertBefore(first, tryStart = processor.Create(OpCodes.Nop));
             }
 
             {
-                // OnSuccessメソッドを呼び出す。
+                // OnSuccess メソッドを呼び出します。
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, aspectIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnSuccess)))));
 
-                // OnExitメソッドを呼び出す。
+                // OnExit メソッドを呼び出す。
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, aspectIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnExit)))));
@@ -121,19 +121,19 @@ namespace SoftCube.Aspects
                 processor.InsertBefore(last, processor.Create(OpCodes.Leave_S, last));
             }
             {
-                // catchの開始位置を挿入します。
+                // catch の開始位置を挿入します。
                 processor.InsertBefore(last, handlerStart = processor.Create(OpCodes.Stloc, exceptionIndex));
 
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, exceptionIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(typeof(MethodExecutionArgs).GetProperty(nameof(MethodExecutionArgs.Exception)).GetSetMethod())));
 
-                // OnExceptionメソッドを呼び出す。
+                // OnException メソッドを呼び出す。
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, aspectIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnException)))));
 
-                // OnExitメソッドを呼び出す(例外時)。
+                // OnExit メソッドを呼び出す(例外時)。
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, aspectIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Ldloc, methodExecutionArgsIndex));
                 processor.InsertBefore(last, processor.Create(OpCodes.Callvirt, module.ImportReference(GetType().GetMethod(nameof(OnExit)))));
@@ -144,7 +144,7 @@ namespace SoftCube.Aspects
 
             // 例外ハンドラーを追加します。
             {
-                // finallyハンドラーを追加します。
+                // finally ハンドラーを追加します。
                 var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
                 {
                     CatchType    = module.ImportReference(typeof(Exception)),

@@ -10,110 +10,134 @@ namespace SoftCube.Loggers
         #region プロパティ
 
         /// <summary>
-        /// ログハンドラコレクション。
+        /// アペンダーコレクション。
         /// </summary>
-        private static IEnumerable<LogHandler> Handlers => handlers;
-        private static readonly List<LogHandler> handlers = new List<LogHandler>();
+        private static IReadOnlyList<Appender> Appenders => appenders;
+        private static readonly List<Appender> appenders = new List<Appender>();
 
         #endregion
 
         #region メソッド
 
-        #region ログハンドラーコレクション
+        #region アペンダーコレクション
 
         /// <summary>
-        /// ログハンドラーを追加します。
+        /// アペンダーを追加します。
         /// </summary>
-        /// <param name="handler">ログハンドラー。</param>
-        public static void Add(LogHandler handler)
+        /// <param name="appender">アペンダー。</param>
+        public static void Add(Appender appender)
         {
-            handlers.Add(handler);
+            lock (appenders)
+            {
+                appenders.Add(appender);
+            }
         }
 
         /// <summary>
-        /// ログハンドラーをクリアし、破棄します。
+        /// アペンダーをクリアし、破棄します。
         /// </summary>
-        public static void ClearAndDisposeHandlers()
+        public static void ClearAndDisposeAppenders()
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Dispose();
-            }
+                foreach (var appender in appenders)
+                {
+                    appender.Dispose();
+                }
 
-            handlers.Clear();
+                appenders.Clear();
+            }
         }
 
         #endregion
 
         /// <summary>
-        /// トレース情報を出力します。
+        /// トレースを出力します。
         /// </summary>
-        /// <param name="message">ログメッセージ。</param>
+        /// <param name="message">メッセージ。</param>
         public static void Trace(string message)
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Trace(message);
+                foreach (var appender in appenders)
+                {
+                    appender.Trace(message);
+                }
             }
         }
 
         /// <summary>
-        /// デバッグ情報を出力します。
+        /// デバッグを出力します。
         /// </summary>
-        /// <param name="message">ログメッセージ。</param>
+        /// <param name="message">メッセージ。</param>
         public static void Debug(string message)
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Debug(message);
+                foreach (var appender in appenders)
+                {
+                    appender.Debug(message);
+                }
             }
         }
 
         /// <summary>
         /// 情報を出力します。
         /// </summary>
-        /// <param name="message">ログメッセージ。</param>
+        /// <param name="message">メッセージ。</param>
         public static void Info(string message)
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Info(message);
+                foreach (var appender in appenders)
+                {
+                    appender.Info(message);
+                }
             }
         }
 
         /// <summary>
         /// 警告を出力します。
         /// </summary>
-        /// <param name="message">ログメッセージ。</param>
+        /// <param name="message">メッセージ。</param>
         public static void Warning(string message)
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Warning(message);
+                foreach (var appender in appenders)
+                {
+                    appender.Warning(message);
+                }
             }
         }
 
         /// <summary>
         /// エラーを出力します。
         /// </summary>
-        /// <param name="message">ログメッセージ。</param>
+        /// <param name="message">メッセージ。</param>
         public static void Error(string message)
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Error(message);
+                foreach (var appender in appenders)
+                {
+                    appender.Error(message);
+                }
             }
         }
 
         /// <summary>
         /// 致命的なエラーを出力します。
         /// </summary>
-        /// <param name="message">ログメッセージ。</param>
+        /// <param name="message">メッセージ。</param>
         public static void Fatal(string message)
         {
-            foreach (var handler in Handlers)
+            lock (appenders)
             {
-                handler.Fatal(message);
+                foreach (var appender in appenders)
+                {
+                    appender.Fatal(message);
+                }
             }
         }
 

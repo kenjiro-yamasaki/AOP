@@ -15,8 +15,7 @@ namespace SoftCube.Aspects.UnitTests
         [Fact]
         public void Test1()
         {
-            var handler = new LogStringHandler();
-            handler.ConversionPattern = "{message}{newline}";
+            var handler = new StringAppender("{message}{newline}");
             Logger.Add(handler);
 
             var aspectTest = new AspectTest();

@@ -4,9 +4,9 @@ using System.Text;
 namespace SoftCube.Loggers
 {
     /// <summary>
-    /// ログ文字列ハンドラー。
+    /// 文字列アペンダー。
     /// </summary>
-    public class LogStringHandler : LogHandler
+    public class StringAppender : Appender
     {
         #region プロパティ
 
@@ -22,29 +22,17 @@ namespace SoftCube.Loggers
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        public LogStringHandler()
+        /// <param name="conversionPattern">変換パターン。</param>
+        /// <param name="minLevel">最小レベル。</param>
+        /// <param name="maxLevel">最大レベル。</param>
+        public StringAppender(string conversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}", Level minLevel = Level.Trace, Level maxLevel = Level.Fatal)
+            : base(conversionPattern, minLevel, maxLevel)
         {
         }
 
         #endregion
 
         #region メソッド
-
-        #region 破棄
-
-        /// <summary>
-        /// 破棄します。
-        /// </summary>
-        /// <param name="disposing">
-        /// <see cref="IDisposable.Dispose"/> から呼び出されたかを示す値。
-        /// <c>true</c> の場合、マネージリソースを破棄します。
-        /// <c>false</c> の場合、マネージリソースを破棄しないでください。
-        /// </param>
-        protected override void Dispose(bool disposing)
-        {
-        }
-
-        #endregion
 
         #region 変換
 
@@ -54,7 +42,10 @@ namespace SoftCube.Loggers
         /// <returns>文字列</returns>
         public override string ToString()
         {
-            return StringBuilder.ToString();
+            lock (StringBuilder)
+            {
+                return StringBuilder.ToString();
+            }
         }
 
         #endregion
@@ -65,7 +56,10 @@ namespace SoftCube.Loggers
         /// <param name="log">ログ。</param>
         public override void Log(string log)
         {
-            StringBuilder.Append(log);
+            lock (StringBuilder)
+            {
+                StringBuilder.Append(log);
+            }
         }
 
         #endregion
