@@ -13,7 +13,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Trace_Trace以上を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MinLevel = Level.Trace;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -33,7 +35,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Debug_Debug以上を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Debug, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MinLevel = Level.Debug;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -53,7 +57,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Info_Info以上を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Info, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MinLevel = Level.Info;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -73,7 +79,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Warning_Warning以上を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Warning, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MinLevel = Level.Warning;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -93,7 +101,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Error_Error以上を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Error, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MinLevel = Level.Error;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -113,7 +123,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Fatal_Fatal以上を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Fatal, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MinLevel = Level.Fatal;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -136,7 +148,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Fatal_Fatal以下を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MaxLevel = Level.Fatal;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -156,7 +170,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Error_Error以下を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Error);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MaxLevel = Level.Error;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -176,7 +192,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Warning_Warning以下を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Warning);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MaxLevel = Level.Warning;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -196,7 +214,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Info_Info以下を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Info);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MaxLevel = Level.Info;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -216,7 +236,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Debug_Debug以下を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Debug);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MaxLevel = Level.Debug;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -236,7 +258,9 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Trace_Trace以下を出力する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Trace);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
+                appender.MaxLevel = Level.Trace;
 
                 appender.Trace("Trace");
                 appender.Debug("Debug");
@@ -259,7 +283,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Date_正しく出力する()
             {
-                var appender = new StringAppender("{date}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{date}";
 
                 appender.Trace("A");
 
@@ -270,7 +295,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Date書式指定_正しく出力する()
             {
-                var appender = new StringAppender("{date:yyyy-MM-dd HH:mm:ss,fff}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff}";
 
                 appender.Trace("A");
 
@@ -281,7 +307,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void File_正しく出力する()
             {
-                var appender = new StringAppender("{file}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{file}";
 
                 appender.Trace("A");
 
@@ -293,7 +320,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Level_正しく出力する()
             {
-                var appender = new StringAppender("{level}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{level}";
 
                 appender.Info("A");
 
@@ -305,7 +333,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Level左詰め_正しく出力する()
             {
-                var appender = new StringAppender("{level,-5}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{level,-5}";
 
                 appender.Info("A");
 
@@ -317,7 +346,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Level右詰め_正しく出力する()
             {
-                var appender = new StringAppender("{level,5}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{level,5}";
 
                 appender.Info("A");
 
@@ -328,7 +358,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Line_正しく出力する()
             {
-                var appender = new StringAppender("{line}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{line}";
 
                 appender.Trace("A");
 
@@ -340,7 +371,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Message_正しく出力する()
             {
-                var appender = new StringAppender("{message}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{message}";
 
                 appender.Info("A");
 
@@ -351,7 +383,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Method_正しく出力する()
             {
-                var appender = new StringAppender("{method}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{method}";
 
                 appender.Trace("A");
 
@@ -363,7 +396,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void NewLine_正しく出力する()
             {
-                var appender = new StringAppender("{newline}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{newline}";
 
                 appender.Info("A");
 
@@ -374,7 +408,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Thread_正しく出力する()
             {
-                var appender = new StringAppender("{thread}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{thread}";
 
                 appender.Trace("A");
 
@@ -386,7 +421,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void Type_正しく出力する()
             {
-                var appender = new StringAppender("{type}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{type}";
 
                 appender.Trace("A");
 
@@ -398,7 +434,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 推奨書式_正しく出力する()
             {
-                var appender = new StringAppender("{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}";
 
                 appender.Info("A");
 
@@ -409,7 +446,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 不正な書式_を投げる()
             {
-                var appender = new StringAppender("{datetime}");
+                var appender = new StringAppender();
+                appender.ConversionPattern = "{datetime}";
 
                 var ex = Record.Exception(() => appender.Trace("A"));
 
@@ -423,7 +461,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void null_ArgumentNullExceptionが投げられる()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 var ex = Record.Exception(() => appender.Trace(null));
 
@@ -433,7 +472,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 空白_許容する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Trace("");
 
@@ -443,7 +483,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void A_成功する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Trace("A");
 
@@ -456,7 +497,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void null_ArgumentNullExceptionが投げられる()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 var ex = Record.Exception(() => appender.Debug(null));
 
@@ -466,7 +508,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 空白_許容する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Debug("");
 
@@ -476,7 +519,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void A_成功する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Debug("A");
 
@@ -489,7 +533,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void null_ArgumentNullExceptionが投げられる()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 var ex = Record.Exception(() => appender.Info(null));
 
@@ -499,7 +544,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 空白_許容する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Info("");
 
@@ -509,7 +555,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void A_成功する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Info("A");
 
@@ -522,7 +569,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void null_ArgumentNullExceptionが投げられる()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 var ex = Record.Exception(() => appender.Warning(null));
 
@@ -532,7 +580,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 空白_許容する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Warning("");
 
@@ -542,7 +591,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void A_成功する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Warning("A");
 
@@ -555,7 +605,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void null_ArgumentNullExceptionが投げられる()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 var ex = Record.Exception(() => appender.Error(null));
 
@@ -565,7 +616,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 空白_許容する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Error("");
 
@@ -575,7 +627,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void A_成功する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Error("A");
 
@@ -588,7 +641,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void null_ArgumentNullExceptionが投げられる()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 var ex = Record.Exception(() => appender.Fatal(null));
 
@@ -598,7 +652,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 空白_許容する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Fatal("");
 
@@ -608,7 +663,8 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void A_成功する()
             {
-                var appender = Substitute.For<Appender>("{message}", Level.Trace, Level.Fatal);
+                var appender = Substitute.For<Appender>();
+                appender.ConversionPattern = "{message}";
 
                 appender.Fatal("A");
 

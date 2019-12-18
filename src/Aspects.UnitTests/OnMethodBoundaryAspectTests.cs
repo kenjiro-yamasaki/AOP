@@ -15,13 +15,14 @@ namespace SoftCube.Aspects.UnitTests
         [Fact]
         public void Test1()
         {
-            var handler = new StringAppender("{message}{newline}");
-            Logger.Add(handler);
+            var appender = new StringAppender();
+            appender.ConversionPattern = "{message}{newline}";
+            Logger.Add(appender);
 
             var aspectTest = new AspectTest();
             aspectTest.Test();
 
-            Assert.Equal($"OnEntry{Environment.NewLine}OnSuccess{Environment.NewLine}OnExit{Environment.NewLine}", handler.ToString());
+            Assert.Equal($"OnEntry{Environment.NewLine}OnSuccess{Environment.NewLine}OnExit{Environment.NewLine}", appender.ToString());
         }
 
         #endregion

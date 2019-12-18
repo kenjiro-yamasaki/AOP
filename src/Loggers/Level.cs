@@ -61,12 +61,12 @@ namespace SoftCube.Loggers
     /// <summary>
     /// <see cref="Level"/> の拡張メソッド。
     /// </summary>
-    public static class LogLevelExtensions
+    public static class LevelExtensions
     {
         #region 静的メソッド
 
         /// <summary>
-        /// ログレベルを表示名に変換する。
+        /// ログレベルを表示名に変換します。
         /// </summary>
         /// <param name="level">ログレベル</param>
         /// <returns>表示名</returns>

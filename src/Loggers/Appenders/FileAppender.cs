@@ -26,11 +26,7 @@ namespace SoftCube.Loggers
         /// </summary>
         /// <param name="filePath">ファイルパス。</param>
         /// <param name="encoding">エンコーディング。</param>
-        /// <param name="conversionPattern">変換パターン。</param>
-        /// <param name="minLevel">最小レベル。</param>
-        /// <param name="maxLevel">最大レベル。</param>
-        public FileAppender(string filePath, Encoding encoding, string conversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}", Level minLevel = Level.Trace, Level maxLevel = Level.Fatal)
-            : base(conversionPattern, minLevel, maxLevel)
+        public FileAppender(string filePath, Encoding encoding)
         {
             if (filePath == null)
             {

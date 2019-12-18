@@ -33,7 +33,7 @@ namespace SoftCube.Loggers
         public string ConversionPattern
         {
             get => conversionPattern;
-            private set
+            set
             {
                 if (conversionPattern != value)
                 {
@@ -66,7 +66,7 @@ namespace SoftCube.Loggers
         /// <remarks>
         /// 最小レベル以上のログのみを出力します。
         /// </remarks>
-        public Level MinLevel { get; }
+        public Level MinLevel { get; set; } = Level.Trace;
 
         /// <summary>
         /// 最大レベル。
@@ -74,7 +74,7 @@ namespace SoftCube.Loggers
         /// <remarks>
         /// 最大レベル以下のログのみを出力します。
         /// </remarks>
-        public Level MaxLevel { get; }
+        public Level MaxLevel { get; set; } = Level.Fatal;
 
         #endregion
 
@@ -83,14 +83,9 @@ namespace SoftCube.Loggers
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="conversionPattern">変換パターン。</param>
-        /// <param name="minLevel">最小レベル。</param>
-        /// <param name="maxLevel">最大レベル。</param>
-        public Appender(string conversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}", Level minLevel = Level.Trace, Level maxLevel = Level.Fatal)
+        public Appender()
         {
-            ConversionPattern = conversionPattern ?? throw new ArgumentNullException(nameof(conversionPattern));
-            MinLevel = minLevel;
-            MaxLevel = maxLevel;
+            ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}";
         }
 
         #endregion
@@ -137,11 +132,7 @@ namespace SoftCube.Loggers
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var level = Level.Trace;
-            if (MinLevel <= level && level <= MaxLevel)
-            {
-                Log(Format(level, message));
-            }
+            Log(Level.Trace, message);
         }
 
         /// <summary>
@@ -155,11 +146,7 @@ namespace SoftCube.Loggers
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var level = Level.Debug;
-            if (MinLevel <= level && level <= MaxLevel)
-            {
-                Log(Format(level, message));
-            }
+            Log(Level.Debug, message);
         }
 
         /// <summary>
@@ -173,11 +160,7 @@ namespace SoftCube.Loggers
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var level = Level.Info;
-            if (MinLevel <= level && level <= MaxLevel)
-            {
-                Log(Format(level, message));
-            }
+            Log(Level.Info, message);
         }
 
         /// <summary>
@@ -191,11 +174,7 @@ namespace SoftCube.Loggers
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var level = Level.Warning;
-            if (MinLevel <= level && level <= MaxLevel)
-            {
-                Log(Format(level, message));
-            }
+            Log(Level.Warning, message);
         }
 
         /// <summary>
@@ -209,11 +188,7 @@ namespace SoftCube.Loggers
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var level = Level.Error;
-            if (MinLevel <= level && level <= MaxLevel)
-            {
-                Log(Format(level, message));
-            }
+            Log(Level.Error, message);
         }
 
         /// <summary>
@@ -227,11 +202,7 @@ namespace SoftCube.Loggers
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var level = Level.Fatal;
-            if (MinLevel <= level && level <= MaxLevel)
-            {
-                Log(Format(level, message));
-            }
+            Log(Level.Fatal, message);
         }
 
         /// <summary>
@@ -239,6 +210,19 @@ namespace SoftCube.Loggers
         /// </summary>
         /// <param name="log">ログ。</param>
         public abstract void Log(string log);
+
+        /// <summary>
+        /// ログを出力します。
+        /// </summary>
+        /// <param name="level">ログレベル。</param>
+        /// <param name="message">ログメッセージ。</param>
+        private void Log(Level level, string message)
+        {
+            if (MinLevel <= level && level <= MaxLevel)
+            {
+                Log(Format(level, message));
+            }
+        }
 
         /// <summary>
         /// 変換パターンを使用して、ログをフォーマットします。
@@ -250,7 +234,7 @@ namespace SoftCube.Loggers
         {
             try
             {
-                var stackFrame = new StackFrame(2, true);
+                var stackFrame = new StackFrame(3, true);
                 var type       = stackFrame.GetMethod().DeclaringType.FullName;
                 var method     = stackFrame.GetMethod().Name;
                 var file       = stackFrame.GetFileName();
