@@ -35,7 +35,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// 文字列に変換する。
         /// </summary>
-        /// <returns>文字列</returns>
+        /// <returns>文字列。</returns>
         public override string ToString()
         {
             lock (StringBuilder)

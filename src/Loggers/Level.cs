@@ -27,7 +27,7 @@ namespace SoftCube.Loggers
         /// 情報ログ。
         /// </summary>
         /// <remarks>
-        /// 実行時の何らかの注目すべき事象（開始や終了など）。
+        /// 実行時の何らかの注目すべき事象（開始や終了など)。
         /// メッセージ内容は簡潔に止めるべき。
         /// </remarks>
         Info = 2,
@@ -68,8 +68,8 @@ namespace SoftCube.Loggers
         /// <summary>
         /// ログレベルを表示名に変換します。
         /// </summary>
-        /// <param name="level">ログレベル</param>
-        /// <returns>表示名</returns>
+        /// <param name="level">ログレベル。</param>
+        /// <returns>表示名。</returns>
         public static string ToDisplayName(this Level level)
         {
             switch (level)
