@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using Xunit;
 
-namespace SoftCube.Loggers.UnitTests
+namespace SoftCube.Logger.UnitTests
 {
     public class AppenderTests
     {

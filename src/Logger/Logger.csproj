@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>SoftCube.Loggers</AssemblyName>
-    <RootNamespace>SoftCube.Loggers</RootNamespace>
+    <AssemblyName>SoftCube.Logger</AssemblyName>
+    <RootNamespace>SoftCube.Logger</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

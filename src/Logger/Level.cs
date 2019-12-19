@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoftCube.Loggers
+namespace SoftCube.Logger
 {
     /// <summary>
     /// ログレベル。

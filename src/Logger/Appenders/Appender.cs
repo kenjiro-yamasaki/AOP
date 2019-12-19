@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 
-namespace SoftCube.Loggers
+namespace SoftCube.Logger
 {
     /// <summary>
     /// アペンダー。

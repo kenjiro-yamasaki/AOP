@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace SoftCube.Loggers
+namespace SoftCube.Logger
 {
     /// <summary>
     /// ファイルアペンダー。

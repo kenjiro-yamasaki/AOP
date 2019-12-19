@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SoftCube.Loggers
+namespace SoftCube.Logger
 {
     /// <summary>
     /// 

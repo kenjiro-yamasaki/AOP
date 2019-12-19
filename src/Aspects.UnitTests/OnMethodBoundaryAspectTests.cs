@@ -1,4 +1,4 @@
-using SoftCube.Loggers;
+using SoftCube.Logger;
 using System;
 using Xunit;
 
@@ -17,7 +17,7 @@ namespace SoftCube.Aspects.UnitTests
         {
             var appender = new StringAppender();
             appender.ConversionPattern = "{message}{newline}";
-            Logger.Add(appender);
+            Logger.Logger.Add(appender);
 
             var aspectTest = new AspectTest();
             aspectTest.Test();

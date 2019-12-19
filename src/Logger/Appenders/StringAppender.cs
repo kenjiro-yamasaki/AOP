@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace SoftCube.Loggers
+namespace SoftCube.Logger
 {
     /// <summary>
     /// 文字列アペンダー。

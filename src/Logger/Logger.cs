@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SoftCube.Loggers
+namespace SoftCube.Logger
 {
     /// <summary>
     /// ロガー。

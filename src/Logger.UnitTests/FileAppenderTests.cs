@@ -1,18 +1,34 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Xunit;
 
-namespace SoftCube.Loggers.UnitTests
+namespace SoftCube.Logger.UnitTests
 {
     public class FileAppenderTests
     {
+        private static string CreateLogFilePath()
+        {
+            var stackFrame = new StackFrame(1, true);
+            return $"{stackFrame.GetFileLineNumber()}.log";
+        }
+
+        private static void CreateLogFile(string logFilePath, string log)
+        {
+            using (var appender = new FileAppender(logFilePath, append: false, Encoding.UTF8))
+            {
+                appender.ConversionPattern = "{message}";
+                appender.Trace(log);
+            }
+        }
+
         public class Constructor
         {
             [Fact]
             public void appendがfalse_ログを上書きする()
             {
-                var logFilePath = "test.log";
+                var logFilePath = CreateLogFilePath();
                 CreateLogFile(logFilePath, "A");
 
                 using (var appender = new FileAppender(logFilePath, append: false, Encoding.UTF8))
@@ -28,7 +44,7 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void appendがtrue_ログを追加する()
             {
-                var logFilePath = "test.log";
+                var logFilePath = CreateLogFilePath();
                 CreateLogFile(logFilePath, "A");
 
                 using (var appender = new FileAppender(logFilePath, append: true, Encoding.UTF8))
@@ -51,16 +67,7 @@ namespace SoftCube.Loggers.UnitTests
             public void 引数がnull_ArgumentNullExceptionを投げる()
             {
                 Assert.Throws<ArgumentNullException>(() => new FileAppender(null, append: true, Encoding.UTF8));
-                Assert.Throws<ArgumentNullException>(() => new FileAppender("test.log", append: true, null));
-            }
-
-            void CreateLogFile(string logFilePath, string log)
-            {
-                using (var appender = new FileAppender(logFilePath, append: false, Encoding.UTF8))
-                {
-                    appender.ConversionPattern = "{message}";
-                    appender.Trace(log);
-                }
+                Assert.Throws<ArgumentNullException>(() => new FileAppender(CreateLogFilePath(), append: true, null));
             }
         }
 
@@ -69,7 +76,7 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void appendがfalse_ログを上書きする()
             {
-                var logFilePath = "test.log";
+                var logFilePath = CreateLogFilePath();
                 CreateLogFile(logFilePath, "A");
 
                 using (var appender = new FileAppender())
@@ -86,7 +93,7 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void appendがtrue_ログを追加する()
             {
-                var logFilePath = "test.log";
+                var logFilePath = CreateLogFilePath();
                 CreateLogFile(logFilePath, "A");
 
                 using (var appender = new FileAppender())
@@ -103,17 +110,20 @@ namespace SoftCube.Loggers.UnitTests
             [Fact]
             public void 連続してOpenする_開いているファイルをCloseしてOpenする()
             {
+                var logFilePathA = CreateLogFilePath();
+                var logFilePathB = CreateLogFilePath();
+
                 var appender = new FileAppender();
                 appender.ConversionPattern = "{message}";
-                appender.Open("A.log", append: false, Encoding.UTF8);
+                appender.Open(logFilePathA, append: false, Encoding.UTF8);
                 appender.Trace("A");
 
-                appender.Open("B.log", append: false, Encoding.UTF8);
+                appender.Open(logFilePathB, append: false, Encoding.UTF8);
                 appender.Trace("B");
                 appender.Close();
 
-                Assert.Equal("A", File.ReadAllText("A.log"));
-                Assert.Equal("B", File.ReadAllText("B.log"));
+                Assert.Equal("A", File.ReadAllText(logFilePathA));
+                Assert.Equal("B", File.ReadAllText(logFilePathB));
             }
 
             [Fact]
@@ -126,17 +136,7 @@ namespace SoftCube.Loggers.UnitTests
             public void 引数がnull_ArgumentNullExceptionを投げる()
             {
                 Assert.Throws<ArgumentNullException>(() => new FileAppender().Open(null, append: true, Encoding.UTF8));
-                Assert.Throws<ArgumentNullException>(() => new FileAppender().Open("test.log", append: true, null));
-            }
-
-            void CreateLogFile(string logFilePath, string log)
-            {
-                using (var appender = new FileAppender())
-                {
-                    appender.ConversionPattern = "{message}";
-                    appender.Open(logFilePath, append: false, Encoding.UTF8);
-                    appender.Trace(log);
-                }
+                Assert.Throws<ArgumentNullException>(() => new FileAppender().Open(CreateLogFilePath(), append: true, null));
             }
         }
 
@@ -147,7 +147,7 @@ namespace SoftCube.Loggers.UnitTests
             {
                 var appender = new FileAppender();
 
-                appender.Open("test.log", append: false, Encoding.UTF8);
+                appender.Open(CreateLogFilePath(), append: false, Encoding.UTF8);
                 var ex = Record.Exception(() => appender.Close());
 
                 Assert.Null(ex);
@@ -168,7 +168,7 @@ namespace SoftCube.Loggers.UnitTests
             {
                 var appender = new FileAppender();
 
-                appender.Open("test.log", append: false, Encoding.UTF8);
+                appender.Open(CreateLogFilePath(), append: false, Encoding.UTF8);
                 appender.Close();
                 var ex = Record.Exception(() => appender.Close());
 
