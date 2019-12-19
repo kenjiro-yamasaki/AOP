@@ -1,4 +1,5 @@
 ﻿using SoftCube.Runtime;
+using System.IO;
 using System.Text;
 
 namespace SoftCube.Logger
@@ -20,14 +21,16 @@ namespace SoftCube.Logger
         /// <remarks>
         /// ローテンションするログファイルサイズを指定します。
         /// </remarks>
-        public int MaxFileSize { get; set; }
+        public long MaxFileSize { get; set; }
 
         /// <summary>
         /// 最大バックアップ数。
         /// </summary>
         /// <remarks>
         /// バックアップファイルをいくつ保持するか指定します。
-        /// 例えば、<see cref="MaxBackupCount"/>=3 を指定すると、ログファイル.1→ログファイル.2→ログファイル.3とローテンションしていき、それ以上古くなると破棄されます。
+        /// 例えば、<see cref="MaxBackupCount"/>=3 を指定すると、
+        /// ログファイル.1→ログファイル.2→ログファイル.3とローテンションしていき、
+        /// それ以上古くなると破棄されます。
         /// </remarks>
         public int MaxBackupCount { get; set; }
 
@@ -88,8 +91,57 @@ namespace SoftCube.Logger
         {
             base.Log(log);
 
+            if (MaxFileSize <= FileSize)
+            {
+                RollLogAndBackupFiles();
+            }
+        }
 
+        /// <summary>
+        /// ログファイル (とバックアップファイル) をローテンションします。
+        /// </summary>
+        private void RollLogAndBackupFiles()
+        {
+            var filePath      = FilePath;
+            var directoryName = Path.GetDirectoryName(filePath);
+            var fileName      = Path.GetFileName(filePath);
+            var baseName      = Path.GetFileNameWithoutExtension(fileName);
+            var extension     = Path.GetExtension(fileName);
+            var encoding      = Encoding;
 
+            // 現在のログファイルを閉じます。
+            Close();
+
+            // 既に存在するバックアップファイルをローテーションします。
+            for (int backupIndex = MaxBackupCount - 1; 1 <= backupIndex; backupIndex--)
+            {
+                var srcFilePath  = Path.Combine(directoryName, $"{baseName}{backupIndex}.{extension}");
+                var destFilePath = Path.Combine(directoryName, $"{baseName}{backupIndex}.{extension}");
+
+                if (!File.Exists(srcFilePath))
+                {
+                    continue;
+                }
+
+                if (File.Exists(destFilePath))
+                {
+                    File.Delete(destFilePath);
+                }
+
+                File.Move(srcFilePath, destFilePath);
+            }
+
+            // 現在のログファイルを新規バックアップファイルとします。
+            {
+                var logFilePath    = filePath;
+                var backupIndex    = 1;
+                var backupFilePath = Path.Combine(directoryName, $"{baseName}{backupIndex}.{extension}");
+
+                File.Move(logFilePath, backupFilePath);
+            }
+
+            // ログファイルを新規作成します。
+            Open(filePath, append: false, encoding);
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using SoftCube.Runtime;
+﻿using SoftCube.Asserts;
+using SoftCube.Runtime;
 using System;
 using System.IO;
 using System.Text;
@@ -15,7 +16,22 @@ namespace SoftCube.Logger
         /// <summary>
         /// ファイルパス。
         /// </summary>
-        public string FilePath { get; private set; }
+        public string FilePath => FileStream.Name;
+
+        /// <summary>
+        /// ファイルサイズ（単位：byte）。
+        /// </summary>
+        public long FileSize => FileStream.Position;
+
+        /// <summary>
+        /// エンコーディング。
+        /// </summary>
+        public Encoding Encoding => Writer.Encoding;
+
+        /// <summary>
+        /// ファイルストリーム。
+        /// </summary>
+        private FileStream FileStream { get; set; }
 
         /// <summary>
         /// ストリームライター。
@@ -136,8 +152,17 @@ namespace SoftCube.Logger
             }
 
             Close();
-            Writer = new StreamWriter(filePath, append, encoding);
-            FilePath = filePath;
+
+            if (append)
+            {
+                FileStream = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+                FileStream.Seek(0, SeekOrigin.End);
+            }
+            else
+            {
+                FileStream = File.Create(filePath);
+            }
+            Writer = new StreamWriter(FileStream, encoding);
         }
 
         /// <summary>
@@ -145,17 +170,21 @@ namespace SoftCube.Logger
         /// </summary>
         public void Close()
         {
-            if (Writer == null)
+            if (FileStream != null && Writer != null)
             {
-                return;
-            }
+                lock (Writer)
+                {
+                    Writer.Dispose();
+                    Writer = null;
 
-            lock (Writer)
+                    FileStream.Dispose();
+                    FileStream = null;
+                }
+            }
+            else
             {
-                Writer.Close();
-                Writer.Dispose();
-                Writer = null;
-                FilePath = null;
+                Assert.Null(FileStream);
+                Assert.Null(Writer);
             }
         }
 
