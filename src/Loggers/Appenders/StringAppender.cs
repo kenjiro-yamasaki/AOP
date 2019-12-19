@@ -30,6 +30,22 @@ namespace SoftCube.Loggers
 
         #region メソッド
 
+        #region ログ
+
+        /// <summary>
+        /// ログを出力します。
+        /// </summary>
+        /// <param name="log">ログ。</param>
+        public override void Log(string log)
+        {
+            lock (StringBuilder)
+            {
+                StringBuilder.Append(log);
+            }
+        }
+
+        #endregion
+
         #region 変換
 
         /// <summary>
@@ -45,18 +61,6 @@ namespace SoftCube.Loggers
         }
 
         #endregion
-
-        /// <summary>
-        /// ログを出力します。
-        /// </summary>
-        /// <param name="log">ログ。</param>
-        public override void Log(string log)
-        {
-            lock (StringBuilder)
-            {
-                StringBuilder.Append(log);
-            }
-        }
 
         #endregion
     }

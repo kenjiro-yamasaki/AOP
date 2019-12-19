@@ -121,6 +121,8 @@ namespace SoftCube.Loggers
 
         #endregion
 
+        #region ログ
+
         /// <summary>
         /// トレースログを出力します。
         /// </summary>
@@ -260,6 +262,8 @@ namespace SoftCube.Loggers
                 throw new InvalidOperationException($"ConversionPattern[{ConversionPattern}]が不正です。");
             }
         }
+
+        #endregion
 
         #endregion
     }

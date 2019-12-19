@@ -1,5 +1,4 @@
-﻿using SoftCube.Asserts;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 
@@ -15,7 +14,7 @@ namespace SoftCube.Loggers
         /// <summary>
         /// ストリームライター。
         /// </summary>
-        private StreamWriter Writer { get; }
+        private StreamWriter Writer { get; set; }
 
         #endregion
 
@@ -24,16 +23,24 @@ namespace SoftCube.Loggers
         /// <summary>
         /// コンストラクター。
         /// </summary>
-        /// <param name="filePath">ファイルパス。</param>
-        /// <param name="encoding">エンコーディング。</param>
-        public FileAppender(string filePath, Encoding encoding)
+        public FileAppender()
         {
-            if (filePath == null)
-            {
-                throw new ArgumentNullException(nameof(filePath));
-            }
+        }
 
-            Writer = new StreamWriter(filePath, append: true, encoding);
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="filePath">ファイルパス。</param>
+        /// <param name="append">
+        /// ファイルにログを追加するかどうかを示す値。
+        /// <c>true</c> の場合、ファイルにログを追加します。
+        /// <c>false</c> の場合、ファイルのログを上書きします。
+        /// </param>
+        /// <param name="encoding">エンコーディング。</param>
+        /// <seealso cref="Open(string, bool, Encoding)"/>
+        public FileAppender(string filePath, bool append, Encoding encoding)
+        {
+            Open(filePath, append, encoding);
         }
 
         #endregion
@@ -54,16 +61,13 @@ namespace SoftCube.Loggers
         {
             if (disposing)
             {
-                lock (Writer)
-                {
-                    Assert.True(Writer != null);
-                    Writer.Close();
-                    Writer.Dispose();
-                }
+                Close();
             }
         }
 
         #endregion
+
+        #region ログ
 
         /// <summary>
         /// ログを出力します。
@@ -71,10 +75,60 @@ namespace SoftCube.Loggers
         /// <param name="log">ログ。</param>
         public override void Log(string log)
         {
+            if (Writer == null)
+            {
+                return;
+            }
+
             lock (Writer)
             {
                 Writer.Write(log);
                 Writer.Flush();
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// ログファイルを開きます。
+        /// </summary>
+        /// <param name="filePath">ファイルパス。</param>
+        /// <param name="append">
+        /// ファイルにログを追加するかどうかを示す値。
+        /// <c>true</c> の場合、ファイルにログを追加します。
+        /// <c>false</c> の場合、ファイルのログを上書きします。
+        /// </param>
+        /// <param name="encoding">エンコーディング。</param>
+        public void Open(string filePath, bool append, Encoding encoding)
+        {
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+            if (encoding == null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
+            Close();
+            Writer = new StreamWriter(filePath, append, encoding);
+        }
+
+        /// <summary>
+        /// ログファイルを閉じます。
+        /// </summary>
+        public void Close()
+        {
+            if (Writer == null)
+            {
+                return;
+            }
+
+            lock (Writer)
+            {
+                Writer.Close();
+                Writer.Dispose();
+                Writer = null;
             }
         }
 
