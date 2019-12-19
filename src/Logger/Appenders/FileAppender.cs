@@ -13,6 +13,11 @@ namespace SoftCube.Logger
         #region プロパティ
 
         /// <summary>
+        /// ファイルパス。
+        /// </summary>
+        public string FilePath { get; private set; }
+
+        /// <summary>
         /// ストリームライター。
         /// </summary>
         private StreamWriter Writer { get; set; }
@@ -132,6 +137,7 @@ namespace SoftCube.Logger
 
             Close();
             Writer = new StreamWriter(filePath, append, encoding);
+            FilePath = filePath;
         }
 
         /// <summary>
@@ -149,6 +155,7 @@ namespace SoftCube.Logger
                 Writer.Close();
                 Writer.Dispose();
                 Writer = null;
+                FilePath = null;
             }
         }
 
