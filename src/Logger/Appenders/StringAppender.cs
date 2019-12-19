@@ -1,4 +1,4 @@
-﻿using System;
+﻿using SoftCube.Runtime;
 using System.Text;
 
 namespace SoftCube.Logger
@@ -23,6 +23,16 @@ namespace SoftCube.Logger
         /// コンストラクター。
         /// </summary>
         public StringAppender()
+            : this(new SystemClock())
+        {
+        }
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="systemClock">システムクロック。</param>
+        public StringAppender(ISystemClock systemClock)
+            : base(systemClock)
         {
         }
 

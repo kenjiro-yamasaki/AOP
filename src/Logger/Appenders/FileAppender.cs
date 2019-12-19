@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoftCube.Runtime;
+using System;
 using System.IO;
 using System.Text;
 
@@ -30,15 +31,34 @@ namespace SoftCube.Logger
         /// <summary>
         /// コンストラクター。
         /// </summary>
+        /// <param name="systemClock">システムクロック。</param>
+        public FileAppender(ISystemClock systemClock)
+            : base(systemClock)
+        {
+        }
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
         /// <param name="filePath">ファイルパス。</param>
-        /// <param name="append">
-        /// ファイルにログを追加するかどうかを示す値。
-        /// <c>true</c> の場合、ファイルにログを追加します。
-        /// <c>false</c> の場合、ファイルのログを上書きします。
-        /// </param>
+        /// <param name="append">ファイルにログを追加するかを示す値。</param>
         /// <param name="encoding">エンコーディング。</param>
         /// <seealso cref="Open(string, bool, Encoding)"/>
         public FileAppender(string filePath, bool append, Encoding encoding)
+            : this(new SystemClock(), filePath, append, encoding)
+        {
+        }
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="systemClock">システムクロック。</param>
+        /// <param name="filePath">ファイルパス。</param>
+        /// <param name="append">ファイルにログを追加するかを示す値。</param>
+        /// <param name="encoding">エンコーディング。</param>
+        /// <seealso cref="Open(string, bool, Encoding)"/>
+        public FileAppender(ISystemClock systemClock, string filePath, bool append, Encoding encoding)
+            : base(systemClock)
         {
             Open(filePath, append, encoding);
         }
@@ -94,7 +114,7 @@ namespace SoftCube.Logger
         /// </summary>
         /// <param name="filePath">ファイルパス。</param>
         /// <param name="append">
-        /// ファイルにログを追加するかどうかを示す値。
+        /// ファイルにログを追加するかを示す値。
         /// <c>true</c> の場合、ファイルにログを追加します。
         /// <c>false</c> の場合、ファイルのログを上書きします。
         /// </param>

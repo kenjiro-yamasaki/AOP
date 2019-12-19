@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoftCube.Runtime;
+using System;
 using System.Diagnostics;
 using System.Threading;
 
@@ -76,6 +77,11 @@ namespace SoftCube.Logger
         /// </remarks>
         public Level MaxLevel { get; set; } = Level.Fatal;
 
+        /// <summary>
+        /// システムクロック。
+        /// </summary>
+        protected ISystemClock SystemClock { get; }
+
         #endregion
 
         #region コンストラクター
@@ -84,8 +90,18 @@ namespace SoftCube.Logger
         /// コンストラクター。
         /// </summary>
         public Appender()
+            : this(new SystemClock())
+        {
+        }
+
+        /// <summary>
+        /// コンストラクター。
+        /// </summary>
+        /// <param name="systemClock">システムクロック。</param>
+        public Appender(ISystemClock systemClock)
         {
             ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}";
+            SystemClock       = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
 
         #endregion
@@ -241,7 +257,7 @@ namespace SoftCube.Logger
                 var method     = stackFrame.GetMethod().Name;
                 var file       = stackFrame.GetFileName();
                 var line       = stackFrame.GetFileLineNumber();
-                var date       = DateTime.Now;
+                var date       = SystemClock.Now;
                 var newline    = Environment.NewLine;
                 var thread     = Thread.CurrentThread.ManagedThreadId;
 

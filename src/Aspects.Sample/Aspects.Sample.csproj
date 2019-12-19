@@ -5,7 +5,7 @@
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>SoftCube.Aspects.Sample</AssemblyName>
     <RootNamespace>SoftCube.Aspects.Sample</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <!-- Buildターゲットからビルド後に呼び出されるターゲット -->

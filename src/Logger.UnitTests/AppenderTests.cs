@@ -1,4 +1,5 @@
 using NSubstitute;
+using SoftCube.Runtime;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -295,13 +296,17 @@ namespace SoftCube.Logger.UnitTests
             [Fact]
             public void DateèëéÆéwíË_ê≥ÇµÇ≠èoóÕÇ∑ÇÈ()
             {
-                var appender = new StringAppender();
+                var clock = Substitute.For<ISystemClock>();
+                clock.Now.Returns(new DateTime(2019, 12, 19, 22, 54, 19, 777));
+
+                var appender = new StringAppender(clock);
                 appender.ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff}";
 
                 appender.Trace("A");
 
-                var actual = appender.ToString();
-                Assert.Matches(@"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}", actual);
+                var expected = clock.Now.ToString("yyyy-MM-dd HH:mm:ss,fff");
+                var actual   = appender.ToString();
+                Assert.Equal(expected, actual);
             }
 
             [Fact]
@@ -434,13 +439,17 @@ namespace SoftCube.Logger.UnitTests
             [Fact]
             public void êÑèßèëéÆ_ê≥ÇµÇ≠èoóÕÇ∑ÇÈ()
             {
-                var appender = new StringAppender();
+                var clock = Substitute.For<ISystemClock>();
+                clock.Now.Returns(new DateTime(2019, 12, 19, 22, 54, 19, 777));
+
+                var appender = new StringAppender(clock);
                 appender.ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}";
 
                 appender.Info("A");
 
-                var log = appender.ToString();
-                Assert.Matches(@"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} \[INFO \] - A" + Environment.NewLine, log);
+                var expected = $@"{clock.Now:yyyy-MM-dd HH:mm:ss,fff} [INFO ] - A{Environment.NewLine}";
+                var actual   = appender.ToString();
+                Assert.Equal(expected, actual);
             }
 
             [Fact]

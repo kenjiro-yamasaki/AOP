@@ -5,7 +5,7 @@
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>SoftCube.Aspects.Injector</AssemblyName>
     <RootNamespace>SoftCube.Aspects.Injector</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

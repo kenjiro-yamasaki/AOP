@@ -8,6 +8,8 @@
     <AssemblyName>SoftCube.Logger.UnitTests</AssemblyName>
 
     <RootNamespace>SoftCube.Logger.UnitTests</RootNamespace>
+
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
