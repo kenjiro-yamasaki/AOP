@@ -33,8 +33,8 @@ namespace SoftCube.Asserts
         /// x > y ⇒ 0 より大きい値。
         /// </returns>
         /// <remarks>
-        /// null と参照型との比較は許容されています。例外は投げられません。
-        /// null は、null 以外よりも小さいと見なします。
+        /// <c>null</c> と参照型オブジェクトとの比較は許容されています。例外は投げられません。
+        /// <c>null</c> は、<c>null</c> 以外よりも小さいと見なします。
         /// </remarks>
         public int Compare(T x, T y)
         {

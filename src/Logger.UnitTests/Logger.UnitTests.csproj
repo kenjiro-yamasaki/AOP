@@ -9,7 +9,7 @@
 
     <RootNamespace>SoftCube.Logger.UnitTests</RootNamespace>
 
-    <Platforms>AnyCPU;x86</Platforms>
+    <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.csproj" />
+    <ProjectReference Include="..\System\System.csproj" />
+    <ProjectReference Include="..\Test\Test.csproj" />
   </ItemGroup>
 
 </Project>

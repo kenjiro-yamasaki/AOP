@@ -322,7 +322,7 @@ namespace SoftCube.Asserts
         /// </summary>
         /// <param name="x">比較対象のオブジェクト。</param>
         /// <param name="y">比較対象のオブジェクト。</param>
-        /// <param name="typeInfo">Tの型情報。</param>
+        /// <param name="typeInfo">比較対象のオブジェクトの型情報。</param>
         /// <returns>指定したオブジェクトが等しいかを示す値 (<see cref="ISet<T>"/> ではない場合、null)。</returns>
         private bool? CheckIfSetsAreEqual(T x, T y, TypeInfo typeInfo)
         {
@@ -395,7 +395,7 @@ namespace SoftCube.Asserts
         /// このクラスは <see cref="GetHashCode(T)"/> を実装しません。
         /// このクラスをハッシュコンテナーに使用しないでください。
         /// </remarks>
-        /// <exception cref="NotImplementedException">このメソッドを呼び出された場合、投げられます</exception>
+        /// <exception cref="NotImplementedException">このメソッドを呼び出された場合、投げられます。</exception>
         public int GetHashCode(T obj)
         {
             throw new NotImplementedException();
@@ -508,7 +508,7 @@ namespace SoftCube.Asserts
             /// このクラスは <see cref="GetHashCode(T)"/> を実装しません。
             /// このクラスをハッシュコンテナーに使用しなでください。
             /// </remarks>
-            /// <exception cref="NotImplementedException">このメソッドを呼び出された場合、投げられます</exception>
+            /// <exception cref="NotImplementedException">このメソッドを呼び出された場合、投げられます。</exception>
             public int GetHashCode(object obj)
             {
                 throw new NotImplementedException();

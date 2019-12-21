@@ -1,4 +1,4 @@
-﻿using SoftCube.Runtime;
+﻿using SoftCube.System;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -100,7 +100,7 @@ namespace SoftCube.Logger
         /// <param name="systemClock">システムクロック。</param>
         public Appender(ISystemClock systemClock)
         {
-            ConversionPattern = "{date:yyyy-MM-dd HH:mm:ss,fff} [{level,-5}] - {message}{newline}";
+            ConversionPattern = "{message}";
             SystemClock       = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
 

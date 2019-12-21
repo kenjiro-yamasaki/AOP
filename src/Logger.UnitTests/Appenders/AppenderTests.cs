@@ -1,5 +1,5 @@
 using NSubstitute;
-using SoftCube.Runtime;
+using SoftCube.System;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -290,7 +290,7 @@ namespace SoftCube.Logger.UnitTests
                 appender.Trace("A");
 
                 var actual = appender.ToString();
-                Assert.True(System.DateTime.TryParse(actual, out _));
+                Assert.True(global::System.DateTime.TryParse(actual, out _));
             }
 
             [Fact]

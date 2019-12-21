@@ -1,4 +1,4 @@
-﻿using SoftCube.Runtime;
+﻿using SoftCube.System;
 using System.IO;
 using System.Text;
 
@@ -13,15 +13,34 @@ namespace SoftCube.Logger
     /// </remarks>
     public class RollingFileAppender : FileAppender
     {
+        #region 定数
+
+        /// <summary>
+        /// B (バイト)。
+        /// </summary>
+        public const long B = 1;
+
+        /// <summary>
+        /// KB (キロバイト)。
+        /// </summary>
+        public const long KB = B * 1024;
+
+        /// <summary>
+        /// MB (メガバイト)。
+        /// </summary>
+        public const long MB = KB * 1024;
+
+        #endregion
+
         #region プロパティ
 
         /// <summary>
-        /// 最大ファイルサイズ（単位：byte）。
+        /// 最大ファイルサイズ (単位：byte)。
         /// </summary>
         /// <remarks>
         /// ローテンションするログファイルサイズを指定します。
         /// </remarks>
-        public long MaxFileSize { get; set; }
+        public long MaxFileSize { get; set; } = 10 * MB;
 
         /// <summary>
         /// 最大バックアップ数。
@@ -32,7 +51,7 @@ namespace SoftCube.Logger
         /// ログファイル.1→ログファイル.2→ログファイル.3とローテンションしていき、
         /// それ以上古くなると破棄されます。
         /// </remarks>
-        public int MaxBackupCount { get; set; }
+        public int MaxBackupCount { get; set; } = 10;
 
         #endregion
 
@@ -89,12 +108,12 @@ namespace SoftCube.Logger
         /// <param name="log">ログ。</param>
         public override void Log(string log)
         {
-            base.Log(log);
-
             if (MaxFileSize <= FileSize)
             {
                 RollLogAndBackupFiles();
             }
+
+            base.Log(log);
         }
 
         /// <summary>
@@ -115,8 +134,8 @@ namespace SoftCube.Logger
             // 既に存在するバックアップファイルをローテーションします。
             for (int backupIndex = MaxBackupCount - 1; 1 <= backupIndex; backupIndex--)
             {
-                var srcFilePath  = Path.Combine(directoryName, $"{baseName}{backupIndex}.{extension}");
-                var destFilePath = Path.Combine(directoryName, $"{baseName}{backupIndex}.{extension}");
+                var srcFilePath  = Path.Combine(directoryName, $"{baseName}_{backupIndex}{extension}");
+                var destFilePath = Path.Combine(directoryName, $"{baseName}_{backupIndex + 1}{extension}");
 
                 if (!File.Exists(srcFilePath))
                 {
@@ -132,10 +151,16 @@ namespace SoftCube.Logger
             }
 
             // 現在のログファイルを新規バックアップファイルとします。
+            if (1 <= MaxBackupCount)
             {
                 var logFilePath    = filePath;
                 var backupIndex    = 1;
-                var backupFilePath = Path.Combine(directoryName, $"{baseName}{backupIndex}.{extension}");
+                var backupFilePath = Path.Combine(directoryName, $"{baseName}_{backupIndex}{extension}");
+
+                if (File.Exists(backupFilePath))
+                {
+                    File.Delete(backupFilePath);
+                }
 
                 File.Move(logFilePath, backupFilePath);
             }
